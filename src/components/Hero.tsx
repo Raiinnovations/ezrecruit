@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Play, Users, Zap, BarChart3 } from "lucide-react";
+import { ArrowRight, Play, Users, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
@@ -86,29 +86,6 @@ const Hero = () => {
             </Button>
           </motion.div>
 
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="grid grid-cols-3 gap-8 max-w-2xl mx-auto"
-          >
-            {[
-              { icon: Users, value: "10,000+", label: "Placements Made" },
-              { icon: Zap, value: "3x", label: "Faster Hiring" },
-              { icon: BarChart3, value: "98%", label: "Client Satisfaction" },
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="flex items-center justify-center mb-2">
-                  <stat.icon size={24} className="text-primary" />
-                </div>
-                <div className="text-2xl md:text-3xl font-bold text-foreground">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
-              </div>
-            ))}
-          </motion.div>
         </div>
 
         {/* Hero Image / Dashboard Preview */}
