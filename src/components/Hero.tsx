@@ -278,20 +278,6 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Floating elements */}
-          <motion.div
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-4 -right-4 md:right-10 glass-card rounded-lg p-3 hidden md:flex items-center gap-2"
-          >
-            <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
-              <Zap size={16} className="text-green-500" />
-            </div>
-            <div>
-              <div className="text-sm font-medium text-foreground">AI Match</div>
-              <div className="text-xs text-muted-foreground">95% accuracy</div>
-            </div>
-          </motion.div>
         </motion.div>
       </div>
     </section>
