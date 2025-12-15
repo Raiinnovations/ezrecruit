@@ -274,9 +274,9 @@ const AgencyWorkflow = () => {
                   <motion.div
                     whileHover={{ scale: 1.08, y: -4 }}
                     animate={isActive ? { 
-                      scale: [1, 1.05, 1],
+                      scale: [1, 1.08, 1],
                     } : {}}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    transition={{ duration: 1.5, ease: "easeInOut", repeat: isActive ? Infinity : 0 }}
                     className={`relative w-16 h-16 md:w-20 md:h-20 rounded-2xl ${stepStyles.card} border flex items-center justify-center mb-4 transition-all duration-300`}
                   >
                     <step.icon className={`w-7 h-7 md:w-8 md:h-8 ${stepStyles.icon}`} />
