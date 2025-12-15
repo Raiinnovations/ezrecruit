@@ -272,30 +272,14 @@ const AgencyWorkflow = () => {
                 >
                   {/* Card with icon, title and explanation inside */}
                   <motion.div
-                    whileHover={{ scale: 1.03, y: -4 }}
-                    animate={isActive ? { 
-                      scale: [1, 1.03, 1],
-                    } : {}}
-                    transition={{ duration: 1.5, ease: "easeInOut", repeat: isActive ? Infinity : 0 }}
-                    className={`relative p-4 md:p-5 rounded-2xl ${stepStyles.card} border flex flex-col items-center justify-start min-h-[180px] md:min-h-[200px] w-[140px] md:w-[160px] transition-all duration-300`}
+                    whileHover={{ scale: 1.02, y: -4 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className={`relative p-4 md:p-5 rounded-2xl ${stepStyles.card} border flex flex-col items-center justify-start h-[200px] md:h-[220px] w-[140px] md:w-[160px] transition-all duration-300 ${isActive ? 'ring-2 ring-primary/50 shadow-lg' : ''}`}
                   >
                     {/* Step Number Badge */}
                     <div className={`absolute -top-2 -right-2 w-6 h-6 rounded-full ${stepStyles.badge} text-xs font-bold flex items-center justify-center shadow-md`}>
                       {index + 1}
                     </div>
-
-                    {/* Active indicator ring */}
-                    <AnimatePresence>
-                      {isActive && (
-                        <motion.div
-                          initial={{ scale: 0.8, opacity: 0 }}
-                          animate={{ scale: 1.05, opacity: [0, 0.6, 0] }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.8, repeat: Infinity }}
-                          className="absolute inset-0 rounded-2xl border-2 border-primary"
-                        />
-                      )}
-                    </AnimatePresence>
 
                     {/* Icon */}
                     <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
@@ -307,20 +291,10 @@ const AgencyWorkflow = () => {
                       {step.label}
                     </h3>
 
-                    {/* Explanation text inside card */}
-                    <AnimatePresence mode="wait">
-                      {(isActive || isRevealed) && (
-                        <motion.p
-                          initial={{ opacity: 0, y: 5 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className={`text-[10px] md:text-xs ${stepStyles.explanation} leading-relaxed text-center`}
-                        >
-                          {step.explanation}
-                        </motion.p>
-                      )}
-                    </AnimatePresence>
+                    {/* Explanation text inside card - always visible */}
+                    <p className={`text-[10px] md:text-xs ${stepStyles.explanation} leading-relaxed text-center`}>
+                      {step.explanation}
+                    </p>
                   </motion.div>
                 </motion.div>
               );
