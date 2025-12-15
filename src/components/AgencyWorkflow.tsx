@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { FileText, ClipboardList, Search, FileCheck, Send, Smile, Cloud } from "lucide-react";
+import { FileText, ClipboardList, Search, FileCheck, Send, Smile } from "lucide-react";
 
 const steps = [
   { 
@@ -43,59 +43,56 @@ const steps = [
 
 const AgencyWorkflow = () => {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: true, margin: "-50px" });
 
   return (
-    <section ref={sectionRef} className="py-20 bg-background relative overflow-hidden">
+    <section ref={sectionRef} className="pt-0 pb-20 bg-background relative overflow-hidden -mt-4">
+      {/* Connection point from Hero carousel - visual connector */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-8 bg-gradient-to-b from-primary/40 to-transparent" />
+      
       <div className="container mx-auto px-4 relative z-10">
-        {/* ATS Cloud Origin */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.5 }}
-          className="flex justify-center mb-4"
-        >
-          <div className="relative">
-            <motion.div
-              animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.1, 0.3] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute inset-0 w-14 h-14 rounded-full bg-primary -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
-            />
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center relative z-10">
-              <Cloud className="w-5 h-5 text-primary-foreground" />
-            </div>
-          </div>
-        </motion.div>
-
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-center mb-8"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-6 pt-8"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
             Built around the <span className="text-primary">agency workflow</span>
           </h2>
         </motion.div>
 
-        {/* Tree Roots from ATS */}
+        {/* Tree Roots originating from top center (connected to carousel) */}
         <div className="relative max-w-6xl mx-auto">
-          {/* Root Branches SVG */}
+          {/* Root Branches SVG - originating from carousel connection point */}
           <svg
-            className="w-full h-24 md:h-28"
-            viewBox="0 0 1200 100"
+            className="w-full h-28 md:h-32"
+            viewBox="0 0 1200 110"
             preserveAspectRatio="xMidYMin meet"
           >
+            {/* Central trunk from carousel */}
+            <motion.line
+              x1="600"
+              y1="0"
+              x2="600"
+              y2="20"
+              stroke="hsl(var(--primary))"
+              strokeWidth="3"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={isInView ? { pathLength: 1, opacity: 0.6 } : {}}
+              transition={{ duration: 0.3 }}
+            />
+            
             {steps.map((_, index) => {
               const startX = 600;
-              const startY = 0;
+              const startY = 20;
               const stepWidth = 1200 / 6;
               const endX = stepWidth * index + stepWidth / 2;
-              const endY = 100;
+              const endY = 110;
               
-              // Create smooth curved paths
-              const midY = 40;
+              // Create smooth curved paths branching from center
+              const midY = 50;
 
               return (
                 <motion.path
@@ -106,8 +103,8 @@ const AgencyWorkflow = () => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   initial={{ pathLength: 0, opacity: 0 }}
-                  animate={isInView ? { pathLength: 1, opacity: 0.4 } : {}}
-                  transition={{ duration: 1, delay: 0.2 + index * 0.1 }}
+                  animate={isInView ? { pathLength: 1, opacity: 0.35 } : {}}
+                  transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
                 />
               );
             })}
