@@ -152,13 +152,11 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-foreground leading-[1.2] tracking-tight mb-10"
+            className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-[1.3] tracking-tight mb-8"
           >
             An ATS that mirrors the
             <br />
-            <span className="gradient-text leading-[1.4]">rhythm of recruitment</span>
-            <br />
-            <span className="gradient-text">agencies.</span>
+            <span className="gradient-text">rhythm of recruitment agencies.</span>
           </motion.h1>
 
           {/* Subheadline */}
