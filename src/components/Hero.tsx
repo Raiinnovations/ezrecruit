@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Play, Zap, User, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Play, Zap, User, CheckCircle2, MousePointer2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // Import all screen images
@@ -16,16 +16,16 @@ import AISearch from "@/assets/screens/9-AISearch.png";
 import GoalManagement from "@/assets/screens/10-GoalManagement.png";
 
 const screens = [
-  { title: "Dashboard", image: Dashboard },
-  { title: "Client", image: Client },
-  { title: "Requirement", image: Requirement },
-  { title: "Candidate", image: Candidate },
-  { title: "Tagged Search", image: TaggedSearch },
-  { title: "Workflow", image: Workflow },
-  { title: "Closure", image: Closure },
-  { title: "Assignment", image: Assignment },
-  { title: "AI Search", image: AISearch },
-  { title: "Goal Management", image: GoalManagement },
+  { title: "Dashboard", image: Dashboard, description: "Get a complete overview of your recruitment pipeline, metrics, and team performance at a glance.", cursorTop: "18%" },
+  { title: "Client", image: Client, description: "Manage all your client relationships, contacts, and associated job requirements in one place.", cursorTop: "28%" },
+  { title: "Requirement", image: Requirement, description: "Create and track job requirements with detailed specifications and candidate matching criteria.", cursorTop: "33%" },
+  { title: "Candidate", image: Candidate, description: "Build your talent pool with comprehensive candidate profiles and recruitment history.", cursorTop: "38%" },
+  { title: "Tagged Search", image: TaggedSearch, description: "Find the perfect candidates instantly using smart tags and advanced filtering options.", cursorTop: "43%" },
+  { title: "Workflow", image: Workflow, description: "Streamline your recruitment process with customizable workflow stages and automation.", cursorTop: "48%" },
+  { title: "Closure", image: Closure, description: "Track successful placements, generate offers, and manage the closing process efficiently.", cursorTop: "53%" },
+  { title: "Assignment", image: Assignment, description: "Assign recruiters to requirements and monitor workload distribution across your team.", cursorTop: "58%" },
+  { title: "AI Search", image: AISearch, description: "Leverage AI-powered search to find the best matching candidates from your database.", cursorTop: "46%" },
+  { title: "Goal Management", image: GoalManagement, description: "Set targets, track progress, and measure recruiter performance against defined goals.", cursorTop: "63%" },
 ];
 
 const Hero = () => {
@@ -258,6 +258,38 @@ const Hero = () => {
                   transition={{ duration: 0.5 }}
                   className="w-full h-full object-cover object-top"
                 />
+              </AnimatePresence>
+
+              {/* Cursor pointer overlay with feature callout */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`cursor-${currentIndex}`}
+                  className="absolute hidden md:flex items-start gap-2"
+                  style={{ left: "3%", top: screens[currentIndex].cursorTop }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.4, delay: 0.3 }}
+                >
+                  {/* Cursor icon */}
+                  <motion.div
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <MousePointer2 size={24} className="text-primary fill-primary/20 drop-shadow-lg" />
+                  </motion.div>
+                  
+                  {/* Feature description callout */}
+                  <motion.div
+                    className="bg-card/95 backdrop-blur-sm border border-border rounded-lg px-3 py-2 shadow-xl max-w-xs"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: 0.5 }}
+                  >
+                    <div className="text-xs font-semibold text-primary mb-1">{screens[currentIndex].title}</div>
+                    <div className="text-[11px] text-muted-foreground leading-relaxed">{screens[currentIndex].description}</div>
+                  </motion.div>
+                </motion.div>
               </AnimatePresence>
             </div>
 
