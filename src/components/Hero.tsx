@@ -69,18 +69,6 @@ const Hero = () => {
             </div>
           </motion.div>
         ))}
-        
-        {/* Label */}
-        <motion.div
-          className="absolute left-4 top-[12%] text-xs text-muted-foreground/80"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          <span className="font-medium">Candidates</span>
-          <br />
-          <span className="text-[10px]">entering ATS</span>
-        </motion.div>
       </div>
 
       {/* Right Side - Success Placements */}
@@ -119,18 +107,6 @@ const Hero = () => {
             </div>
           </motion.div>
         ))}
-        
-        {/* Label */}
-        <motion.div
-          className="absolute right-4 top-[12%] text-xs text-green-600/80 text-right"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-        >
-          <span className="font-medium">Fast Closures</span>
-          <br />
-          <span className="text-[10px]">placed successfully</span>
-        </motion.div>
       </div>
 
       {/* Flowing dots animation - connecting left to right */}
