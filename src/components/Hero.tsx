@@ -242,14 +242,6 @@ const Hero = () => {
           </motion.div>
         ))}
         
-        {/* Arrow indicator - Enter ATS */}
-        <motion.div
-          className="absolute left-[180px] top-[60%] text-primary/50"
-          animate={{ x: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <ArrowRight size={24} />
-        </motion.div>
       </div>
 
       {/* Right Side - Happy Recruiters with Successful Placements */}
@@ -299,14 +291,6 @@ const Hero = () => {
           </motion.div>
         ))}
         
-        {/* Success indicator */}
-        <motion.div
-          className="absolute right-[200px] top-[60%] flex items-center gap-1 text-green-500"
-          animate={{ x: [0, -10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <Trophy size={20} />
-        </motion.div>
       </div>
 
       {/* Center ATS Processing Animation */}
@@ -588,18 +572,16 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Floating elements */}
+          {/* AI Powered ATS Badge - positioned at top center of carousel */}
           <motion.div
-            animate={{ y: [0, -10, 0] }}
+            animate={{ y: [0, -6, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-4 -right-4 md:right-10 glass-card rounded-lg p-3 hidden md:flex items-center gap-2"
+            className="absolute -top-5 left-1/2 -translate-x-1/2 glass-card rounded-lg px-4 py-2 hidden md:flex items-center gap-2 z-10"
           >
-            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-              <Zap size={16} className="text-primary" />
+            <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center">
+              <Zap size={14} className="text-primary" />
             </div>
-            <div>
-              <div className="text-sm font-medium text-foreground">AI Powered ATS</div>
-            </div>
+            <span className="text-sm font-medium text-foreground whitespace-nowrap">AI Powered ATS</span>
           </motion.div>
         </motion.div>
       </div>
