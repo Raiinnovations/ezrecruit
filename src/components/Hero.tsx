@@ -204,11 +204,12 @@ const Hero = () => {
       </div>
 
       {/* Left Side - Stressed Recruiters Entering */}
-      <div className="absolute left-0 top-0 h-full w-72 hidden lg:block pointer-events-none">
+      <div className="absolute left-0 top-0 h-full w-72 hidden lg:block pointer-events-none z-0">
         {[
-          { name: "Recruiter 1", status: "Struggling with manual search...", top: "18%", delay: 0 },
-          { name: "Recruiter 2", status: "Too many spreadsheets...", top: "32%", delay: 2 },
-          { name: "Recruiter 3", status: "Missing deadlines...", top: "46%", delay: 4 },
+          { name: "Recruiter 1", status: "Struggling with manual search...", top: "15%", delay: 0 },
+          { name: "Recruiter 2", status: "Too many spreadsheets...", top: "35%", delay: 2 },
+          { name: "Recruiter 3", status: "Missing deadlines...", top: "55%", delay: 4 },
+          { name: "Recruiter 4", status: "Can't track candidates...", top: "75%", delay: 6 },
         ].map((recruiter, i) => (
           <motion.div
             key={i}
@@ -241,15 +242,15 @@ const Hero = () => {
             </div>
           </motion.div>
         ))}
-        
       </div>
 
       {/* Right Side - Happy Recruiters with Successful Placements */}
-      <div className="absolute right-0 top-0 h-full w-80 hidden lg:block pointer-events-none">
+      <div className="absolute right-0 top-0 h-full w-80 hidden lg:block pointer-events-none z-0">
         {[
-          { name: "Recruiter 1", candidate: "Placed 3 candidates!", company: "TechCorp", top: "18%", delay: 2.5 },
-          { name: "Recruiter 2", candidate: "5 closures this week!", company: "StartupXYZ", top: "32%", delay: 4.5 },
-          { name: "Recruiter 3", candidate: "Record placements!", company: "BigTech", top: "46%", delay: 6.5 },
+          { name: "Recruiter 1", candidate: "Placed 3 candidates!", company: "TechCorp", top: "15%", delay: 2.5 },
+          { name: "Recruiter 2", candidate: "5 closures this week!", company: "StartupXYZ", top: "35%", delay: 4.5 },
+          { name: "Recruiter 3", candidate: "Record placements!", company: "BigTech", top: "55%", delay: 6.5 },
+          { name: "Recruiter 4", candidate: "Best quarter ever!", company: "Enterprise", top: "75%", delay: 8.5 },
         ].map((recruiter, i) => (
           <motion.div
             key={i}
@@ -290,7 +291,6 @@ const Hero = () => {
             </div>
           </motion.div>
         ))}
-        
       </div>
 
       {/* Center ATS Processing Animation */}
