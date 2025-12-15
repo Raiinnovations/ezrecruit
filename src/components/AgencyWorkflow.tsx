@@ -2,14 +2,14 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { FileText, ClipboardList, Search, FileCheck, Send, Smile } from "lucide-react";
 
-// Soft colorful palette for each step
+// Primary color palette using website teal/blue theme
 const stepColors = [
-  { bg: "bg-blue-100", border: "border-blue-300", text: "text-blue-600", glow: "shadow-blue-200" },
-  { bg: "bg-purple-100", border: "border-purple-300", text: "text-purple-600", glow: "shadow-purple-200" },
-  { bg: "bg-amber-100", border: "border-amber-300", text: "text-amber-600", glow: "shadow-amber-200" },
-  { bg: "bg-emerald-100", border: "border-emerald-300", text: "text-emerald-600", glow: "shadow-emerald-200" },
-  { bg: "bg-pink-100", border: "border-pink-300", text: "text-pink-600", glow: "shadow-pink-200" },
-  { bg: "bg-teal-100", border: "border-teal-300", text: "text-teal-600", glow: "shadow-teal-200" },
+  { bg: "bg-primary/10", border: "border-primary/30", text: "text-primary", glow: "shadow-primary/20" },
+  { bg: "bg-primary/10", border: "border-primary/30", text: "text-primary", glow: "shadow-primary/20" },
+  { bg: "bg-primary/10", border: "border-primary/30", text: "text-primary", glow: "shadow-primary/20" },
+  { bg: "bg-primary/10", border: "border-primary/30", text: "text-primary", glow: "shadow-primary/20" },
+  { bg: "bg-primary/10", border: "border-primary/30", text: "text-primary", glow: "shadow-primary/20" },
+  { bg: "bg-primary/10", border: "border-primary/30", text: "text-primary", glow: "shadow-primary/20" },
 ];
 
 const steps = [
@@ -57,7 +57,7 @@ const AgencyWorkflow = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [revealedSteps, setRevealedSteps] = useState<number[]>([]);
 
-  // Auto-advance through steps when in view
+  // Auto-advance through steps when in view - faster animation (1.2s)
   useEffect(() => {
     if (!isInView) return;
     
@@ -76,7 +76,7 @@ const AgencyWorkflow = () => {
         }
         return next;
       });
-    }, 2000);
+    }, 1200);
 
     return () => clearInterval(interval);
   }, [isInView]);
