@@ -1,14 +1,12 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Play, Users, Zap, Briefcase, User, Building2, FileText, CheckCircle, Target } from "lucide-react";
+import { ArrowRight, Play, Users, Zap, User, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const floatingElements = [
-  { icon: User, label: "Candidate", x: "10%", y: "20%", delay: 0 },
-  { icon: Briefcase, label: "Job", x: "85%", y: "15%", delay: 0.5 },
-  { icon: Building2, label: "Company", x: "5%", y: "60%", delay: 1 },
-  { icon: FileText, label: "Resume", x: "90%", y: "55%", delay: 1.5 },
-  { icon: CheckCircle, label: "Match", x: "15%", y: "80%", delay: 2 },
-  { icon: Target, label: "Placed", x: "80%", y: "75%", delay: 2.5 },
+const candidateProfiles = [
+  { name: "John D.", role: "Developer", delay: 0 },
+  { name: "Sarah M.", role: "Designer", delay: 1.5 },
+  { name: "Alex K.", role: "Manager", delay: 3 },
+  { name: "Emma R.", role: "Analyst", delay: 4.5 },
 ];
 
 const Hero = () => {
@@ -42,54 +40,86 @@ const Hero = () => {
         />
       </div>
 
-      {/* Floating recruitment elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {floatingElements.map((element, index) => (
+      {/* ATS Flow Animation - Left Side (Input) */}
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 hidden lg:block w-48">
+        {candidateProfiles.map((profile, index) => (
           <motion.div
             key={index}
-            className="absolute hidden md:flex items-center gap-2 px-3 py-2 rounded-xl bg-card/60 backdrop-blur-sm border border-border/30 shadow-sm"
-            style={{ left: element.x, top: element.y }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ 
-              opacity: [0.4, 0.7, 0.4],
-              scale: [0.95, 1, 0.95],
-              y: [0, -15, 0],
+            className="absolute left-4 flex items-center gap-2 px-3 py-2 rounded-lg bg-card/80 backdrop-blur-sm border border-border/50 shadow-md"
+            initial={{ x: -100, opacity: 0 }}
+            animate={{
+              x: [-100, 60, 300],
+              opacity: [0, 1, 0],
             }}
             transition={{
               duration: 4,
-              delay: element.delay,
+              delay: profile.delay,
               repeat: Infinity,
+              repeatDelay: 2,
               ease: "easeInOut",
             }}
           >
-            <element.icon size={16} className="text-primary" />
-            <span className="text-xs text-muted-foreground font-medium">{element.label}</span>
+            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+              <User size={14} className="text-primary" />
+            </div>
+            <div>
+              <div className="text-xs font-semibold text-foreground">{profile.name}</div>
+              <div className="text-[10px] text-muted-foreground">{profile.role}</div>
+            </div>
           </motion.div>
         ))}
+      </div>
 
-        {/* Connection lines */}
-        <svg className="absolute inset-0 w-full h-full hidden md:block" style={{ opacity: 0.15 }}>
-          <motion.path
-            d="M 100 200 Q 400 100 700 300"
-            fill="none"
-            stroke="hsl(198, 94%, 33%)"
-            strokeWidth="1"
-            strokeDasharray="5,5"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      {/* ATS Flow Animation - Right Side (Output - Closures) */}
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden lg:block w-48">
+        {candidateProfiles.map((profile, index) => (
+          <motion.div
+            key={index}
+            className="absolute right-4 flex items-center gap-2 px-3 py-2 rounded-lg bg-green-50/80 backdrop-blur-sm border border-green-200/50 shadow-md"
+            initial={{ x: 100, opacity: 0 }}
+            animate={{
+              x: [100, -60, -300],
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration: 4,
+              delay: profile.delay + 2,
+              repeat: Infinity,
+              repeatDelay: 2,
+              ease: "easeInOut",
+            }}
+          >
+            <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
+              <CheckCircle2 size={14} className="text-green-600" />
+            </div>
+            <div>
+              <div className="text-xs font-semibold text-green-700">{profile.name}</div>
+              <div className="text-[10px] text-green-600">Placed ✓</div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Flow arrows */}
+      <div className="absolute left-48 top-1/2 -translate-y-1/2 hidden lg:flex items-center gap-1">
+        {[0, 1, 2].map((i) => (
+          <motion.div
+            key={i}
+            className="w-2 h-2 rounded-full bg-primary/40"
+            animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }}
+            transition={{ duration: 1.5, delay: i * 0.3, repeat: Infinity }}
           />
-          <motion.path
-            d="M 800 150 Q 600 400 300 350"
-            fill="none"
-            stroke="hsl(198, 94%, 33%)"
-            strokeWidth="1"
-            strokeDasharray="5,5"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 4, delay: 1, repeat: Infinity, ease: "easeInOut" }}
+        ))}
+      </div>
+      <div className="absolute right-48 top-1/2 -translate-y-1/2 hidden lg:flex items-center gap-1">
+        {[0, 1, 2].map((i) => (
+          <motion.div
+            key={i}
+            className="w-2 h-2 rounded-full bg-green-500/40"
+            animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }}
+            transition={{ duration: 1.5, delay: i * 0.3, repeat: Infinity }}
           />
-        </svg>
+        ))}
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
