@@ -270,17 +270,15 @@ const AgencyWorkflow = () => {
                   transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
                   className="flex flex-col items-center text-center group"
                 >
-                  {/* Icon Box - clean white card style */}
+                  {/* Card with icon, title and explanation inside */}
                   <motion.div
-                    whileHover={{ scale: 1.08, y: -4 }}
+                    whileHover={{ scale: 1.03, y: -4 }}
                     animate={isActive ? { 
-                      scale: [1, 1.08, 1],
+                      scale: [1, 1.03, 1],
                     } : {}}
                     transition={{ duration: 1.5, ease: "easeInOut", repeat: isActive ? Infinity : 0 }}
-                    className={`relative w-16 h-16 md:w-20 md:h-20 rounded-2xl ${stepStyles.card} border flex items-center justify-center mb-4 transition-all duration-300`}
+                    className={`relative p-4 md:p-5 rounded-2xl ${stepStyles.card} border flex flex-col items-center justify-start min-h-[180px] md:min-h-[200px] w-[140px] md:w-[160px] transition-all duration-300`}
                   >
-                    <step.icon className={`w-7 h-7 md:w-8 md:h-8 ${stepStyles.icon}`} />
-                    
                     {/* Step Number Badge */}
                     <div className={`absolute -top-2 -right-2 w-6 h-6 rounded-full ${stepStyles.badge} text-xs font-bold flex items-center justify-center shadow-md`}>
                       {index + 1}
@@ -291,34 +289,39 @@ const AgencyWorkflow = () => {
                       {isActive && (
                         <motion.div
                           initial={{ scale: 0.8, opacity: 0 }}
-                          animate={{ scale: 1.2, opacity: [0, 0.6, 0] }}
+                          animate={{ scale: 1.05, opacity: [0, 0.6, 0] }}
                           exit={{ opacity: 0 }}
                           transition={{ duration: 0.8, repeat: Infinity }}
                           className="absolute inset-0 rounded-2xl border-2 border-primary"
                         />
                       )}
                     </AnimatePresence>
+
+                    {/* Icon */}
+                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
+                      <step.icon className={`w-6 h-6 md:w-7 md:h-7 ${stepStyles.icon}`} />
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-semibold text-foreground text-xs md:text-sm mb-2 text-center">
+                      {step.label}
+                    </h3>
+
+                    {/* Explanation text inside card */}
+                    <AnimatePresence mode="wait">
+                      {(isActive || isRevealed) && (
+                        <motion.p
+                          initial={{ opacity: 0, y: 5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className={`text-[10px] md:text-xs ${stepStyles.explanation} leading-relaxed text-center`}
+                        >
+                          {step.explanation}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
                   </motion.div>
-
-                  {/* Title */}
-                  <h3 className="font-semibold text-foreground text-sm md:text-base mb-2">
-                    {step.label}
-                  </h3>
-
-                  {/* Animated explanation text */}
-                  <AnimatePresence mode="wait">
-                    {(isActive || isRevealed) && (
-                      <motion.p
-                        initial={{ opacity: 0, y: 10, height: 0 }}
-                        animate={{ opacity: 1, y: 0, height: "auto" }}
-                        exit={{ opacity: 0, y: -5 }}
-                        transition={{ duration: 0.3 }}
-                        className={`text-xs md:text-sm ${stepStyles.explanation} leading-relaxed max-w-[160px]`}
-                      >
-                        {step.explanation}
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
                 </motion.div>
               );
             })}
