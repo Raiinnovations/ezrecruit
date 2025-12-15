@@ -230,7 +230,7 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mt-20 relative"
         >
-          <div className="glass-card rounded-2xl p-2 md:p-4 mx-auto max-w-5xl">
+          <div className="glass-card rounded-2xl p-2 md:p-4 mx-auto max-w-6xl">
             {/* Browser Header */}
             <div className="bg-muted/50 rounded-t-xl px-4 py-3 border-b border-border flex items-center gap-2">
               <div className="flex gap-1.5">
@@ -246,7 +246,7 @@ const Hero = () => {
             </div>
 
             {/* Screenshot Carousel */}
-            <div className="relative aspect-[16/10] overflow-hidden rounded-b-xl bg-secondary">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-b-xl bg-secondary">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentIndex}
