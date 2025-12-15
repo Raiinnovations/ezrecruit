@@ -2,15 +2,13 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { FileText, ClipboardList, Search, FileCheck, Send, Smile } from "lucide-react";
 
-// Primary color palette using website teal/blue theme
-const stepColors = [
-  { bg: "bg-primary/10", border: "border-primary/30", text: "text-primary", glow: "shadow-primary/20" },
-  { bg: "bg-primary/10", border: "border-primary/30", text: "text-primary", glow: "shadow-primary/20" },
-  { bg: "bg-primary/10", border: "border-primary/30", text: "text-primary", glow: "shadow-primary/20" },
-  { bg: "bg-primary/10", border: "border-primary/30", text: "text-primary", glow: "shadow-primary/20" },
-  { bg: "bg-primary/10", border: "border-primary/30", text: "text-primary", glow: "shadow-primary/20" },
-  { bg: "bg-primary/10", border: "border-primary/30", text: "text-primary", glow: "shadow-primary/20" },
-];
+// Clean white cards with primary accent - matches website aesthetic
+const stepStyles = {
+  card: "bg-card border-border/50 shadow-sm hover:shadow-md hover:border-primary/30",
+  icon: "text-primary",
+  badge: "bg-primary text-primary-foreground",
+  explanation: "text-muted-foreground"
+};
 
 const steps = [
   { 
@@ -261,7 +259,6 @@ const AgencyWorkflow = () => {
           {/* Steps Grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
             {steps.map((step, index) => {
-              const colors = stepColors[index];
               const isActive = currentStep === index;
               const isRevealed = revealedSteps.includes(index);
 
@@ -273,20 +270,19 @@ const AgencyWorkflow = () => {
                   transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
                   className="flex flex-col items-center text-center group"
                 >
-                  {/* Icon Box with soft colorful styling */}
+                  {/* Icon Box - clean white card style */}
                   <motion.div
                     whileHover={{ scale: 1.08, y: -4 }}
                     animate={isActive ? { 
-                      scale: [1, 1.1, 1],
-                      boxShadow: ["0 0 0 0 rgba(0,0,0,0)", "0 0 20px 8px rgba(59,130,246,0.3)", "0 0 0 0 rgba(0,0,0,0)"]
+                      scale: [1, 1.05, 1],
                     } : {}}
-                    transition={{ duration: 0.6, repeat: isActive ? Infinity : 0 }}
-                    className={`relative w-16 h-16 md:w-20 md:h-20 rounded-2xl ${colors.bg} ${colors.border} border-2 flex items-center justify-center mb-4 transition-all duration-300 group-hover:shadow-xl ${colors.glow}`}
+                    transition={{ duration: 0.5, repeat: isActive ? Infinity : 0 }}
+                    className={`relative w-16 h-16 md:w-20 md:h-20 rounded-2xl ${stepStyles.card} border flex items-center justify-center mb-4 transition-all duration-300`}
                   >
-                    <step.icon className={`w-7 h-7 md:w-8 md:h-8 ${colors.text}`} />
+                    <step.icon className={`w-7 h-7 md:w-8 md:h-8 ${stepStyles.icon}`} />
                     
                     {/* Step Number Badge */}
-                    <div className={`absolute -top-2 -right-2 w-6 h-6 rounded-full ${colors.bg} ${colors.border} border ${colors.text} text-xs font-bold flex items-center justify-center shadow-md`}>
+                    <div className={`absolute -top-2 -right-2 w-6 h-6 rounded-full ${stepStyles.badge} text-xs font-bold flex items-center justify-center shadow-md`}>
                       {index + 1}
                     </div>
 
@@ -295,10 +291,10 @@ const AgencyWorkflow = () => {
                       {isActive && (
                         <motion.div
                           initial={{ scale: 0.8, opacity: 0 }}
-                          animate={{ scale: 1.3, opacity: [0, 1, 0] }}
+                          animate={{ scale: 1.2, opacity: [0, 0.6, 0] }}
                           exit={{ opacity: 0 }}
-                          transition={{ duration: 1, repeat: Infinity }}
-                          className={`absolute inset-0 rounded-2xl ${colors.border} border-2`}
+                          transition={{ duration: 0.8, repeat: Infinity }}
+                          className="absolute inset-0 rounded-2xl border-2 border-primary"
                         />
                       )}
                     </AnimatePresence>
@@ -316,8 +312,8 @@ const AgencyWorkflow = () => {
                         initial={{ opacity: 0, y: 10, height: 0 }}
                         animate={{ opacity: 1, y: 0, height: "auto" }}
                         exit={{ opacity: 0, y: -5 }}
-                        transition={{ duration: 0.4 }}
-                        className={`text-xs md:text-sm ${colors.text} leading-relaxed max-w-[160px]`}
+                        transition={{ duration: 0.3 }}
+                        className={`text-xs md:text-sm ${stepStyles.explanation} leading-relaxed max-w-[160px]`}
                       >
                         {step.explanation}
                       </motion.p>
