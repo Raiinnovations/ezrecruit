@@ -1,8 +1,43 @@
-import { motion } from "framer-motion";
-import { ArrowRight, Play, Users, Zap, User, CheckCircle2, FileText, Briefcase } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, Play, Zap, User, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// Import all screen images
+import Dashboard from "@/assets/screens/1-Dashboard.png";
+import Client from "@/assets/screens/2-Client.png";
+import Requirement from "@/assets/screens/3-Requirement.png";
+import Candidate from "@/assets/screens/4-Candidate.png";
+import TaggedSearch from "@/assets/screens/5-TaggedSearch.png";
+import Workflow from "@/assets/screens/6-Workflow.png";
+import Closure from "@/assets/screens/7-Closure.png";
+import Assignment from "@/assets/screens/8-Assignment.png";
+import AISearch from "@/assets/screens/9-AISearch.png";
+import GoalManagement from "@/assets/screens/10-GoalManagement.png";
+
+const screens = [
+  { title: "Dashboard", image: Dashboard },
+  { title: "Client", image: Client },
+  { title: "Requirement", image: Requirement },
+  { title: "Candidate", image: Candidate },
+  { title: "Tagged Search", image: TaggedSearch },
+  { title: "Workflow", image: Workflow },
+  { title: "Closure", image: Closure },
+  { title: "Assignment", image: Assignment },
+  { title: "AI Search", image: AISearch },
+  { title: "Goal Management", image: GoalManagement },
+];
+
 const Hero = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Autoplay
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % screens.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient pt-20">
       {/* Animated gradient blobs */}
@@ -188,7 +223,7 @@ const Hero = () => {
 
         </div>
 
-        {/* Hero Image / Dashboard Preview */}
+        {/* Hero Image / Dashboard Preview - Autoplay Carousel */}
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
@@ -196,35 +231,50 @@ const Hero = () => {
           className="mt-20 relative"
         >
           <div className="glass-card rounded-2xl p-2 md:p-4 mx-auto max-w-5xl">
-            <div className="bg-secondary rounded-xl overflow-hidden aspect-video flex items-center justify-center">
-              <div className="p-8 w-full">
-                {/* Mock Dashboard UI */}
-                <div className="bg-card rounded-lg shadow-lg p-6 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                        <Users size={20} className="text-primary" />
-                      </div>
-                      <div>
-                        <div className="font-semibold text-foreground">Active Candidates</div>
-                        <div className="text-sm text-muted-foreground">247 in pipeline</div>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <div className="px-3 py-1 rounded-full bg-accent text-primary text-sm font-medium">Screening</div>
-                      <div className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">Interview</div>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-4 gap-4">
-                    {["New", "Screening", "Interview", "Offer"].map((stage, i) => (
-                      <div key={stage} className="bg-secondary rounded-lg p-4">
-                        <div className="text-sm text-muted-foreground mb-1">{stage}</div>
-                        <div className="text-2xl font-bold text-foreground">{[42, 85, 67, 53][i]}</div>
-                      </div>
-                    ))}
-                  </div>
+            {/* Browser Header */}
+            <div className="bg-muted/50 rounded-t-xl px-4 py-3 border-b border-border flex items-center gap-2">
+              <div className="flex gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-destructive/60" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
+                <div className="w-3 h-3 rounded-full bg-green-500/60" />
+              </div>
+              <div className="flex-1 mx-4">
+                <div className="bg-background/50 rounded-md px-4 py-1.5 text-xs text-muted-foreground text-center max-w-md mx-auto">
+                  ezrecruit.app/{screens[currentIndex].title.toLowerCase().replace(/\s+/g, '-')}
                 </div>
               </div>
+            </div>
+
+            {/* Screenshot Carousel */}
+            <div className="relative aspect-[16/10] overflow-hidden rounded-b-xl bg-secondary">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentIndex}
+                  src={screens[currentIndex].image}
+                  alt={screens[currentIndex].title}
+                  initial={{ opacity: 0, scale: 1.02 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.5 }}
+                  className="w-full h-full object-cover object-top"
+                />
+              </AnimatePresence>
+            </div>
+
+            {/* Dot Indicators */}
+            <div className="flex justify-center gap-1.5 mt-3 pb-2">
+              {screens.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    currentIndex === index
+                      ? "w-6 bg-primary"
+                      : "w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
             </div>
           </div>
           
