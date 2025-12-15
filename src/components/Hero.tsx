@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Play, Zap, User, CheckCircle2, Pointer } from "lucide-react";
+import { ArrowRight, Play, Zap, User, CheckCircle2, Pointer, LayoutDashboard, FileText, Tags, Sparkles, GitBranch, Trophy, ClipboardList, Target, AlertTriangle, Clock, Users, Search, Database, TrendingUp, Shield, LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // Import all screen images
@@ -15,17 +15,142 @@ import Assignment from "@/assets/screens/8-Assignment.png";
 import AISearch from "@/assets/screens/9-AISearch.png";
 import GoalManagement from "@/assets/screens/10-GoalManagement.png";
 
-const screens = [
-  { title: "Dashboard", image: Dashboard, description: "Get a complete overview of your recruitment pipeline, metrics, and team performance at a glance.", cursorTop: "18%" },
-  { title: "Client", image: Client, description: "Manage all your client relationships, contacts, and associated job requirements in one place.", cursorTop: "28%" },
-  { title: "Requirement", image: Requirement, description: "Create and track job requirements with detailed specifications and candidate matching criteria.", cursorTop: "33%" },
-  { title: "Candidate", image: Candidate, description: "Build your talent pool with comprehensive candidate profiles and recruitment history.", cursorTop: "38%" },
-  { title: "Tagged Search", image: TaggedSearch, description: "Find the perfect candidates instantly using smart tags and advanced filtering options.", cursorTop: "43%" },
-  { title: "Workflow", image: Workflow, description: "Streamline your recruitment process with customizable workflow stages and automation.", cursorTop: "48%" },
-  { title: "Closure", image: Closure, description: "Track successful placements, generate offers, and manage the closing process efficiently.", cursorTop: "53%" },
-  { title: "Assignment", image: Assignment, description: "Assign recruiters to requirements and monitor workload distribution across your team.", cursorTop: "58%" },
-  { title: "AI Search", image: AISearch, description: "Leverage AI-powered search to find the best matching candidates from your database.", cursorTop: "46%" },
-  { title: "Goal Management", image: GoalManagement, description: "Set targets, track progress, and measure recruiter performance against defined goals.", cursorTop: "63%" },
+interface FeaturePoint {
+  icon: LucideIcon;
+  text: string;
+  highlight?: boolean;
+}
+
+interface Screen {
+  title: string;
+  image: string;
+  headline: string;
+  description: string;
+  features: FeaturePoint[];
+  cursorTop: string;
+}
+
+const screens: Screen[] = [
+  { 
+    title: "Requirement", 
+    image: Requirement, 
+    headline: "Define Once, Brief Right Every Time",
+    description: "Wrong briefs lead to wrong submissions and wrong outcomes. With the Requirement module, eliminate miscommunication.",
+    features: [
+      { icon: FileText, text: "Define detailed job requirements with specifications" },
+      { icon: ClipboardList, text: "Add evaluation questions for each requirement" },
+      { icon: Users, text: "Directly assign requirements to recruiters" },
+    ],
+    cursorTop: "33%" 
+  },
+  { 
+    title: "Dashboard", 
+    image: Dashboard, 
+    headline: "Visibility That Scales With Your Team",
+    description: "Dedicated dashboards for every role provide clear visibility across your organization.",
+    features: [
+      { icon: LayoutDashboard, text: "Role-specific dashboards for managers & recruiters" },
+      { icon: TrendingUp, text: "Real-time analytics and performance metrics" },
+      { icon: Target, text: "Data-driven insights for informed decisions" },
+    ],
+    cursorTop: "18%" 
+  },
+  { 
+    title: "Tagged Search", 
+    image: TaggedSearch, 
+    headline: "Make Every Recruiter Effort Reusable",
+    description: "Every screened profile has closure potential. Tag candidates to similar jobs and maximize your sourcing ROI.",
+    features: [
+      { icon: Tags, text: "Tag candidates to multiple similar requirements" },
+      { icon: Search, text: "Instantly find previously screened candidates" },
+      { icon: Database, text: "Build a reusable talent pool from every search" },
+    ],
+    cursorTop: "43%" 
+  },
+  { 
+    title: "AI Search", 
+    image: AISearch, 
+    headline: "Faster Sourcing, Cleaner Shortlisting",
+    description: "No more complex Boolean queries. AI generates search queries from requirement specs and finds matching candidates with scores.",
+    features: [
+      { icon: Sparkles, text: "AI-generated search queries from requirements" },
+      { icon: Target, text: "Matching scores for every candidate" },
+      { icon: Clock, text: "10x faster sourcing from your own database" },
+    ],
+    cursorTop: "46%" 
+  },
+  { 
+    title: "Workflow", 
+    image: Workflow, 
+    headline: "No Feedback, No Learning, No Growth",
+    description: "Every profile costs ₹300-500 to source. Without feedback, money goes to waste. Track feedback at every interview stage.",
+    features: [
+      { icon: GitBranch, text: "Track candidate progress through interview stages" },
+      { icon: AlertTriangle, text: "Leads provide feedback for each rejection" },
+      { icon: Shield, text: "4-step duplication check prevents duplicate submissions" },
+    ],
+    cursorTop: "48%" 
+  },
+  { 
+    title: "Closure", 
+    image: Closure, 
+    headline: "Celebrate & Track Your Wins",
+    description: "View all candidates who have successfully closed against requirements. Maintain separate data for closed candidates.",
+    features: [
+      { icon: Trophy, text: "Complete closure history for each requirement" },
+      { icon: CheckCircle2, text: "Track offer status and joining dates" },
+      { icon: TrendingUp, text: "Measure closure rates and success metrics" },
+    ],
+    cursorTop: "53%" 
+  },
+  { 
+    title: "Assignment", 
+    image: Assignment, 
+    headline: "Clear Ownership, Better Accountability",
+    description: "View all assigned requirements in one place. Know exactly who is working on what.",
+    features: [
+      { icon: ClipboardList, text: "Centralized view of all requirement assignments" },
+      { icon: Users, text: "Track workload distribution across team" },
+      { icon: Clock, text: "Monitor assignment deadlines and progress" },
+    ],
+    cursorTop: "58%" 
+  },
+  { 
+    title: "Goal Management", 
+    image: GoalManagement, 
+    headline: "Set Goals, Track Performance Daily",
+    description: "Define expected CV count per requirement for each recruiter. Track daily targets and achievement rates.",
+    features: [
+      { icon: Target, text: "Set daily/weekly CV submission targets" },
+      { icon: TrendingUp, text: "Track goal achievement in real-time" },
+      { icon: Trophy, text: "Identify top performers and those needing support" },
+    ],
+    cursorTop: "63%" 
+  },
+  { 
+    title: "Client", 
+    image: Client, 
+    headline: "Manage Client Relationships",
+    description: "Centralize all client information, contacts, and requirements in one organized place.",
+    features: [
+      { icon: Users, text: "Store all client contacts and SPOCs" },
+      { icon: FileText, text: "Link requirements to specific clients" },
+      { icon: Clock, text: "Track client-specific SLAs and deadlines" },
+    ],
+    cursorTop: "28%" 
+  },
+  { 
+    title: "Candidate", 
+    image: Candidate, 
+    headline: "Your Talent Pool, Organized",
+    description: "Build comprehensive candidate profiles with complete recruitment history and status tracking.",
+    features: [
+      { icon: User, text: "Complete candidate profiles with history" },
+      { icon: Search, text: "Advanced search and filtering options" },
+      { icon: Database, text: "Growing talent pool from every interaction" },
+    ],
+    cursorTop: "38%" 
+  },
 ];
 
 const Hero = () => {
@@ -264,30 +389,73 @@ const Hero = () => {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`cursor-${currentIndex}`}
-                  className="absolute hidden md:flex items-start gap-2"
-                  style={{ left: "3%", top: screens[currentIndex].cursorTop }}
-                  initial={{ opacity: 0, x: -20 }}
+                  className="absolute hidden md:flex items-start gap-3"
+                  style={{ left: "2%", top: screens[currentIndex].cursorTop }}
+                  initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.4, delay: 0.3 }}
+                  exit={{ opacity: 0, x: -30 }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
                 >
                   {/* Cursor icon */}
                   <motion.div
-                    animate={{ x: [0, 4, 0] }}
+                    className="flex-shrink-0 mt-2"
+                    animate={{ x: [0, 6, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    <Pointer size={24} className="text-primary fill-primary/20 drop-shadow-lg" />
+                    <Pointer size={28} className="text-primary fill-primary/30 drop-shadow-lg" />
                   </motion.div>
                   
-                  {/* Feature description callout */}
+                  {/* Feature description callout - Enhanced design */}
                   <motion.div
-                    className="bg-card/95 backdrop-blur-sm border border-border rounded-lg px-3 py-2 shadow-xl max-w-xs"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: 0.5 }}
+                    className="bg-card/98 backdrop-blur-md border border-primary/20 rounded-xl p-4 shadow-2xl max-w-sm relative overflow-hidden"
+                    initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.4 }}
                   >
-                    <div className="text-xs font-semibold text-primary mb-1">{screens[currentIndex].title}</div>
-                    <div className="text-[11px] text-muted-foreground leading-relaxed">{screens[currentIndex].description}</div>
+                    {/* Gradient accent */}
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-primary-light to-primary" />
+                    
+                    {/* Header */}
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-7 h-7 rounded-lg bg-primary/15 flex items-center justify-center">
+                        {(() => {
+                          const IconComponent = screens[currentIndex].features[0]?.icon || FileText;
+                          return <IconComponent size={14} className="text-primary" />;
+                        })()}
+                      </div>
+                      <span className="text-sm font-bold text-primary">{screens[currentIndex].title}</span>
+                    </div>
+                    
+                    {/* Headline */}
+                    <h4 className="text-sm font-semibold text-foreground mb-2 leading-tight">
+                      {screens[currentIndex].headline}
+                    </h4>
+                    
+                    {/* Description */}
+                    <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+                      {screens[currentIndex].description}
+                    </p>
+                    
+                    {/* Feature points */}
+                    <div className="space-y-2">
+                      {screens[currentIndex].features.map((feature, idx) => {
+                        const FeatureIcon = feature.icon;
+                        return (
+                          <motion.div 
+                            key={idx}
+                            className="flex items-start gap-2"
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: 0.6 + idx * 0.1 }}
+                          >
+                            <div className="w-5 h-5 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                              <FeatureIcon size={10} className="text-primary" />
+                            </div>
+                            <span className="text-[11px] text-muted-foreground leading-tight">{feature.text}</span>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
                   </motion.div>
                 </motion.div>
               </AnimatePresence>
