@@ -40,87 +40,128 @@ const Hero = () => {
         />
       </div>
 
-      {/* ATS Flow Animation - Left Side (Input) */}
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 hidden lg:block w-48">
-        {candidateProfiles.map((profile, index) => (
-          <motion.div
-            key={index}
-            className="absolute left-4 flex items-center gap-2 px-3 py-2 rounded-lg bg-card/80 backdrop-blur-sm border border-border/50 shadow-md"
-            initial={{ x: -100, opacity: 0 }}
-            animate={{
-              x: [-100, 60, 300],
-              opacity: [0, 1, 0],
-            }}
+      {/* Flow Lines SVG - Left Side (Candidates going to ATS) */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" preserveAspectRatio="none">
+        {/* Left side - incoming lines */}
+        {[
+          { d: "M 0 80 Q 150 120 350 200", delay: 0 },
+          { d: "M 0 150 Q 180 180 380 220", delay: 0.3 },
+          { d: "M 0 220 Q 200 240 400 250", delay: 0.6 },
+          { d: "M 0 350 Q 180 320 380 280", delay: 0.9 },
+          { d: "M 0 420 Q 150 380 350 300", delay: 1.2 },
+        ].map((line, i) => (
+          <motion.path
+            key={`left-${i}`}
+            d={line.d}
+            fill="none"
+            stroke="hsl(198, 94%, 33%)"
+            strokeWidth="1.5"
+            strokeOpacity="0.3"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: [0, 1, 1, 0] }}
             transition={{
               duration: 4,
-              delay: profile.delay,
+              delay: line.delay,
               repeat: Infinity,
-              repeatDelay: 2,
+              repeatDelay: 1,
               ease: "easeInOut",
             }}
-          >
-            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-              <User size={14} className="text-primary" />
-            </div>
-            <div>
-              <div className="text-xs font-semibold text-foreground">{profile.name}</div>
-              <div className="text-[10px] text-muted-foreground">{profile.role}</div>
-            </div>
-          </motion.div>
+          />
         ))}
-      </div>
 
-      {/* ATS Flow Animation - Right Side (Output - Closures) */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden lg:block w-48">
-        {candidateProfiles.map((profile, index) => (
-          <motion.div
-            key={index}
-            className="absolute right-4 flex items-center gap-2 px-3 py-2 rounded-lg bg-green-50/80 backdrop-blur-sm border border-green-200/50 shadow-md"
-            initial={{ x: 100, opacity: 0 }}
-            animate={{
-              x: [100, -60, -300],
-              opacity: [0, 1, 0],
-            }}
+        {/* Right side - outgoing lines */}
+        {[
+          { d: "M 1000 200 Q 1200 120 1400 80", delay: 0.5 },
+          { d: "M 1020 220 Q 1220 180 1400 150", delay: 0.8 },
+          { d: "M 1000 250 Q 1200 240 1400 220", delay: 1.1 },
+          { d: "M 1020 280 Q 1220 320 1400 350", delay: 1.4 },
+          { d: "M 1000 300 Q 1200 380 1400 420", delay: 1.7 },
+        ].map((line, i) => (
+          <motion.path
+            key={`right-${i}`}
+            d={line.d}
+            fill="none"
+            stroke="hsl(142, 71%, 45%)"
+            strokeWidth="1.5"
+            strokeOpacity="0.3"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: [0, 1, 1, 0] }}
             transition={{
               duration: 4,
-              delay: profile.delay + 2,
+              delay: line.delay,
               repeat: Infinity,
-              repeatDelay: 2,
+              repeatDelay: 1,
               ease: "easeInOut",
             }}
-          >
-            <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
-              <CheckCircle2 size={14} className="text-green-600" />
-            </div>
-            <div>
-              <div className="text-xs font-semibold text-green-700">{profile.name}</div>
-              <div className="text-[10px] text-green-600">Placed ✓</div>
-            </div>
-          </motion.div>
+          />
         ))}
-      </div>
+      </svg>
 
-      {/* Flow arrows */}
-      <div className="absolute left-48 top-1/2 -translate-y-1/2 hidden lg:flex items-center gap-1">
-        {[0, 1, 2].map((i) => (
-          <motion.div
-            key={i}
-            className="w-2 h-2 rounded-full bg-primary/40"
-            animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }}
-            transition={{ duration: 1.5, delay: i * 0.3, repeat: Infinity }}
-          />
-        ))}
-      </div>
-      <div className="absolute right-48 top-1/2 -translate-y-1/2 hidden lg:flex items-center gap-1">
-        {[0, 1, 2].map((i) => (
-          <motion.div
-            key={i}
-            className="w-2 h-2 rounded-full bg-green-500/40"
-            animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }}
-            transition={{ duration: 1.5, delay: i * 0.3, repeat: Infinity }}
-          />
-        ))}
-      </div>
+      {/* Left Label */}
+      <motion.div
+        className="absolute left-6 top-32 hidden lg:block text-xs text-muted-foreground/70 max-w-[100px] text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+      >
+        <span className="font-medium">Candidates</span>
+        <br />
+        <span className="text-[10px]">going to ATS</span>
+      </motion.div>
+
+      {/* Right Label */}
+      <motion.div
+        className="absolute right-6 top-32 hidden lg:block text-xs text-green-600/70 max-w-[100px] text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+      >
+        <span className="font-medium">Fast closures</span>
+        <br />
+        <span className="text-[10px]">placed successfully</span>
+      </motion.div>
+
+      {/* Animated dots flowing along paths - Left */}
+      {[0, 1, 2].map((i) => (
+        <motion.div
+          key={`dot-left-${i}`}
+          className="absolute w-2 h-2 rounded-full bg-primary hidden lg:block"
+          style={{ left: 0, top: 150 + i * 80 }}
+          animate={{
+            x: [0, 350],
+            y: [0, 50 - i * 30],
+            opacity: [0, 1, 1, 0],
+          }}
+          transition={{
+            duration: 3,
+            delay: i * 1.2,
+            repeat: Infinity,
+            repeatDelay: 2,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+
+      {/* Animated dots flowing along paths - Right */}
+      {[0, 1, 2].map((i) => (
+        <motion.div
+          key={`dot-right-${i}`}
+          className="absolute w-2 h-2 rounded-full bg-green-500 hidden lg:block"
+          style={{ right: 350, top: 200 + i * 30 }}
+          animate={{
+            x: [0, 350],
+            y: [0, -50 + i * 40],
+            opacity: [0, 1, 1, 0],
+          }}
+          transition={{
+            duration: 3,
+            delay: i * 1.2 + 1,
+            repeat: Infinity,
+            repeatDelay: 2,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
