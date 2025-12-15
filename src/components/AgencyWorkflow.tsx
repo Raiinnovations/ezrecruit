@@ -3,42 +3,12 @@ import { useRef } from "react";
 import { FileText, ClipboardList, Search, FileCheck, Send, Smile } from "lucide-react";
 
 const steps = [
-  { 
-    id: 1, 
-    label: "Get Requirement", 
-    icon: FileText,
-    description: "Receive detailed job requirements directly from your client into the system"
-  },
-  { 
-    id: 2, 
-    label: "Brief Recruiter", 
-    icon: ClipboardList,
-    description: "Share structured briefs with your team ensuring everyone starts with clarity"
-  },
-  { 
-    id: 3, 
-    label: "Hunt Candidates", 
-    icon: Search,
-    description: "Your recruiters source and identify the right talent using AI-powered search"
-  },
-  { 
-    id: 4, 
-    label: "Screen CVs", 
-    icon: FileCheck,
-    description: "Evaluate candidates with standardized screening criteria for consistency"
-  },
-  { 
-    id: 5, 
-    label: "Submit to Client", 
-    icon: Send,
-    description: "Send qualified profiles to clients with one-click tracker generation"
-  },
-  { 
-    id: 6, 
-    label: "Close Candidate", 
-    icon: Smile,
-    description: "Successfully place the candidate and celebrate another successful hire"
-  },
+  { id: 1, label: "Get Requirement", icon: FileText },
+  { id: 2, label: "Brief Recruiter", icon: ClipboardList },
+  { id: 3, label: "Hunt Candidates", icon: Search },
+  { id: 4, label: "Screen CVs", icon: FileCheck },
+  { id: 5, label: "Submit to Client", icon: Send },
+  { id: 6, label: "Close Candidate", icon: Smile },
 ];
 
 const AgencyWorkflow = () => {
@@ -228,14 +198,9 @@ const AgencyWorkflow = () => {
                 </motion.div>
 
                 {/* Title */}
-                <h3 className="font-semibold text-foreground mb-2 text-sm md:text-base">
+                <h3 className="font-semibold text-foreground text-sm md:text-base">
                   {step.label}
                 </h3>
-
-                {/* Description */}
-                <p className="text-muted-foreground text-xs md:text-sm leading-relaxed">
-                  {step.description}
-                </p>
               </motion.div>
             ))}
           </div>
