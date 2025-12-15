@@ -1,13 +1,6 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Play, Users, Zap, User, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Play, Users, Zap, User, CheckCircle2, FileText, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const candidateProfiles = [
-  { name: "John D.", role: "Developer", delay: 0 },
-  { name: "Sarah M.", role: "Designer", delay: 1.5 },
-  { name: "Alex K.", role: "Manager", delay: 3 },
-  { name: "Emma R.", role: "Analyst", delay: 4.5 },
-];
 
 const Hero = () => {
   return (
@@ -40,124 +33,126 @@ const Hero = () => {
         />
       </div>
 
-      {/* Flow Lines SVG - Left Side (Candidates going to ATS) */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" preserveAspectRatio="none">
-        {/* Left side - incoming lines */}
+      {/* Left Side - Floating Candidate Cards */}
+      <div className="absolute left-0 top-0 h-full w-80 hidden lg:block pointer-events-none">
         {[
-          { d: "M 0 80 Q 150 120 350 200", delay: 0 },
-          { d: "M 0 150 Q 180 180 380 220", delay: 0.3 },
-          { d: "M 0 220 Q 200 240 400 250", delay: 0.6 },
-          { d: "M 0 350 Q 180 320 380 280", delay: 0.9 },
-          { d: "M 0 420 Q 150 380 350 300", delay: 1.2 },
-        ].map((line, i) => (
-          <motion.path
-            key={`left-${i}`}
-            d={line.d}
-            fill="none"
-            stroke="hsl(198, 94%, 33%)"
-            strokeWidth="1.5"
-            strokeOpacity="0.3"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: [0, 1, 1, 0] }}
+          { name: "John D.", role: "Developer", top: "20%", delay: 0 },
+          { name: "Sarah M.", role: "Designer", top: "35%", delay: 1.5 },
+          { name: "Alex K.", role: "Manager", top: "50%", delay: 3 },
+          { name: "Emma R.", role: "Analyst", top: "65%", delay: 4.5 },
+        ].map((candidate, i) => (
+          <motion.div
+            key={i}
+            className="absolute left-4"
+            style={{ top: candidate.top }}
+            initial={{ x: -100, opacity: 0 }}
+            animate={{
+              x: [-100, 60, 200],
+              opacity: [0, 1, 0],
+            }}
             transition={{
               duration: 4,
-              delay: line.delay,
+              delay: candidate.delay,
               repeat: Infinity,
-              repeatDelay: 1,
+              repeatDelay: 2,
               ease: "easeInOut",
             }}
-          />
+          >
+            <div className="flex items-center gap-2 bg-card/80 backdrop-blur-sm border border-border/50 rounded-lg px-3 py-2 shadow-lg">
+              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                <User size={14} className="text-primary" />
+              </div>
+              <div>
+                <div className="text-xs font-medium text-foreground">{candidate.name}</div>
+                <div className="text-[10px] text-muted-foreground">{candidate.role}</div>
+              </div>
+            </div>
+          </motion.div>
         ))}
-
-        {/* Right side - outgoing lines */}
-        {[
-          { d: "M 1000 200 Q 1200 120 1400 80", delay: 0.5 },
-          { d: "M 1020 220 Q 1220 180 1400 150", delay: 0.8 },
-          { d: "M 1000 250 Q 1200 240 1400 220", delay: 1.1 },
-          { d: "M 1020 280 Q 1220 320 1400 350", delay: 1.4 },
-          { d: "M 1000 300 Q 1200 380 1400 420", delay: 1.7 },
-        ].map((line, i) => (
-          <motion.path
-            key={`right-${i}`}
-            d={line.d}
-            fill="none"
-            stroke="hsl(142, 71%, 45%)"
-            strokeWidth="1.5"
-            strokeOpacity="0.3"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: [0, 1, 1, 0] }}
-            transition={{
-              duration: 4,
-              delay: line.delay,
-              repeat: Infinity,
-              repeatDelay: 1,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </svg>
-
-      {/* Left Label */}
-      <motion.div
-        className="absolute left-6 top-32 hidden lg:block text-xs text-muted-foreground/70 max-w-[100px] text-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-      >
-        <span className="font-medium">Candidates</span>
-        <br />
-        <span className="text-[10px]">going to ATS</span>
-      </motion.div>
-
-      {/* Right Label */}
-      <motion.div
-        className="absolute right-6 top-32 hidden lg:block text-xs text-green-600/70 max-w-[100px] text-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-      >
-        <span className="font-medium">Fast closures</span>
-        <br />
-        <span className="text-[10px]">placed successfully</span>
-      </motion.div>
-
-      {/* Animated dots flowing along paths - Left */}
-      {[0, 1, 2].map((i) => (
+        
+        {/* Label */}
         <motion.div
-          key={`dot-left-${i}`}
-          className="absolute w-2 h-2 rounded-full bg-primary hidden lg:block"
-          style={{ left: 0, top: 150 + i * 80 }}
+          className="absolute left-4 top-[12%] text-xs text-muted-foreground/80"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <span className="font-medium">Candidates</span>
+          <br />
+          <span className="text-[10px]">entering ATS</span>
+        </motion.div>
+      </div>
+
+      {/* Right Side - Success Placements */}
+      <div className="absolute right-0 top-0 h-full w-80 hidden lg:block pointer-events-none">
+        {[
+          { name: "John D.", company: "TechCorp", top: "22%", delay: 2 },
+          { name: "Sarah M.", company: "DesignHub", top: "38%", delay: 3.5 },
+          { name: "Alex K.", company: "CloudInc", top: "52%", delay: 5 },
+          { name: "Emma R.", company: "DataPro", top: "68%", delay: 6.5 },
+        ].map((placement, i) => (
+          <motion.div
+            key={i}
+            className="absolute right-4"
+            style={{ top: placement.top }}
+            initial={{ x: -100, opacity: 0 }}
+            animate={{
+              x: [-100, 0, 100],
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration: 4,
+              delay: placement.delay,
+              repeat: Infinity,
+              repeatDelay: 2,
+              ease: "easeOut",
+            }}
+          >
+            <div className="flex items-center gap-2 bg-green-50 dark:bg-green-950/30 backdrop-blur-sm border border-green-200 dark:border-green-800/50 rounded-lg px-3 py-2 shadow-lg">
+              <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
+                <CheckCircle2 size={14} className="text-green-600" />
+              </div>
+              <div>
+                <div className="text-xs font-medium text-green-700 dark:text-green-400">{placement.name}</div>
+                <div className="text-[10px] text-green-600/70 dark:text-green-500/70">Placed at {placement.company}</div>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+        
+        {/* Label */}
+        <motion.div
+          className="absolute right-4 top-[12%] text-xs text-green-600/80 text-right"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+        >
+          <span className="font-medium">Fast Closures</span>
+          <br />
+          <span className="text-[10px]">placed successfully</span>
+        </motion.div>
+      </div>
+
+      {/* Flowing dots animation - connecting left to right */}
+      {[0, 1, 2, 3, 4].map((i) => (
+        <motion.div
+          key={`flow-${i}`}
+          className="absolute w-2 h-2 rounded-full hidden lg:block"
+          style={{
+            left: "15%",
+            top: `${25 + i * 10}%`,
+            background: `linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(142, 71%, 45%) 100%)`,
+          }}
           animate={{
-            x: [0, 350],
-            y: [0, 50 - i * 30],
+            x: ["0vw", "70vw"],
+            scale: [0.8, 1.2, 0.8],
             opacity: [0, 1, 1, 0],
           }}
           transition={{
-            duration: 3,
-            delay: i * 1.2,
+            duration: 5,
+            delay: i * 0.8,
             repeat: Infinity,
-            repeatDelay: 2,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-
-      {/* Animated dots flowing along paths - Right */}
-      {[0, 1, 2].map((i) => (
-        <motion.div
-          key={`dot-right-${i}`}
-          className="absolute w-2 h-2 rounded-full bg-green-500 hidden lg:block"
-          style={{ right: 350, top: 200 + i * 30 }}
-          animate={{
-            x: [0, 350],
-            y: [0, -50 + i * 40],
-            opacity: [0, 1, 1, 0],
-          }}
-          transition={{
-            duration: 3,
-            delay: i * 1.2 + 1,
-            repeat: Infinity,
-            repeatDelay: 2,
+            repeatDelay: 1,
             ease: "easeInOut",
           }}
         />
