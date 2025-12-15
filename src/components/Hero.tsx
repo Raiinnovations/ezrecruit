@@ -1,11 +1,20 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Play, Users, Zap } from "lucide-react";
+import { ArrowRight, Play, Users, Zap, Briefcase, User, Building2, FileText, CheckCircle, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const floatingElements = [
+  { icon: User, label: "Candidate", x: "10%", y: "20%", delay: 0 },
+  { icon: Briefcase, label: "Job", x: "85%", y: "15%", delay: 0.5 },
+  { icon: Building2, label: "Company", x: "5%", y: "60%", delay: 1 },
+  { icon: FileText, label: "Resume", x: "90%", y: "55%", delay: 1.5 },
+  { icon: CheckCircle, label: "Match", x: "15%", y: "80%", delay: 2 },
+  { icon: Target, label: "Placed", x: "80%", y: "75%", delay: 2.5 },
+];
 
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient pt-20">
-      {/* Animated background elements */}
+      {/* Animated gradient blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl"
@@ -31,6 +40,56 @@ const Hero = () => {
             ease: "easeInOut",
           }}
         />
+      </div>
+
+      {/* Floating recruitment elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {floatingElements.map((element, index) => (
+          <motion.div
+            key={index}
+            className="absolute hidden md:flex items-center gap-2 px-3 py-2 rounded-xl bg-card/60 backdrop-blur-sm border border-border/30 shadow-sm"
+            style={{ left: element.x, top: element.y }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ 
+              opacity: [0.4, 0.7, 0.4],
+              scale: [0.95, 1, 0.95],
+              y: [0, -15, 0],
+            }}
+            transition={{
+              duration: 4,
+              delay: element.delay,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <element.icon size={16} className="text-primary" />
+            <span className="text-xs text-muted-foreground font-medium">{element.label}</span>
+          </motion.div>
+        ))}
+
+        {/* Connection lines */}
+        <svg className="absolute inset-0 w-full h-full hidden md:block" style={{ opacity: 0.15 }}>
+          <motion.path
+            d="M 100 200 Q 400 100 700 300"
+            fill="none"
+            stroke="hsl(198, 94%, 33%)"
+            strokeWidth="1"
+            strokeDasharray="5,5"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.path
+            d="M 800 150 Q 600 400 300 350"
+            fill="none"
+            stroke="hsl(198, 94%, 33%)"
+            strokeWidth="1"
+            strokeDasharray="5,5"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 4, delay: 1, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </svg>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
