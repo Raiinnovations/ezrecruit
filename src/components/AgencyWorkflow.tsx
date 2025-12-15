@@ -1,6 +1,6 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { FileText, ClipboardList, Search, FileCheck, Send, Smile, AlertTriangle } from "lucide-react";
+import { FileText, ClipboardList, Search, FileCheck, Send, Smile } from "lucide-react";
 
 // Clean white cards with primary accent - matches website aesthetic
 const stepStyles = {
@@ -15,43 +15,37 @@ const steps = [
     id: 1, 
     label: "Get Requirement", 
     icon: FileText,
-    explanation: "Receive detailed job requirements directly from your client into the system",
-    pain: "Vague requirements lead to wrong submissions and wasted effort"
+    explanation: "Receive detailed job requirements directly from your client into the system"
   },
   { 
     id: 2, 
     label: "Brief Recruiter", 
     icon: ClipboardList,
-    explanation: "Assign and brief your recruiter with all the job details and expectations",
-    pain: "Miscommunication causes delays and misaligned candidate searches"
+    explanation: "Assign and brief your recruiter with all the job details and expectations"
   },
   { 
     id: 3, 
     label: "Hunt Candidates", 
     icon: Search,
-    explanation: "Source and find the best candidates using AI-powered search tools",
-    pain: "Hours spent on manual boolean searches with inconsistent results"
+    explanation: "Source and find the best candidates using AI-powered search tools"
   },
   { 
     id: 4, 
     label: "Screen CVs", 
     icon: FileCheck,
-    explanation: "Review and shortlist candidates based on requirements and qualifications",
-    pain: "No standard screening criteria leads to quality inconsistency"
+    explanation: "Review and shortlist candidates based on requirements and qualifications"
   },
   { 
     id: 5, 
     label: "Submit to Client", 
     icon: Send,
-    explanation: "Send qualified candidates to clients with professional profiles",
-    pain: "Duplicate submissions damage client relationships and trust"
+    explanation: "Send qualified candidates to clients with professional profiles"
   },
   { 
     id: 6, 
     label: "Close Candidate", 
     icon: Smile,
-    explanation: "Successfully place the candidate and track the closure",
-    pain: "Lost track of closures means missed revenue and poor reporting"
+    explanation: "Successfully place the candidate and track the closure"
   },
 ];
 
@@ -309,42 +303,6 @@ const AgencyWorkflow = () => {
               );
             })}
           </div>
-
-          {/* Pain Points Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 1.2 }}
-            className="mt-16"
-          >
-            <div className="text-center mb-8">
-              <h3 className="text-xl md:text-2xl font-semibold text-foreground flex items-center justify-center gap-2">
-                <AlertTriangle className="w-5 h-5 md:w-6 md:h-6 text-amber-500" />
-                Pain we all face as an agency at every step
-              </h3>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
-              {steps.map((step, index) => (
-                <motion.div
-                  key={`pain-${step.id}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 1.4 + index * 0.1 }}
-                  className="flex flex-col items-center text-center"
-                >
-                  <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 h-[120px] md:h-[130px] w-[140px] md:w-[160px] flex flex-col items-center justify-center">
-                    <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/50 flex items-center justify-center mb-2">
-                      <span className="text-amber-600 dark:text-amber-400 font-semibold text-sm">{index + 1}</span>
-                    </div>
-                    <p className="text-[10px] md:text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
-                      {step.pain}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
 
         </div>
       </div>
