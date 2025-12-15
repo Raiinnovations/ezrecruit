@@ -230,7 +230,7 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mt-8 relative"
         >
-          <div className="glass-card rounded-2xl p-1.5 md:p-2 mx-auto max-w-4xl">
+          <div className="glass-card rounded-2xl p-1.5 md:p-2 mx-auto max-w-6xl">
             {/* Browser Header */}
             <div className="bg-muted/50 rounded-t-xl px-4 py-3 border-b border-border flex items-center gap-2">
               <div className="flex gap-1.5">
