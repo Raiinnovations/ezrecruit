@@ -16,16 +16,78 @@ import AISearch from "@/assets/screens/9-AISearch.png";
 import GoalManagement from "@/assets/screens/10-GoalManagement.png";
 
 const screens = [
-  { title: "Dashboard", image: Dashboard, description: "Get a complete overview of your recruitment pipeline, metrics, and team performance at a glance.", cursorTop: "18%" },
-  { title: "Client", image: Client, description: "Manage all your client relationships, contacts, and associated job requirements in one place.", cursorTop: "28%" },
-  { title: "Requirement", image: Requirement, description: "Create and track job requirements with detailed specifications and candidate matching criteria.", cursorTop: "33%" },
-  { title: "Candidate", image: Candidate, description: "Build your talent pool with comprehensive candidate profiles and recruitment history.", cursorTop: "38%" },
-  { title: "Tagged Search", image: TaggedSearch, description: "Find the perfect candidates instantly using smart tags and advanced filtering options.", cursorTop: "43%" },
-  { title: "Workflow", image: Workflow, description: "Streamline your recruitment process with customizable workflow stages and automation.", cursorTop: "48%" },
-  { title: "Closure", image: Closure, description: "Track successful placements, generate offers, and manage the closing process efficiently.", cursorTop: "53%" },
-  { title: "Assignment", image: Assignment, description: "Assign recruiters to requirements and monitor workload distribution across your team.", cursorTop: "58%" },
-  { title: "AI Search", image: AISearch, description: "Leverage AI-powered search to find the best matching candidates from your database.", cursorTop: "46%" },
-  { title: "Goal Management", image: GoalManagement, description: "Set targets, track progress, and measure recruiter performance against defined goals.", cursorTop: "63%" },
+  { 
+    title: "Requirement", 
+    image: Requirement, 
+    description: "Wrong briefs lead to wrong submissions and wrong outcomes. With the Requirement module, define detailed job specs, add evaluation questions, and assign directly to recruiters. Save time and avoid miscommunication.", 
+    cursorTop: "33%" 
+  },
+  { 
+    title: "Dashboard", 
+    image: Dashboard, 
+    description: "Visibility that scales with your team. Dedicated dashboards for every role give you clear visibility across your organization. See all analytics and make informed decisions.", 
+    cursorTop: "18%" 
+  },
+  { 
+    title: "Tagged Search", 
+    image: TaggedSearch, 
+    description: "Make every recruiter effort reusable. Every screened profile has potential for closure. Tag candidates to similar jobs and never let good profiles go to waste.", 
+    cursorTop: "43%" 
+  },
+  { 
+    title: "AI Search", 
+    image: AISearch, 
+    description: "Faster sourcing, cleaner shortlisting, consistent quality. No more Boolean headaches. AI reads your requirement and finds matching candidates from your database with scores. Sourcing made smooth.", 
+    cursorTop: "46%" 
+  },
+  { 
+    title: "Workflow", 
+    image: Workflow, 
+    description: "No feedback means no learning. Each profile costs ₹300-500 and many go to waste without clarity on why. Leads can update feedback at every interview stage to help recruiters improve.", 
+    cursorTop: "48%" 
+  },
+  { 
+    title: "Duplicate Check", 
+    image: Workflow, 
+    description: "Duplicate submissions drain time and morale. When multiple leads work on the same position, duplicates increase. Our 4-step duplicate check eliminates this and keeps momentum going.", 
+    cursorTop: "52%" 
+  },
+  { 
+    title: "Tracker", 
+    image: Workflow, 
+    description: "Making trackers daily eats into productivity. Usually takes 60-90 minutes every day. Download trackers in seconds. Define custom formats for each client SPOC.", 
+    cursorTop: "56%" 
+  },
+  { 
+    title: "Closure", 
+    image: Closure, 
+    description: "View all candidates who have closed against a requirement. Maintain separate records for successful placements and celebrate your wins.", 
+    cursorTop: "53%" 
+  },
+  { 
+    title: "Assignment", 
+    image: Assignment, 
+    description: "View all assigned requirements in one place. See workload distribution and ensure every recruiter knows exactly what they are working on.", 
+    cursorTop: "58%" 
+  },
+  { 
+    title: "Goal Management", 
+    image: GoalManagement, 
+    description: "Set expected CV counts per requirement for each recruiter. Track whether they have achieved daily targets and keep your team accountable.", 
+    cursorTop: "63%" 
+  },
+  { 
+    title: "Client", 
+    image: Client, 
+    description: "Manage all your client relationships and contacts in one place. Keep track of every conversation and requirement linked to each client.", 
+    cursorTop: "28%" 
+  },
+  { 
+    title: "Candidate", 
+    image: Candidate, 
+    description: "Build your talent pool with complete candidate profiles and recruitment history. Every interaction is tracked for future reference.", 
+    cursorTop: "38%" 
+  },
 ];
 
 const Hero = () => {
