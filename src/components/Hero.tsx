@@ -572,16 +572,16 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* AI Powered ATS Badge - positioned at top center of carousel */}
+          {/* AI Powered ATS Badge - positioned at top right of carousel */}
           <motion.div
             animate={{ y: [0, -6, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-5 left-1/2 -translate-x-1/2 glass-card rounded-lg px-4 py-2 hidden md:flex items-center gap-2 z-10"
+            className="absolute -top-5 -right-4 glass-card rounded-xl px-4 py-2 hidden md:flex items-center gap-2 z-10 shadow-lg"
           >
-            <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center">
-              <Zap size={14} className="text-primary" />
+            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+              <Zap size={16} className="text-primary" />
             </div>
-            <span className="text-sm font-medium text-foreground whitespace-nowrap">AI Powered ATS</span>
+            <span className="text-base font-semibold text-foreground whitespace-nowrap">AI Powered ATS</span>
           </motion.div>
         </motion.div>
       </div>
