@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import AgencyWorkflow from "@/components/AgencyWorkflow";
+import StepDeepDive from "@/components/StepDeepDive";
 import Features from "@/components/Features";
 import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonials";
@@ -14,6 +15,7 @@ const Index = () => {
       <Navbar />
       <Hero />
       <AgencyWorkflow />
+      <StepDeepDive />
       <Features />
       <HowItWorks />
       <Testimonials />
