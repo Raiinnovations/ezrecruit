@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Play, Zap, User, CheckCircle2, MousePointer2 } from "lucide-react";
+import { ArrowRight, Play, Zap, User, CheckCircle2, Pointer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // Import all screen images
@@ -276,7 +276,7 @@ const Hero = () => {
                     animate={{ x: [0, 4, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    <MousePointer2 size={24} className="text-primary fill-primary/20 drop-shadow-lg" />
+                    <Pointer size={24} className="text-primary fill-primary/20 drop-shadow-lg" />
                   </motion.div>
                   
                   {/* Feature description callout */}
