@@ -228,9 +228,9 @@ const Hero = () => {
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-20 relative"
+          className="mt-8 relative"
         >
-          <div className="glass-card rounded-2xl p-2 md:p-4 mx-auto max-w-6xl">
+          <div className="glass-card rounded-2xl p-1.5 md:p-2 mx-auto max-w-4xl">
             {/* Browser Header */}
             <div className="bg-muted/50 rounded-t-xl px-4 py-3 border-b border-border flex items-center gap-2">
               <div className="flex gap-1.5">
