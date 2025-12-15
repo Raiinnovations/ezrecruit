@@ -51,7 +51,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight mb-6"
+            className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-[1.15] tracking-tight mb-8"
           >
             An ATS that mirrors the
             <br />
@@ -63,10 +63,9 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
+            className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-12 leading-relaxed"
           >
-            A simple, structured way to run your recruiting operations.
-            Built to help agencies work with more clarity, discipline and measurable efficiency.
+            A simple, structured way to run your recruiting operations. Built to help agencies work with more clarity, discipline and measurable efficiency.
           </motion.p>
 
           {/* CTA Buttons */}
