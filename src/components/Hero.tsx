@@ -30,6 +30,19 @@ const screens = [
 
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  // Preload all images
+  useEffect(() => {
+    const imagePromises = screens.map((screen) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = screen.image;
+        img.onload = resolve;
+      });
+    });
+    Promise.all(imagePromises).then(() => setImagesLoaded(true));
+  }, []);
 
   // Autoplay
   useEffect(() => {
@@ -247,24 +260,26 @@ const Hero = () => {
 
             {/* Screenshot Carousel */}
             <div className="relative aspect-[16/9] overflow-hidden rounded-b-xl bg-secondary">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={currentIndex}
-                  src={screens[currentIndex].image}
-                  alt={screens[currentIndex].title}
-                  initial={{ opacity: 0, scale: 1.02 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.5 }}
-                  className="w-full h-full object-cover object-top"
+              {/* Preload all images in hidden layer */}
+              {screens.map((screen, idx) => (
+                <img
+                  key={`preload-${idx}`}
+                  src={screen.image}
+                  alt={screen.title}
+                  className="absolute inset-0 w-full h-full object-cover object-top"
+                  style={{ 
+                    opacity: currentIndex === idx ? 1 : 0,
+                    transition: 'opacity 0.5s ease-in-out',
+                    zIndex: currentIndex === idx ? 1 : 0
+                  }}
                 />
-              </AnimatePresence>
+              ))}
 
               {/* Cursor pointer overlay with feature callout */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`cursor-${currentIndex}`}
-                  className="absolute hidden md:flex items-start gap-2"
+                  className="absolute hidden md:flex items-start gap-2 z-10"
                   style={{ left: "3%", top: screens[currentIndex].cursorTop }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
