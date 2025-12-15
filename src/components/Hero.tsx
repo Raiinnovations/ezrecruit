@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Play, Zap, User, CheckCircle2, Pointer, LayoutDashboard, FileText, Tags, Sparkles, GitBranch, Trophy, ClipboardList, Target, AlertTriangle, Clock, Users, Search, Database, TrendingUp, Shield, LucideIcon, ChevronLeft, ChevronRight, Pause, PlayCircle } from "lucide-react";
+import { ArrowRight, Play, Zap, User, CheckCircle2, Pointer, LayoutDashboard, FileText, Tags, Sparkles, GitBranch, Trophy, ClipboardList, Target, AlertTriangle, Clock, Users, Search, Database, TrendingUp, Shield, LucideIcon, ChevronLeft, ChevronRight, Pause, PlayCircle, Frown, Smile, Briefcase, Coffee } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // Import all screen images
@@ -203,37 +203,40 @@ const Hero = () => {
         />
       </div>
 
-      {/* Left Side - Incoming Candidate Profiles */}
-      <div className="absolute left-0 top-0 h-full w-64 hidden lg:block pointer-events-none">
+      {/* Left Side - Stressed Recruiters Entering */}
+      <div className="absolute left-0 top-0 h-full w-72 hidden lg:block pointer-events-none">
         {[
-          { name: "Frontend Developer", exp: "5 years", top: "18%", delay: 0 },
-          { name: "Data Analyst", exp: "3 years", top: "32%", delay: 2 },
-          { name: "Product Manager", exp: "7 years", top: "46%", delay: 4 },
-        ].map((candidate, i) => (
+          { name: "Recruiter 1", status: "Struggling with manual search...", top: "18%", delay: 0 },
+          { name: "Recruiter 2", status: "Too many spreadsheets...", top: "32%", delay: 2 },
+          { name: "Recruiter 3", status: "Missing deadlines...", top: "46%", delay: 4 },
+        ].map((recruiter, i) => (
           <motion.div
             key={i}
             className="absolute left-0"
-            style={{ top: candidate.top }}
-            initial={{ x: -120, opacity: 0 }}
+            style={{ top: recruiter.top }}
+            initial={{ x: -150, opacity: 0 }}
             animate={{
-              x: [-120, 40, 300],
+              x: [-150, 40, 280],
               opacity: [0, 1, 0],
             }}
             transition={{
               duration: 5,
-              delay: candidate.delay,
+              delay: recruiter.delay,
               repeat: Infinity,
               repeatDelay: 3,
               ease: "easeInOut",
             }}
           >
-            <div className="flex items-center gap-2 bg-card/90 backdrop-blur-sm border border-border rounded-lg px-3 py-2 shadow-lg">
-              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                <User size={14} className="text-primary" />
+            <div className="flex items-center gap-2 bg-orange-50 dark:bg-orange-950/30 backdrop-blur-sm border border-orange-200 dark:border-orange-800/50 rounded-lg px-3 py-2 shadow-lg">
+              <div className="w-9 h-9 rounded-full bg-orange-500/20 flex items-center justify-center">
+                <Coffee size={16} className="text-orange-600" />
               </div>
               <div>
-                <div className="text-[10px] font-medium text-foreground">{candidate.name}</div>
-                <div className="text-[9px] text-muted-foreground">{candidate.exp} experience</div>
+                <div className="flex items-center gap-1">
+                  <Frown size={12} className="text-orange-500" />
+                  <span className="text-[10px] font-medium text-orange-700 dark:text-orange-400">{recruiter.name}</span>
+                </div>
+                <div className="text-[9px] text-orange-600/70 dark:text-orange-500/70">{recruiter.status}</div>
               </div>
             </div>
           </motion.div>
@@ -241,7 +244,7 @@ const Hero = () => {
         
         {/* Arrow indicator - Enter ATS */}
         <motion.div
-          className="absolute left-[160px] top-[60%] text-primary/50"
+          className="absolute left-[180px] top-[60%] text-primary/50"
           animate={{ x: [0, 10, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         >
@@ -249,37 +252,48 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Right Side - Successful Placements */}
-      <div className="absolute right-0 top-0 h-full w-72 hidden lg:block pointer-events-none">
+      {/* Right Side - Happy Recruiters with Successful Placements */}
+      <div className="absolute right-0 top-0 h-full w-80 hidden lg:block pointer-events-none">
         {[
-          { name: "Sarah Chen", role: "Senior Developer", company: "TechCorp", top: "18%", delay: 2.5 },
-          { name: "Mike Johnson", role: "Data Lead", company: "StartupXYZ", top: "32%", delay: 4.5 },
-          { name: "Emma Wilson", role: "PM Director", company: "BigTech", top: "46%", delay: 6.5 },
-        ].map((placement, i) => (
+          { name: "Recruiter 1", candidate: "Placed 3 candidates!", company: "TechCorp", top: "18%", delay: 2.5 },
+          { name: "Recruiter 2", candidate: "5 closures this week!", company: "StartupXYZ", top: "32%", delay: 4.5 },
+          { name: "Recruiter 3", candidate: "Record placements!", company: "BigTech", top: "46%", delay: 6.5 },
+        ].map((recruiter, i) => (
           <motion.div
             key={i}
             className="absolute right-0"
-            style={{ top: placement.top }}
-            initial={{ x: -100, opacity: 0 }}
+            style={{ top: recruiter.top }}
+            initial={{ x: -150, opacity: 0 }}
             animate={{
-              x: [-100, -40, 80],
+              x: [-150, -40, 100],
               opacity: [0, 1, 0],
             }}
             transition={{
               duration: 5,
-              delay: placement.delay,
+              delay: recruiter.delay,
               repeat: Infinity,
               repeatDelay: 3,
               ease: "easeOut",
             }}
           >
             <div className="flex items-center gap-2 bg-green-50 dark:bg-green-950/30 backdrop-blur-sm border border-green-200 dark:border-green-800/50 rounded-lg px-3 py-2 shadow-lg">
-              <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
-                <CheckCircle2 size={14} className="text-green-600" />
+              <div className="w-9 h-9 rounded-full bg-green-500/20 flex items-center justify-center relative">
+                <Briefcase size={16} className="text-green-600" />
+                <motion.div 
+                  className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 0.5, repeat: Infinity }}
+                >
+                  <CheckCircle2 size={10} className="text-white" />
+                </motion.div>
               </div>
               <div>
-                <div className="text-[10px] font-medium text-green-700 dark:text-green-400">{placement.name}</div>
-                <div className="text-[9px] text-green-600/70 dark:text-green-500/70">{placement.role} @ {placement.company}</div>
+                <div className="flex items-center gap-1">
+                  <Smile size={12} className="text-green-500" />
+                  <span className="text-[10px] font-medium text-green-700 dark:text-green-400">{recruiter.name}</span>
+                </div>
+                <div className="text-[9px] font-semibold text-green-600 dark:text-green-500">{recruiter.candidate}</div>
+                <div className="text-[8px] text-green-600/70 dark:text-green-500/70">via {recruiter.company}</div>
               </div>
             </div>
           </motion.div>
@@ -287,7 +301,7 @@ const Hero = () => {
         
         {/* Success indicator */}
         <motion.div
-          className="absolute right-[180px] top-[60%] flex items-center gap-1 text-green-500"
+          className="absolute right-[200px] top-[60%] flex items-center gap-1 text-green-500"
           animate={{ x: [0, -10, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         >
@@ -295,30 +309,60 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Center - Data Flow Particles */}
+      {/* Center ATS Processing Animation */}
       <div className="absolute inset-0 hidden lg:flex items-center justify-center pointer-events-none">
-        {[0, 1, 2, 3, 4].map((i) => (
+        {/* Data flow particles */}
+        {[0, 1, 2, 3, 4, 5].map((i) => (
           <motion.div
             key={`particle-${i}`}
             className="absolute w-2 h-2 rounded-full"
             style={{
-              left: "15%",
-              top: `${22 + i * 7}%`,
+              left: "12%",
+              top: `${22 + i * 6}%`,
               background: `linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(142, 71%, 45%) 100%)`,
             }}
             animate={{
-              x: ["0vw", "35vw", "70vw"],
-              scale: [0.5, 1.2, 0.6],
+              x: ["0vw", "35vw", "75vw"],
+              scale: [0.6, 1.5, 0.8],
               opacity: [0, 1, 1, 0],
             }}
             transition={{
-              duration: 5,
-              delay: i * 0.8,
+              duration: 6,
+              delay: i * 0.7,
               repeat: Infinity,
               repeatDelay: 1,
               ease: "easeInOut",
             }}
           />
+        ))}
+        
+        {/* CV Icons flowing through */}
+        {[0, 1, 2].map((i) => (
+          <motion.div
+            key={`cv-${i}`}
+            className="absolute"
+            style={{
+              left: "10%",
+              top: `${25 + i * 12}%`,
+            }}
+            initial={{ x: 0, opacity: 0 }}
+            animate={{
+              x: ["0vw", "80vw"],
+              opacity: [0, 1, 1, 0],
+              rotate: [0, 5, -5, 0],
+            }}
+            transition={{
+              duration: 7,
+              delay: i * 2,
+              repeat: Infinity,
+              repeatDelay: 2,
+              ease: "easeInOut",
+            }}
+          >
+            <div className="w-6 h-7 bg-card border border-border rounded shadow-md flex items-center justify-center">
+              <FileText size={12} className="text-primary" />
+            </div>
+          </motion.div>
         ))}
       </div>
 
