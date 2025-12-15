@@ -416,7 +416,7 @@ const Hero = () => {
             <motion.div
               animate={{ y: [0, -6, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-5 right-2 glass-card rounded-lg px-4 py-2 hidden md:flex items-center gap-2 z-10"
+              className="absolute -top-5 -right-12 glass-card rounded-lg px-4 py-2 hidden md:flex items-center gap-2 z-10"
             >
               <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center">
                 <Zap size={14} className="text-primary" />
