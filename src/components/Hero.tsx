@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Play, Zap, User, CheckCircle2, Pointer, LayoutDashboard, FileText, Tags, Sparkles, GitBranch, Trophy, ClipboardList, Target, AlertTriangle, Clock, Users, Search, Database, TrendingUp, Shield, LucideIcon } from "lucide-react";
+import { ArrowRight, Play, Zap, User, CheckCircle2, Pointer, LayoutDashboard, FileText, Tags, Sparkles, GitBranch, Trophy, ClipboardList, Target, AlertTriangle, Clock, Users, Search, Database, TrendingUp, Shield, LucideIcon, ChevronLeft, ChevronRight, Pause, PlayCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // Import all screen images
@@ -155,14 +155,24 @@ const screens: Screen[] = [
 
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
-  // Autoplay
+  // Autoplay with pause support
   useEffect(() => {
+    if (isPaused) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % screens.length);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isPaused]);
+
+  const goToPrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + screens.length) % screens.length);
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % screens.length);
+  };
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient pt-20">
       {/* Animated gradient blobs */}
@@ -461,20 +471,58 @@ const Hero = () => {
               </AnimatePresence>
             </div>
 
-            {/* Dot Indicators */}
-            <div className="flex justify-center gap-1.5 mt-3 pb-2">
-              {screens.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    currentIndex === index
-                      ? "w-6 bg-primary"
-                      : "w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
+            {/* Navigation Controls */}
+            <div className="flex items-center justify-center gap-4 mt-4 pb-2">
+              {/* Prev Button */}
+              <button
+                onClick={goToPrev}
+                className="w-8 h-8 rounded-full bg-muted/50 hover:bg-muted border border-border flex items-center justify-center transition-all hover:scale-105"
+                aria-label="Previous slide"
+              >
+                <ChevronLeft size={16} className="text-foreground" />
+              </button>
+
+              {/* Dot Indicators */}
+              <div className="flex items-center gap-1.5">
+                {screens.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentIndex(index)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      currentIndex === index
+                        ? "w-6 bg-primary"
+                        : "w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+
+              {/* Next Button */}
+              <button
+                onClick={goToNext}
+                className="w-8 h-8 rounded-full bg-muted/50 hover:bg-muted border border-border flex items-center justify-center transition-all hover:scale-105"
+                aria-label="Next slide"
+              >
+                <ChevronRight size={16} className="text-foreground" />
+              </button>
+
+              {/* Pause/Play Button */}
+              <button
+                onClick={() => setIsPaused(!isPaused)}
+                className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all hover:scale-105 ${
+                  isPaused 
+                    ? "bg-primary/10 border-primary/30 hover:bg-primary/20" 
+                    : "bg-muted/50 border-border hover:bg-muted"
+                }`}
+                aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
+              >
+                {isPaused ? (
+                  <PlayCircle size={16} className="text-primary" />
+                ) : (
+                  <Pause size={14} className="text-foreground" />
+                )}
+              </button>
             </div>
           </div>
           
