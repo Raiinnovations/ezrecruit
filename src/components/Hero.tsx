@@ -36,10 +36,10 @@ const Hero = () => {
       {/* Left Side - Floating Candidate Cards */}
       <div className="absolute left-0 top-0 h-full w-80 hidden lg:block pointer-events-none">
         {[
-          { name: "John D.", role: "Developer", top: "20%", delay: 0 },
-          { name: "Sarah M.", role: "Designer", top: "35%", delay: 1.5 },
-          { name: "Alex K.", role: "Manager", top: "50%", delay: 3 },
-          { name: "Emma R.", role: "Analyst", top: "65%", delay: 4.5 },
+          { name: "John D.", role: "Developer", top: "12%", delay: 0 },
+          { name: "Sarah M.", role: "Designer", top: "24%", delay: 1.5 },
+          { name: "Alex K.", role: "Manager", top: "36%", delay: 3 },
+          { name: "Emma R.", role: "Analyst", top: "48%", delay: 4.5 },
         ].map((candidate, i) => (
           <motion.div
             key={i}
@@ -74,10 +74,10 @@ const Hero = () => {
       {/* Right Side - Success Placements */}
       <div className="absolute right-0 top-0 h-full w-80 hidden lg:block pointer-events-none">
         {[
-          { name: "John D.", company: "TechCorp", top: "22%", delay: 2 },
-          { name: "Sarah M.", company: "DesignHub", top: "38%", delay: 3.5 },
-          { name: "Alex K.", company: "CloudInc", top: "52%", delay: 5 },
-          { name: "Emma R.", company: "DataPro", top: "68%", delay: 6.5 },
+          { name: "John D.", company: "TechCorp", top: "14%", delay: 2 },
+          { name: "Sarah M.", company: "DesignHub", top: "26%", delay: 3.5 },
+          { name: "Alex K.", company: "CloudInc", top: "38%", delay: 5 },
+          { name: "Emma R.", company: "DataPro", top: "50%", delay: 6.5 },
         ].map((placement, i) => (
           <motion.div
             key={i}
@@ -116,7 +116,7 @@ const Hero = () => {
           className="absolute w-2 h-2 rounded-full hidden lg:block"
           style={{
             left: "15%",
-            top: `${25 + i * 10}%`,
+            top: `${15 + i * 8}%`,
             background: `linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(142, 71%, 45%) 100%)`,
           }}
           animate={{
