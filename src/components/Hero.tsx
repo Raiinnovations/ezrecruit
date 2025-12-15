@@ -228,9 +228,9 @@ const Hero = () => {
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-8 relative"
+          className="mt-20 relative"
         >
-          <div className="glass-card rounded-2xl p-1.5 md:p-2 mx-auto max-w-7xl">
+          <div className="glass-card rounded-2xl p-2 md:p-4 mx-auto max-w-6xl">
             {/* Browser Header */}
             <div className="bg-muted/50 rounded-t-xl px-4 py-3 border-b border-border flex items-center gap-2">
               <div className="flex gap-1.5">
@@ -246,7 +246,7 @@ const Hero = () => {
             </div>
 
             {/* Screenshot Carousel */}
-            <div className="relative h-[410px] overflow-hidden rounded-b-xl bg-secondary">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-b-xl bg-secondary">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentIndex}
