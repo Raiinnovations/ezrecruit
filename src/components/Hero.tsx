@@ -53,9 +53,9 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight mb-6"
           >
-            Hire Smarter.
+            An ATS that mirrors the
             <br />
-            <span className="gradient-text">Recruit Faster.</span>
+            <span className="gradient-text">rhythm of recruitment agencies.</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -65,8 +65,8 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
           >
-            The modern ATS that helps staffing agencies source, track, and place 
-            candidates 3x faster with AI-powered automation and intelligent workflows.
+            A simple, structured way to run your recruiting operations.
+            Built to help agencies work with more clarity, discipline and measurable efficiency.
           </motion.p>
 
           {/* CTA Buttons */}
