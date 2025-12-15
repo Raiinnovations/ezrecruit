@@ -411,7 +411,18 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mt-20 relative"
         >
-          <div className="glass-card rounded-xl p-1.5 md:p-2 mx-auto max-w-4xl">
+          <div className="glass-card rounded-xl p-1.5 md:p-2 mx-auto max-w-4xl relative">
+            {/* AI Powered ATS Badge - positioned at top right corner */}
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-5 right-2 glass-card rounded-lg px-4 py-2 hidden md:flex items-center gap-2 z-10"
+            >
+              <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center">
+                <Zap size={14} className="text-primary" />
+              </div>
+              <span className="text-sm font-medium text-foreground whitespace-nowrap">AI Powered ATS</span>
+            </motion.div>
             {/* Browser Header */}
             <div className="bg-muted/50 rounded-t-lg px-3 py-2 border-b border-border flex items-center gap-2">
               <div className="flex gap-1">
@@ -571,18 +582,6 @@ const Hero = () => {
               </button>
             </div>
           </div>
-          
-          {/* AI Powered ATS Badge - positioned at top right corner of carousel */}
-          <motion.div
-            animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-5 right-0 glass-card rounded-lg px-4 py-2 hidden md:flex items-center gap-2 z-10"
-          >
-            <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center">
-              <Zap size={14} className="text-primary" />
-            </div>
-            <span className="text-sm font-medium text-foreground whitespace-nowrap">AI Powered ATS</span>
-          </motion.div>
         </motion.div>
       </div>
     </section>
