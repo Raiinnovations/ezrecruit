@@ -71,6 +71,45 @@ const AgencyWorkflow = () => {
             viewBox="0 0 1200 110"
             preserveAspectRatio="xMidYMin meet"
           >
+            <defs>
+              {/* Gradient for animated glow effect */}
+              <linearGradient id="branchGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.2" />
+                <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.8" />
+                <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.2" />
+              </linearGradient>
+              
+              {/* Animated dash pattern */}
+              {steps.map((_, index) => (
+                <linearGradient key={`grad-${index}`} id={`flowGrad-${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.3">
+                    <animate
+                      attributeName="offset"
+                      values="-0.5;1"
+                      dur={`${1.5 + index * 0.2}s`}
+                      repeatCount="indefinite"
+                    />
+                  </stop>
+                  <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="1">
+                    <animate
+                      attributeName="offset"
+                      values="0;1.5"
+                      dur={`${1.5 + index * 0.2}s`}
+                      repeatCount="indefinite"
+                    />
+                  </stop>
+                  <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.3">
+                    <animate
+                      attributeName="offset"
+                      values="0.5;2"
+                      dur={`${1.5 + index * 0.2}s`}
+                      repeatCount="indefinite"
+                    />
+                  </stop>
+                </linearGradient>
+              ))}
+            </defs>
+            
             {/* Central trunk from carousel */}
             <motion.line
               x1="600"
@@ -84,28 +123,82 @@ const AgencyWorkflow = () => {
               transition={{ duration: 0.3 }}
             />
             
+            {/* Pulsing center point */}
+            <motion.circle
+              cx="600"
+              cy="20"
+              r="4"
+              fill="hsl(var(--primary))"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={isInView ? { 
+                scale: [1, 1.5, 1], 
+                opacity: [0.8, 0.4, 0.8] 
+              } : {}}
+              transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }}
+            />
+            
             {steps.map((_, index) => {
               const startX = 600;
               const startY = 20;
               const stepWidth = 1200 / 6;
               const endX = stepWidth * index + stepWidth / 2;
               const endY = 110;
-              
-              // Create smooth curved paths branching from center
               const midY = 50;
+              const pathD = `M ${startX} ${startY} Q ${startX} ${midY}, ${endX} ${endY}`;
 
               return (
-                <motion.path
-                  key={index}
-                  d={`M ${startX} ${startY} Q ${startX} ${midY}, ${endX} ${endY}`}
-                  fill="none"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={isInView ? { pathLength: 1, opacity: 0.35 } : {}}
-                  transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
-                />
+                <g key={index}>
+                  {/* Base path */}
+                  <motion.path
+                    d={pathD}
+                    fill="none"
+                    stroke="hsl(var(--primary))"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    animate={isInView ? { pathLength: 1, opacity: 0.25 } : {}}
+                    transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
+                  />
+                  
+                  {/* Animated flowing overlay */}
+                  <motion.path
+                    d={pathD}
+                    fill="none"
+                    stroke={`url(#flowGrad-${index})`}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeDasharray="8 12"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    animate={isInView ? { 
+                      pathLength: 1, 
+                      opacity: 1,
+                      strokeDashoffset: [0, -40]
+                    } : {}}
+                    transition={{ 
+                      pathLength: { duration: 0.8, delay: 0.2 + index * 0.1 },
+                      opacity: { duration: 0.5, delay: 0.2 + index * 0.1 },
+                      strokeDashoffset: { duration: 2, repeat: Infinity, ease: "linear", delay: 0.8 + index * 0.1 }
+                    }}
+                  />
+                  
+                  {/* End point pulse */}
+                  <motion.circle
+                    cx={endX}
+                    cy={endY}
+                    r="3"
+                    fill="hsl(var(--primary))"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={isInView ? { 
+                      scale: [0.8, 1.2, 0.8], 
+                      opacity: [0.6, 1, 0.6] 
+                    } : {}}
+                    transition={{ 
+                      duration: 1.5, 
+                      repeat: Infinity, 
+                      delay: 0.8 + index * 0.15 
+                    }}
+                  />
+                </g>
               );
             })}
           </svg>
