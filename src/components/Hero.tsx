@@ -246,7 +246,7 @@ const Hero = () => {
             </div>
 
             {/* Screenshot Carousel */}
-            <div className="relative h-[380px] overflow-hidden rounded-b-xl bg-secondary">
+            <div className="relative h-[410px] overflow-hidden rounded-b-xl bg-secondary">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentIndex}
