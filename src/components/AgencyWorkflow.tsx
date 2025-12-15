@@ -21,12 +21,31 @@ const AgencyWorkflow = () => {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-8 bg-gradient-to-b from-primary/40 to-transparent" />
       
       <div className="container mx-auto px-4 relative z-10">
+        {/* Flow Indicator Badge - above heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="flex justify-center pt-8 mb-4"
+        >
+          <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-primary/5 border border-primary/20">
+            <motion.div
+              className="w-2 h-2 rounded-full bg-primary"
+              animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+            <span className="text-sm text-muted-foreground">
+              Seamless flow from requirement to closure
+            </span>
+          </div>
+        </motion.div>
+
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-6 pt-8"
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="text-center mb-6"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
             Built around the <span className="text-primary">agency workflow</span>
@@ -205,24 +224,6 @@ const AgencyWorkflow = () => {
             ))}
           </div>
 
-          {/* Flow Indicator */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 1.2 }}
-            className="flex justify-center mt-12"
-          >
-            <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-primary/5 border border-primary/20">
-              <motion.div
-                className="w-2 h-2 rounded-full bg-primary"
-                animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              />
-              <span className="text-sm text-muted-foreground">
-                Seamless flow from requirement to placement
-              </span>
-            </div>
-          </motion.div>
         </div>
       </div>
     </section>
