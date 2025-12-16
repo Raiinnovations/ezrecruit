@@ -176,7 +176,7 @@ const ChatBubble = ({ message, delay, resetKey }: { message: string; delay: numb
   );
 };
 
-// Solution card with staggered animation - carousel style (middle focused)
+// Solution card with staggered animation - carousel style
 const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: string }; delay: number; isFocused: boolean }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -189,16 +189,17 @@ const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: str
   return (
     <motion.div
       initial={{ opacity: 0, y: 30, scale: 0.9 }}
-      animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`bg-card rounded-xl overflow-hidden flex flex-col transition-all duration-300 ${
+      animate={isVisible ? { 
+        opacity: isFocused ? 1 : 0.7, 
+        y: isFocused ? 0 : 8, 
+        scale: isFocused ? 1 : 0.9 
+      } : { opacity: 0, y: 30, scale: 0.9 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className={`bg-card rounded-xl overflow-hidden flex flex-col transition-all duration-400 flex-shrink-0 ${
         isFocused 
-          ? "border-2 border-primary/30 shadow-2xl scale-100 z-10 flex-shrink-0 w-[28%] md:w-[30%]" 
-          : "border border-border/40 shadow-lg scale-95 opacity-90 flex-shrink-0 w-[22%] md:w-[24%]"
+          ? "border-2 border-primary/30 shadow-2xl z-10 w-[30%] md:w-[32%]" 
+          : "border border-border/40 shadow-lg w-[24%] md:w-[26%]"
       }`}
-      style={{ 
-        marginTop: isFocused ? 0 : '12px',
-      }}
     >
       {/* Solution Heading */}
       <div className={`${isFocused ? 'p-2 md:p-3' : 'p-1.5 md:p-2'} bg-muted/30`}>
@@ -214,7 +215,7 @@ const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: str
         <img
           src={requirementIntake}
           alt={solution.heading}
-          className={`w-full object-cover object-top rounded-md ${
+          className={`w-full object-cover object-top rounded-md transition-all duration-400 ${
             isFocused ? 'h-[100px] md:h-[160px]' : 'h-[80px] md:h-[120px]'
           }`}
         />
@@ -326,44 +327,68 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
           </div>
 
           {/* Solution Section */}
-          <motion.div
-            key={`solution-header-${animationKey}`}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 3.5, duration: 0.5 }}
-            className="text-right mb-3"
-          >
-            <p className="text-sm md:text-base font-semibold">
-              <span className="text-primary">EzRecruit</span> <span className="text-foreground">{stepData.solutionIntro}</span>
-            </p>
-          </motion.div>
-
-          {/* Solution Cards - Horizontal carousel with middle focused */}
-          <div className="flex items-center justify-center gap-2 md:gap-4 flex-1 min-h-0">
-            {stepData.solutions.map((solution, idx) => (
-              <SolutionCard 
-                key={`${animationKey}-${idx}`} 
-                solution={solution} 
-                delay={4000 + idx * 400} 
-                isFocused={idx === 1}
-              />
-            ))}
-          </div>
-          
-          {/* Carousel dots indicator */}
-          <div className="flex justify-center gap-2 mt-3">
-            {stepData.solutions.map((_, idx) => (
-              <div 
-                key={idx}
-                className={`h-1.5 md:h-2 rounded-full transition-all ${
-                  idx === 1 ? 'w-5 md:w-6 bg-primary' : 'w-1.5 md:w-2 bg-muted-foreground/30'
-                }`}
-              />
-            ))}
-          </div>
+          <SolutionCarousel stepData={stepData} animationKey={animationKey} solutionIntro={stepData.solutionIntro} />
         </div>
       </div>
     </motion.div>
+  );
+};
+
+// Carousel component for solution cards
+const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData: typeof stepsData[0]; animationKey: number; solutionIntro: string }) => {
+  const [focusedIndex, setFocusedIndex] = useState(0);
+
+  useEffect(() => {
+    setFocusedIndex(0);
+    
+    const interval = setInterval(() => {
+      setFocusedIndex(prev => (prev + 1) % stepData.solutions.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [animationKey, stepData.solutions.length]);
+
+  return (
+    <>
+      <motion.div
+        key={`solution-header-${animationKey}`}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 3.5, duration: 0.5 }}
+        className="text-right mb-3"
+      >
+        <p className="text-sm md:text-base font-semibold">
+          <span className="text-primary">EzRecruit</span> <span className="text-foreground">{solutionIntro}</span>
+        </p>
+      </motion.div>
+
+      {/* Solution Cards - Horizontal carousel with animated focus */}
+      <div className="flex items-center justify-center gap-2 md:gap-4 flex-1 min-h-0">
+        {stepData.solutions.map((solution, idx) => (
+          <SolutionCard 
+            key={`${animationKey}-${idx}`} 
+            solution={solution} 
+            delay={4000 + idx * 400} 
+            isFocused={idx === focusedIndex}
+          />
+        ))}
+      </div>
+      
+      {/* Carousel dots indicator */}
+      <div className="flex justify-center gap-2 mt-3">
+        {stepData.solutions.map((_, idx) => (
+          <motion.div 
+            key={idx}
+            animate={{ 
+              width: idx === focusedIndex ? 24 : 8,
+              backgroundColor: idx === focusedIndex ? 'hsl(var(--primary))' : 'hsl(var(--muted-foreground) / 0.3)'
+            }}
+            transition={{ duration: 0.3 }}
+            className="h-1.5 md:h-2 rounded-full"
+          />
+        ))}
+      </div>
+    </>
   );
 };
 
