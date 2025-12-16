@@ -111,46 +111,40 @@ interface ScrollCardProps {
 }
 
 const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps) => {
-  const stepStart = index / total;
-  const stepEnd = (index + 1) / total;
+  const stepProgress = index / total;
   
-  // First card starts visible, others fade in
-  const opacityIn = index === 0 ? [1, 1] : [0, 1];
-  const opacityOut = index === total - 1 ? [1, 1] : [1, 0];
+  // Calculate when this card should start animating out
+  const y = useTransform(
+    scrollYProgress,
+    [stepProgress, stepProgress + (1 / total)],
+    [0, -600]
+  );
   
   const opacity = useTransform(
     scrollYProgress,
-    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
-    [...opacityIn, ...opacityOut]
+    [stepProgress, stepProgress + (0.8 / total)],
+    [1, 0]
   );
   
-  const yIn = index === 0 ? [0, 0] : [60, 0];
-  const yOut = index === total - 1 ? [0, 0] : [0, -60];
-  
-  const y = useTransform(
-    scrollYProgress,
-    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
-    [...yIn, ...yOut]
-  );
-  
-  const scaleIn = index === 0 ? [1, 1] : [0.95, 1];
-  const scaleOut = index === total - 1 ? [1, 1] : [1, 0.95];
-  
-  const scale = useTransform(
-    scrollYProgress,
-    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
-    [...scaleIn, ...scaleOut]
-  );
+  // Stack offset - cards stack from bottom to top
+  const stackOffset = (total - 1 - index) * 8;
+  const stackScale = 1 - (total - 1 - index) * 0.02;
 
   const Icon = stepData.icon;
 
   return (
     <motion.div
-      style={{ opacity, y, scale }}
-      className="absolute inset-0 flex flex-col"
+      style={{ 
+        y, 
+        opacity,
+        zIndex: total - index,
+        top: stackOffset,
+        scale: stackScale,
+      }}
+      className="absolute inset-x-0 flex flex-col"
     >
       {/* Browser-style window frame */}
-      <div className="rounded-2xl border border-border/50 bg-muted/30 shadow-xl overflow-hidden h-full flex flex-col">
+      <div className="rounded-2xl border border-border/50 bg-card shadow-xl overflow-hidden h-full flex flex-col">
         {/* Browser header bar */}
         <div className="flex items-center gap-2 px-4 py-3 bg-muted/50 border-b border-border/30">
           <div className="flex gap-1.5">
@@ -241,27 +235,17 @@ interface StepIndicatorProps {
 }
 
 const StepIndicator = ({ step, scrollYProgress, index, total }: StepIndicatorProps) => {
-  const stepStart = index / total;
-  const stepEnd = (index + 1) / total;
+  const stepProgress = index / total;
+  const nextStepProgress = (index + 1) / total;
   
-  // First indicator starts active
-  const scaleIn = index === 0 ? [1.2, 1.2] : [1, 1.2];
-  const scaleOut = index === total - 1 ? [1.2, 1.2] : [1.2, 1];
-  
-  const scale = useTransform(
+  const isActive = useTransform(
     scrollYProgress,
-    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
-    [...scaleIn, ...scaleOut]
+    [stepProgress, nextStepProgress],
+    [1, 0]
   );
   
-  const opacityIn = index === 0 ? [1, 1] : [0.3, 1];
-  const opacityOut = index === total - 1 ? [1, 1] : [1, 0.3];
-  
-  const bgOpacity = useTransform(
-    scrollYProgress,
-    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
-    [...opacityIn, ...opacityOut]
-  );
+  const scale = useTransform(isActive, [0, 1], [1, 1.15]);
+  const bgOpacity = useTransform(isActive, [0, 1], [0.4, 1]);
 
   return (
     <motion.div
