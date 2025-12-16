@@ -178,4 +178,24 @@
       opacity: 0.7;
     }
   }
+
+  /* Glowing border animation */
+  @property --glow-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  .animate-glow-rotate {
+    animation: glow-rotate 3s linear infinite;
+  }
+
+  @keyframes glow-rotate {
+    0% {
+      --glow-angle: 0deg;
+    }
+    100% {
+      --glow-angle: 360deg;
+    }
+  }
 }
