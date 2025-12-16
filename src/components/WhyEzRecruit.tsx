@@ -52,10 +52,12 @@ const WhyEzRecruit = () => {
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
             Why EzRecruit
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-            Structure beats effort.
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+            Structure beats <span className="text-primary">effort</span>. Every time.
           </h2>
-          <p className="text-lg text-muted-foreground">Every time.</p>
+          <p className="text-muted-foreground mt-3 text-base md:text-lg max-w-2xl mx-auto">
+            The discipline your agency needs to scale
+          </p>
         </motion.div>
 
         <div className="max-w-6xl mx-auto flex flex-col gap-6">
