@@ -306,7 +306,7 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
             </span>
           </div>
           <div className="flex-1">
-            <h3 className="text-sm md:text-base font-semibold text-foreground">
+            <h3 className="text-sm md:text-base font-normal text-foreground/80">
               {stepData.problemHeading}
             </h3>
           </div>
