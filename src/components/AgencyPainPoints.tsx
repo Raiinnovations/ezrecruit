@@ -194,12 +194,12 @@ const AgencyPainPoints = () => {
                           : 'border-border/50 shadow-md hover:shadow-lg opacity-60'
                       }`}
                     >
-                      {/* Solution Heading - Pill Style */}
+                      {/* Solution Heading - Minimalist Pill Style */}
                       <div className="p-3">
                         <div className={`px-4 py-2.5 rounded-lg transition-colors duration-300 ${
-                          isActive ? 'bg-primary' : 'bg-primary/80'
+                          isActive ? 'bg-muted' : 'bg-muted/50'
                         }`}>
-                          <h3 className="text-xs md:text-sm font-semibold text-white line-clamp-2">
+                          <h3 className="text-xs md:text-sm font-semibold text-primary line-clamp-2">
                             {solution.heading}
                           </h3>
                         </div>
