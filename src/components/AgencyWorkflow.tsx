@@ -304,7 +304,7 @@ const AgencyWorkflow = () => {
             })}
           </div>
 
-          {/* Animated Connector - Problems Flowing Down */}
+          {/* Animated Connector - Flowing lines converging to center */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
@@ -312,89 +312,81 @@ const AgencyWorkflow = () => {
             className="relative mt-8 md:mt-12"
           >
             <svg
-              className="w-full h-24 md:h-32"
-              viewBox="0 0 1200 100"
+              className="w-full h-32 md:h-40"
+              viewBox="0 0 1200 120"
               preserveAspectRatio="xMidYMin meet"
             >
               <defs>
                 <linearGradient id="flowDownGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.6" />
-                  <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.1" />
+                  <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.5" />
+                  <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.8" />
                 </linearGradient>
               </defs>
               
-              {/* Flowing lines from each step going down */}
+              {/* Flowing curved lines from each step converging to center */}
               {[0, 1, 2, 3, 4, 5].map((index) => {
                 const stepWidth = 1200 / 6;
-                const x = stepWidth * index + stepWidth / 2;
+                const startX = stepWidth * index + stepWidth / 2;
+                const endX = 600; // Center point
+                const pathD = `M ${startX} 0 Q ${startX} 60, ${endX} 120`;
                 
                 return (
                   <g key={index}>
-                    {/* Main line */}
-                    <motion.line
-                      x1={x}
-                      y1="0"
-                      x2={x}
-                      y2="100"
+                    {/* Base curved path */}
+                    <motion.path
+                      d={pathD}
+                      fill="none"
+                      stroke="hsl(var(--primary))"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeOpacity="0.2"
+                      initial={{ pathLength: 0 }}
+                      animate={isInView ? { pathLength: 1 } : {}}
+                      transition={{ duration: 0.8, delay: 1.3 + index * 0.1 }}
+                    />
+                    
+                    {/* Animated flowing overlay */}
+                    <motion.path
+                      d={pathD}
+                      fill="none"
                       stroke="url(#flowDownGrad)"
                       strokeWidth="2"
                       strokeLinecap="round"
+                      strokeDasharray="8 16"
                       initial={{ pathLength: 0, opacity: 0 }}
-                      animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
-                      transition={{ duration: 0.6, delay: 1.3 + index * 0.1 }}
-                    />
-                    
-                    {/* Animated flowing particle */}
-                    <motion.circle
-                      cx={x}
-                      r="4"
-                      fill="hsl(var(--primary))"
-                      initial={{ cy: 0, opacity: 0 }}
                       animate={isInView ? { 
-                        cy: [0, 100],
-                        opacity: [0, 1, 1, 0]
+                        pathLength: 1, 
+                        opacity: 1,
+                        strokeDashoffset: [0, -48]
                       } : {}}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        delay: 1.5 + index * 0.2,
-                        ease: "easeIn"
-                      }}
-                    />
-                    
-                    {/* Secondary particle with offset */}
-                    <motion.circle
-                      cx={x}
-                      r="3"
-                      fill="hsl(var(--primary))"
-                      initial={{ cy: 0, opacity: 0 }}
-                      animate={isInView ? { 
-                        cy: [0, 100],
-                        opacity: [0, 0.6, 0.6, 0]
-                      } : {}}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        delay: 2.2 + index * 0.2,
-                        ease: "easeIn"
+                      transition={{ 
+                        pathLength: { duration: 0.8, delay: 1.3 + index * 0.1 },
+                        opacity: { duration: 0.5, delay: 1.3 + index * 0.1 },
+                        strokeDashoffset: { duration: 2, repeat: Infinity, ease: "linear", delay: 1.8 + index * 0.1 }
                       }}
                     />
                   </g>
                 );
               })}
+              
+              {/* Center convergence point pulse */}
+              <motion.circle
+                cx="600"
+                cy="120"
+                r="6"
+                fill="hsl(var(--primary))"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={isInView ? { 
+                  scale: [1, 1.4, 1], 
+                  opacity: [0.8, 1, 0.8] 
+                } : {}}
+                transition={{ 
+                  duration: 1.5, 
+                  repeat: Infinity, 
+                  delay: 2 
+                }}
+              />
             </svg>
-            
-            {/* Text indicator */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 1.8 }}
-              className="text-center"
-            >
-              <span className="text-xs text-muted-foreground/60 tracking-wider uppercase">
-                Problems at every step flow down
-              </span>
-            </motion.div>
           </motion.div>
 
         </div>
