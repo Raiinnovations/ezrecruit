@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import AgencyWorkflow from "@/components/AgencyWorkflow";
 import AgencyPainPoints from "@/components/AgencyPainPoints";
+import HowItWorks from "@/components/HowItWorks";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
@@ -12,6 +13,7 @@ const Index = () => {
       <Hero />
       <AgencyWorkflow />
       <AgencyPainPoints />
+      <HowItWorks />
       <CTA />
       <Footer />
     </main>
