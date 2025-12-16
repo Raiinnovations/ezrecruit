@@ -41,7 +41,7 @@ const AgencyPainPoints = () => {
   }, [isInView, solutions.length]);
 
   return (
-    <section ref={sectionRef} className="py-5 bg-background relative overflow-hidden">
+    <section ref={sectionRef} className="py-3 bg-background relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div
