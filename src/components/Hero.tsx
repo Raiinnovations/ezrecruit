@@ -439,29 +439,29 @@ const Hero = () => {
 
             {/* Screenshot Carousel */}
             <div className="relative aspect-[16/8] overflow-hidden rounded-b-lg bg-secondary">
-              <AnimatePresence mode="wait">
+              <AnimatePresence initial={false}>
                 <motion.img
                   key={currentIndex}
                   src={screens[currentIndex].image}
                   alt={screens[currentIndex].title}
-                  initial={{ opacity: 0, scale: 1.02 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.5 }}
-                  className="w-full h-full object-cover object-top"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  className="absolute inset-0 w-full h-full object-cover object-top"
                 />
               </AnimatePresence>
 
               {/* Cursor pointer overlay with feature callout */}
-              <AnimatePresence mode="wait">
+              <AnimatePresence initial={false}>
                 <motion.div
                   key={`cursor-${currentIndex}`}
                   className="absolute hidden md:flex items-start gap-3"
                   style={{ left: "2%", top: screens[currentIndex].cursorTop }}
-                  initial={{ opacity: 0, x: -30 }}
+                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -30 }}
-                  transition={{ duration: 0.4, delay: 0.2 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
                 >
                   {/* Cursor icon */}
                   <motion.div
