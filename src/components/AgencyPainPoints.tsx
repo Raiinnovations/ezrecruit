@@ -191,31 +191,31 @@ const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: str
       initial={{ opacity: 0, y: 30, scale: 0.9 }}
       animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`bg-card rounded-xl overflow-hidden flex flex-col transition-all duration-300 flex-shrink-0 ${
+      className={`bg-card rounded-xl overflow-hidden flex flex-col transition-all duration-300 ${
         isFocused 
-          ? "border-2 border-primary/30 shadow-2xl scale-100 z-10 w-[320px] md:w-[400px]" 
-          : "border border-border/40 shadow-lg scale-90 opacity-80 w-[200px] md:w-[260px]"
+          ? "border-2 border-primary/30 shadow-2xl scale-100 z-10 flex-shrink-0 w-[28%] md:w-[30%]" 
+          : "border border-border/40 shadow-lg scale-95 opacity-90 flex-shrink-0 w-[22%] md:w-[24%]"
       }`}
       style={{ 
-        marginTop: isFocused ? 0 : '20px',
+        marginTop: isFocused ? 0 : '12px',
       }}
     >
       {/* Solution Heading */}
-      <div className={`${isFocused ? 'p-3 md:p-4' : 'p-2 md:p-3'} bg-muted/30`}>
-        <div className={`${isFocused ? 'px-4 md:px-5 py-2 md:py-3' : 'px-3 md:px-4 py-1.5 md:py-2'} rounded-lg bg-primary/10 border border-primary/20`}>
-          <h3 className={`${isFocused ? 'text-xs md:text-sm' : 'text-[10px] md:text-xs'} font-bold text-primary leading-tight`}>
+      <div className={`${isFocused ? 'p-2 md:p-3' : 'p-1.5 md:p-2'} bg-muted/30`}>
+        <div className={`${isFocused ? 'px-2 md:px-4 py-1.5 md:py-2' : 'px-2 md:px-3 py-1 md:py-1.5'} rounded-lg bg-primary/10 border border-primary/20`}>
+          <h3 className={`${isFocused ? 'text-[10px] md:text-xs' : 'text-[9px] md:text-[10px]'} font-bold text-primary leading-tight`}>
             {solution.heading}
           </h3>
         </div>
       </div>
       
       {/* Screenshot */}
-      <div className="relative bg-background flex-1 p-2 md:p-3">
+      <div className="relative bg-background flex-1 p-1.5 md:p-2">
         <img
           src={requirementIntake}
           alt={solution.heading}
           className={`w-full object-cover object-top rounded-md ${
-            isFocused ? 'h-[160px] md:h-[220px]' : 'h-[100px] md:h-[140px]'
+            isFocused ? 'h-[100px] md:h-[160px]' : 'h-[80px] md:h-[120px]'
           }`}
         />
       </div>
@@ -338,18 +338,16 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
             </p>
           </motion.div>
 
-          {/* Solution Cards - Horizontal scrolling carousel */}
-          <div className="flex-1 min-h-0 overflow-x-auto overflow-y-hidden scrollbar-hide">
-            <div className="flex items-center justify-center gap-4 md:gap-6 h-full px-4">
-              {stepData.solutions.map((solution, idx) => (
-                <SolutionCard 
-                  key={`${animationKey}-${idx}`} 
-                  solution={solution} 
-                  delay={4000 + idx * 400} 
-                  isFocused={idx === 1}
-                />
-              ))}
-            </div>
+          {/* Solution Cards - Horizontal carousel with middle focused */}
+          <div className="flex items-center justify-center gap-2 md:gap-4 flex-1 min-h-0">
+            {stepData.solutions.map((solution, idx) => (
+              <SolutionCard 
+                key={`${animationKey}-${idx}`} 
+                solution={solution} 
+                delay={4000 + idx * 400} 
+                isFocused={idx === 1}
+              />
+            ))}
           </div>
           
           {/* Carousel dots indicator */}
