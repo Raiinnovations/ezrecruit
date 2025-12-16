@@ -166,49 +166,69 @@ const AgencyPainPoints = () => {
                 <p className="text-sm text-foreground font-medium">EzRecruit changes that from the first step.</p>
               </div>
 
-              {/* Screenshot Carousel */}
-              <div className="relative">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeSlide}
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -50 }}
-                    transition={{ duration: 0.5 }}
-                    className="bg-card rounded-xl border border-border/50 overflow-hidden shadow-lg"
-                  >
-                    {/* Solution Heading */}
-                    <div className="bg-primary/5 border-b border-border/30 px-4 py-3">
-                      <h3 className="text-sm md:text-base font-semibold text-primary">
-                        {solutions[activeSlide].heading}
-                      </h3>
-                    </div>
-                    
-                    {/* Screenshot */}
-                    <div className="relative">
-                      <img
-                        src={solutions[activeSlide].screenshot}
-                        alt={solutions[activeSlide].heading}
-                        className="w-full h-auto max-h-[400px] object-cover object-top"
-                      />
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-
-                {/* Slide Indicators */}
-                <div className="flex justify-center gap-2 mt-4">
-                  {solutions.map((_, index) => (
-                    <button
+              {/* Stacked Screenshot Cards */}
+              <div className="relative h-[350px] md:h-[420px]">
+                {solutions.map((solution, index) => {
+                  const isActive = index === activeSlide;
+                  const offset = index - activeSlide;
+                  
+                  return (
+                    <motion.div
                       key={index}
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={isInView ? {
+                        opacity: isActive ? 1 : 0.6,
+                        y: offset * 15,
+                        x: offset * 20,
+                        scale: isActive ? 1 : 0.95 - Math.abs(offset) * 0.02,
+                        zIndex: solutions.length - Math.abs(offset),
+                      } : { opacity: 0, y: 50 }}
+                      transition={{ 
+                        duration: 0.5,
+                        delay: isInView ? index * 0.1 : 0
+                      }}
                       onClick={() => setActiveSlide(index)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                        index === activeSlide
-                          ? "bg-primary w-6"
-                          : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                      className={`absolute inset-0 bg-card rounded-xl border overflow-hidden shadow-lg cursor-pointer transition-all duration-300 ${
+                        isActive ? 'border-primary/50 shadow-xl' : 'border-border/50'
                       }`}
-                    />
-                  ))}
-                </div>
+                    >
+                      {/* Solution Heading */}
+                      <div className={`border-b border-border/30 px-4 py-3 transition-colors duration-300 ${
+                        isActive ? 'bg-primary text-white' : 'bg-primary/5'
+                      }`}>
+                        <h3 className={`text-sm md:text-base font-semibold ${
+                          isActive ? 'text-white' : 'text-primary'
+                        }`}>
+                          {solution.heading}
+                        </h3>
+                      </div>
+                      
+                      {/* Screenshot */}
+                      <div className="relative">
+                        <img
+                          src={solution.screenshot}
+                          alt={solution.heading}
+                          className="w-full h-auto max-h-[300px] md:max-h-[350px] object-cover object-top"
+                        />
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Slide Indicators */}
+              <div className="flex justify-center gap-2 mt-4">
+                {solutions.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveSlide(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === activeSlide
+                        ? "bg-primary w-6"
+                        : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           </div>
