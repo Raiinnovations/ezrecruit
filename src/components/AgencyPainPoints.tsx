@@ -209,8 +209,8 @@ const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: str
       transition={{ duration: 0.4, ease: "easeOut" }}
       className={`bg-card rounded-xl overflow-hidden flex flex-col transition-all duration-400 flex-shrink-0 ${
         isFocused 
-          ? "border-2 border-primary/30 shadow-2xl z-10 w-[180px] md:w-[280px]" 
-          : "border border-border/40 shadow-lg w-[150px] md:w-[240px]"
+          ? "border-2 border-primary/30 shadow-2xl z-10 w-[200px] md:w-[300px]" 
+          : "border border-border/40 shadow-lg w-[160px] md:w-[260px]"
       }`}
     >
       {/* Solution Heading */}
