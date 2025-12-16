@@ -166,35 +166,42 @@ const AgencyPainPoints = () => {
                 <p className="text-sm text-foreground font-medium">EzRecruit changes that from the first step.</p>
               </div>
 
-              {/* Stacked Screenshot Cards */}
-              <div className="relative h-[350px] md:h-[420px]">
+              {/* Stacked Screenshot Cards - All Visible */}
+              <div className="relative h-[400px] md:h-[480px]">
                 {solutions.map((solution, index) => {
                   const isActive = index === activeSlide;
-                  const offset = index - activeSlide;
+                  // Stack from bottom to top with offset
+                  const stackOffset = (solutions.length - 1 - index) * 25;
+                  const horizontalOffset = (solutions.length - 1 - index) * 15;
                   
                   return (
                     <motion.div
                       key={index}
-                      initial={{ opacity: 0, y: 50 }}
+                      initial={{ opacity: 0, y: 80 }}
                       animate={isInView ? {
-                        opacity: isActive ? 1 : 0.6,
-                        y: offset * 15,
-                        x: offset * 20,
-                        scale: isActive ? 1 : 0.95 - Math.abs(offset) * 0.02,
-                        zIndex: solutions.length - Math.abs(offset),
-                      } : { opacity: 0, y: 50 }}
+                        opacity: 1,
+                        y: stackOffset,
+                        x: horizontalOffset,
+                        scale: isActive ? 1.02 : 1,
+                        zIndex: isActive ? 10 : solutions.length - index,
+                      } : { opacity: 0, y: 80 }}
                       transition={{ 
-                        duration: 0.5,
-                        delay: isInView ? index * 0.1 : 0
+                        duration: 0.6,
+                        delay: isInView ? (solutions.length - 1 - index) * 0.15 : 0
                       }}
                       onClick={() => setActiveSlide(index)}
-                      className={`absolute inset-0 bg-card rounded-xl border overflow-hidden shadow-lg cursor-pointer transition-all duration-300 ${
-                        isActive ? 'border-primary/50 shadow-xl' : 'border-border/50'
+                      className={`absolute left-0 right-0 top-0 bg-card rounded-xl border overflow-hidden cursor-pointer transition-shadow duration-300 ${
+                        isActive 
+                          ? 'border-primary shadow-2xl ring-2 ring-primary/20' 
+                          : 'border-border/50 shadow-lg hover:shadow-xl'
                       }`}
+                      style={{
+                        width: `calc(100% - ${horizontalOffset * 2}px)`,
+                      }}
                     >
                       {/* Solution Heading */}
                       <div className={`border-b border-border/30 px-4 py-3 transition-colors duration-300 ${
-                        isActive ? 'bg-primary text-white' : 'bg-primary/5'
+                        isActive ? 'bg-primary text-white' : 'bg-muted/50'
                       }`}>
                         <h3 className={`text-sm md:text-base font-semibold ${
                           isActive ? 'text-white' : 'text-primary'
@@ -204,11 +211,11 @@ const AgencyPainPoints = () => {
                       </div>
                       
                       {/* Screenshot */}
-                      <div className="relative">
+                      <div className="relative bg-background">
                         <img
                           src={solution.screenshot}
                           alt={solution.heading}
-                          className="w-full h-auto max-h-[300px] md:max-h-[350px] object-cover object-top"
+                          className="w-full h-auto max-h-[280px] md:max-h-[350px] object-cover object-top"
                         />
                       </div>
                     </motion.div>
