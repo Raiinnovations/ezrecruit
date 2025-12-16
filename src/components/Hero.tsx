@@ -411,7 +411,17 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mt-20 relative"
         >
-          <div className="glass-card rounded-xl p-1.5 md:p-2 mx-auto max-w-4xl relative">
+          <div className="relative mx-auto max-w-4xl">
+            {/* Glowing animated border for dark mode */}
+            <div className="hidden dark:block absolute -inset-[2px] rounded-xl bg-gradient-to-r from-transparent via-primary to-transparent opacity-75 blur-sm animate-spin-slow" />
+            <div className="hidden dark:block absolute -inset-[1px] rounded-xl overflow-hidden">
+              <motion.div
+                className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent_0%,hsl(var(--primary))_10%,hsl(var(--primary-light))_20%,transparent_30%)]"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              />
+            </div>
+            <div className="glass-card rounded-xl p-1.5 md:p-2 relative z-10 dark:shadow-[0_0_40px_hsl(var(--primary)/0.2)]">
             {/* AI Powered ATS Badge - positioned at top right corner */}
             <motion.div
               animate={{ y: [0, -6, 0] }}
@@ -580,6 +590,7 @@ const Hero = () => {
                   <Pause size={14} className="text-foreground" />
                 )}
               </button>
+            </div>
             </div>
           </div>
         </motion.div>
