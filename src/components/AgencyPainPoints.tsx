@@ -82,48 +82,45 @@ const AgencyPainPoints = () => {
             <div className="p-6 md:p-8 bg-gradient-to-br from-background to-muted/20">
               {/* Problem Section with Chat Bubbles */}
               <div className="mb-8">
-                <p className="text-sm text-muted-foreground mb-4">It usually starts with a problem.</p>
+                <p className="text-sm text-muted-foreground mb-5">It usually starts with a problem.</p>
                 
                 {/* Animated Chat Bubbles with User Icon */}
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-4">
                   {/* User Avatar */}
                   <motion.div
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
-                    transition={{ duration: 0.3, delay: 0.2 }}
-                    className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-200 dark:bg-amber-800 flex items-center justify-center"
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                    className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-amber-300 to-orange-400 flex items-center justify-center shadow-lg ring-2 ring-white dark:ring-background"
                   >
-                    <User className="w-5 h-5 text-amber-800 dark:text-amber-200" />
+                    <User className="w-6 h-6 text-white" />
                   </motion.div>
                   
                   {/* Chat Bubbles Container */}
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex flex-wrap items-start gap-3 pt-1">
                     {chatMessages.map((msg, index) => (
                       <motion.div
                         key={index}
-                        initial={{ opacity: 0, x: -15, scale: 0.8 }}
-                        animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: -15, scale: 0.8 }}
-                        transition={{ duration: 0.4, delay: msg.delay }}
-                        className="relative"
+                        initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                        animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 10, scale: 0.9 }}
+                        transition={{ 
+                          duration: 0.5, 
+                          delay: msg.delay,
+                          type: "spring",
+                          stiffness: 200,
+                          damping: 20
+                        }}
+                        className="relative group"
                       >
-                        {/* Speech bubble with tail */}
-                        <div className="relative bg-muted/80 dark:bg-muted/50 border border-border/50 px-4 py-2 rounded-lg text-sm text-foreground shadow-sm">
-                          {/* Tail for first bubble */}
-                          {index === 0 && (
-                            <div className="absolute -left-2 top-3 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[8px] border-r-muted/80 dark:border-r-muted/50" />
-                          )}
-                          {msg.text}
+                        {/* Speech bubble */}
+                        <div className="relative bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-700 dark:to-slate-800 px-4 py-2.5 rounded-2xl rounded-bl-sm text-sm text-slate-700 dark:text-slate-200 shadow-md border border-slate-200/50 dark:border-slate-600/50 hover:shadow-lg transition-shadow duration-300">
+                          {/* Tail */}
+                          <div className="absolute -left-1.5 bottom-1 w-3 h-3 bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-700 dark:to-slate-800 transform rotate-45 border-l border-b border-slate-200/50 dark:border-slate-600/50" />
+                          <span className="relative z-10 font-medium">{msg.text}</span>
                         </div>
                         
-                        {/* Connecting line to next bubble */}
-                        {index < chatMessages.length - 1 && (
-                          <motion.div
-                            initial={{ scaleX: 0 }}
-                            animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-                            transition={{ duration: 0.3, delay: msg.delay + 0.3 }}
-                            className="hidden md:block absolute top-1/2 -right-3 w-4 h-px bg-border origin-left"
-                          />
-                        )}
+                        {/* Subtle glow effect on hover */}
+                        <div className="absolute inset-0 rounded-2xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl" />
                       </motion.div>
                     ))}
                   </div>
