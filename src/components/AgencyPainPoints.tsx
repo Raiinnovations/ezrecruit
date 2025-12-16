@@ -191,31 +191,31 @@ const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: str
       initial={{ opacity: 0, y: 30, scale: 0.9 }}
       animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`bg-card rounded-2xl overflow-hidden flex flex-col transition-all duration-300 ${
+      className={`bg-card rounded-xl overflow-hidden flex flex-col transition-all duration-300 ${
         isFocused 
-          ? "border-2 border-primary/30 shadow-2xl scale-100 z-10 flex-shrink-0 w-[35%] md:w-[38%]" 
-          : "border border-border/40 shadow-lg scale-95 opacity-90 flex-shrink-0 w-[25%] md:w-[28%]"
+          ? "border-2 border-primary/30 shadow-2xl scale-100 z-10 flex-shrink-0 w-[28%] md:w-[30%]" 
+          : "border border-border/40 shadow-lg scale-95 opacity-90 flex-shrink-0 w-[22%] md:w-[24%]"
       }`}
       style={{ 
-        marginTop: isFocused ? 0 : '16px',
+        marginTop: isFocused ? 0 : '12px',
       }}
     >
       {/* Solution Heading */}
-      <div className={`${isFocused ? 'p-3 md:p-4' : 'p-2 md:p-3'} bg-muted/30`}>
-        <div className={`${isFocused ? 'px-3 md:px-5 py-2 md:py-3' : 'px-2 md:px-4 py-1.5 md:py-2.5'} rounded-xl bg-primary/10 border border-primary/20`}>
-          <h3 className={`${isFocused ? 'text-xs md:text-sm' : 'text-[10px] md:text-xs'} font-bold text-primary leading-tight`}>
+      <div className={`${isFocused ? 'p-2 md:p-3' : 'p-1.5 md:p-2'} bg-muted/30`}>
+        <div className={`${isFocused ? 'px-2 md:px-4 py-1.5 md:py-2' : 'px-2 md:px-3 py-1 md:py-1.5'} rounded-lg bg-primary/10 border border-primary/20`}>
+          <h3 className={`${isFocused ? 'text-[10px] md:text-xs' : 'text-[9px] md:text-[10px]'} font-bold text-primary leading-tight`}>
             {solution.heading}
           </h3>
         </div>
       </div>
       
       {/* Screenshot */}
-      <div className="relative bg-background flex-1 p-2 md:p-3">
+      <div className="relative bg-background flex-1 p-1.5 md:p-2">
         <img
           src={requirementIntake}
           alt={solution.heading}
-          className={`w-full object-cover object-top rounded-lg ${
-            isFocused ? 'h-[140px] md:h-[220px]' : 'h-[100px] md:h-[160px]'
+          className={`w-full object-cover object-top rounded-md ${
+            isFocused ? 'h-[100px] md:h-[160px]' : 'h-[80px] md:h-[120px]'
           }`}
         />
       </div>
