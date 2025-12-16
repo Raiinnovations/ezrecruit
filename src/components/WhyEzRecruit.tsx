@@ -68,7 +68,7 @@ const WhyEzRecruit = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="lg:col-span-2"
             >
-              <div className="bg-card rounded-2xl border border-border p-6 shadow-sm h-full">
+              <div className="bg-card rounded-2xl border border-border p-6 shadow-sm">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-9 h-9 rounded-full bg-destructive/10 flex items-center justify-center">
                     <AlertCircle className="w-4 h-4 text-destructive" />
