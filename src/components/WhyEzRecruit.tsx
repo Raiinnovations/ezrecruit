@@ -70,10 +70,10 @@ const WhyEzRecruit = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="lg:col-span-2"
             >
-              <div className="bg-card rounded-2xl border border-border p-6 shadow-sm h-full">
+              <div className="bg-primary/5 rounded-2xl border border-primary/10 p-6 h-full">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-9 h-9 rounded-full bg-destructive/10 flex items-center justify-center">
-                    <AlertCircle className="w-4 h-4 text-destructive" />
+                  <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
+                    <AlertCircle className="w-4 h-4 text-primary" />
                   </div>
                   <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">The Problem</p>
                 </div>
@@ -82,7 +82,7 @@ const WhyEzRecruit = () => {
                   Agencies don't lack effort
                 </h3>
                 <p className="text-xl md:text-2xl font-light text-foreground/80 mb-4">
-                  They lack <span className="text-destructive font-semibold">structure</span>.
+                  They lack <span className="text-primary font-semibold">structure</span>.
                 </p>
                 
                 <div className="space-y-1.5 mb-5">
@@ -94,7 +94,7 @@ const WhyEzRecruit = () => {
                       transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
                       className="flex items-center gap-2 text-sm text-muted-foreground"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary/60" />
                       {problem}
                     </motion.div>
                   ))}
