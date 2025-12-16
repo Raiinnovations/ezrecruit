@@ -167,7 +167,7 @@ const AgencyPainPoints = () => {
               </div>
 
               {/* Horizontal Cards - Side by Side */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="flex items-center justify-center gap-4 flex-wrap md:flex-nowrap">
                 {solutions.map((solution, index) => {
                   const isActive = index === activeSlide;
                   
@@ -178,18 +178,20 @@ const AgencyPainPoints = () => {
                       animate={isInView ? {
                         opacity: 1,
                         y: 0,
-                        scale: isActive ? 1.03 : 0.97,
+                        scale: isActive ? 1 : 0.85,
+                        flex: isActive ? 1.5 : 0.8,
                       } : { opacity: 0, y: 30 }}
                       transition={{ 
-                        duration: 0.5,
+                        duration: 0.4,
                         delay: isInView ? index * 0.1 : 0,
-                        scale: { duration: 0.3 }
+                        scale: { duration: 0.3, ease: "easeOut" },
+                        flex: { duration: 0.3, ease: "easeOut" }
                       }}
                       onClick={() => setActiveSlide(index)}
-                      className={`bg-card rounded-xl border overflow-hidden cursor-pointer transition-all duration-300 ${
+                      className={`bg-card rounded-xl border overflow-hidden cursor-pointer transition-all duration-300 min-w-[200px] ${
                         isActive 
-                          ? 'border-primary shadow-2xl ring-2 ring-primary/30' 
-                          : 'border-border/50 shadow-md hover:shadow-lg opacity-70'
+                          ? 'border-primary shadow-2xl ring-2 ring-primary/30 z-10' 
+                          : 'border-border/50 shadow-md hover:shadow-lg opacity-60'
                       }`}
                     >
                       {/* Solution Heading */}
@@ -208,7 +210,9 @@ const AgencyPainPoints = () => {
                         <img
                           src={solution.screenshot}
                           alt={solution.heading}
-                          className="w-full h-[180px] md:h-[220px] object-cover object-top"
+                          className={`w-full object-cover object-top transition-all duration-300 ${
+                            isActive ? 'h-[220px] md:h-[280px]' : 'h-[150px] md:h-[180px]'
+                          }`}
                         />
                       </div>
                     </motion.div>
