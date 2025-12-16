@@ -304,6 +304,126 @@ const AgencyWorkflow = () => {
             })}
           </div>
 
+          {/* Pain Connection Animation - Lines flowing from steps to pain points */}
+          <div className="mt-8 relative">
+            <svg
+              className="w-full h-24 md:h-32"
+              viewBox="0 0 1200 120"
+              preserveAspectRatio="xMidYMin meet"
+            >
+              <defs>
+                {steps.map((_, index) => (
+                  <linearGradient key={`pain-grad-${index}`} id={`painGrad-${index}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.6" />
+                    <stop offset="100%" stopColor="#ef4444" stopOpacity="0.8" />
+                  </linearGradient>
+                ))}
+              </defs>
+              
+              {steps.map((_, index) => {
+                const stepWidth = 1200 / 6;
+                const x = stepWidth * index + stepWidth / 2;
+                
+                return (
+                  <g key={`pain-line-${index}`}>
+                    {/* Curved line going down */}
+                    <motion.path
+                      d={`M ${x} 0 Q ${x + (index % 2 === 0 ? 15 : -15)} 50, ${x} 85`}
+                      fill="none"
+                      stroke={`url(#painGrad-${index})`}
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeDasharray="6 8"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={isInView ? { 
+                        pathLength: 1, 
+                        opacity: 1,
+                        strokeDashoffset: [0, -28]
+                      } : {}}
+                      transition={{ 
+                        pathLength: { duration: 0.6, delay: 1.5 + index * 0.1 },
+                        opacity: { duration: 0.4, delay: 1.5 + index * 0.1 },
+                        strokeDashoffset: { duration: 1.5, repeat: Infinity, ease: "linear", delay: 2 + index * 0.1 }
+                      }}
+                    />
+                    
+                    {/* Pain icon container at end */}
+                    <motion.g
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={isInView ? { scale: 1, opacity: 1 } : {}}
+                      transition={{ duration: 0.4, delay: 2 + index * 0.1, type: "spring", stiffness: 200 }}
+                    >
+                      {/* Background circle */}
+                      <circle
+                        cx={x}
+                        cy="95"
+                        r="14"
+                        fill="white"
+                        stroke="#ef4444"
+                        strokeWidth="2"
+                      />
+                      
+                      {/* Magnifying glass icon */}
+                      <circle
+                        cx={x - 2}
+                        cy="92"
+                        r="5"
+                        fill="none"
+                        stroke="hsl(var(--primary))"
+                        strokeWidth="1.5"
+                      />
+                      <line
+                        x1={x + 2}
+                        y1="96"
+                        x2={x + 5}
+                        y2="99"
+                        stroke="hsl(var(--primary))"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                      
+                      {/* Exclamation mark */}
+                      <circle
+                        cx={x + 6}
+                        cy="88"
+                        r="5"
+                        fill="#ef4444"
+                      />
+                      <text
+                        x={x + 6}
+                        y="91"
+                        textAnchor="middle"
+                        fill="white"
+                        fontSize="8"
+                        fontWeight="bold"
+                      >!</text>
+                    </motion.g>
+                    
+                    {/* Pulsing animation on pain icons */}
+                    <motion.circle
+                      cx={x}
+                      cy="95"
+                      r="14"
+                      fill="none"
+                      stroke="#ef4444"
+                      strokeWidth="1"
+                      initial={{ scale: 1, opacity: 0 }}
+                      animate={isInView ? { 
+                        scale: [1, 1.5, 1.8], 
+                        opacity: [0.5, 0.2, 0] 
+                      } : {}}
+                      transition={{ 
+                        duration: 1.5, 
+                        repeat: Infinity, 
+                        delay: 2.2 + index * 0.15 
+                      }}
+                    />
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
+
         </div>
       </div>
     </section>
