@@ -176,8 +176,8 @@ const ChatBubble = ({ message, delay, resetKey }: { message: string; delay: numb
   );
 };
 
-// Solution card with staggered animation - different sizes based on index
-const SolutionCard = ({ solution, delay, index, isFirst }: { solution: { heading: string }; delay: number; index: number; isFirst: boolean }) => {
+// Solution card with staggered animation - carousel style (middle focused)
+const SolutionCard = ({ solution, delay, index, isFocused }: { solution: { heading: string }; delay: number; index: number; isFocused: boolean }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -186,59 +186,37 @@ const SolutionCard = ({ solution, delay, index, isFirst }: { solution: { heading
     return () => clearTimeout(timer);
   }, [delay]);
 
-  if (isFirst) {
-    // Large focused card on the left
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 30, scale: 0.9 }}
-        animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="bg-card rounded-2xl border-2 border-primary/30 overflow-hidden shadow-xl flex-shrink-0 w-full md:w-[55%] flex flex-col"
-      >
-        {/* Solution Heading */}
-        <div className="p-4 bg-muted/50">
-          <div className="px-5 py-3 rounded-xl bg-primary/10 border border-primary/20">
-            <h3 className="text-sm md:text-base font-bold text-primary">
-              {solution.heading}
-            </h3>
-          </div>
-        </div>
-        
-        {/* Large Screenshot */}
-        <div className="relative bg-background flex-1 p-3">
-          <img
-            src={requirementIntake}
-            alt={solution.heading}
-            className="w-full h-[250px] md:h-[320px] object-cover object-top rounded-lg shadow-inner"
-          />
-        </div>
-      </motion.div>
-    );
-  }
-
-  // Smaller cards on the right
   return (
     <motion.div
-      initial={{ opacity: 0, x: 30, scale: 0.9 }}
-      animate={isVisible ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: 30, scale: 0.9 }}
+      initial={{ opacity: 0, y: 30, scale: 0.9 }}
+      animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="bg-card rounded-xl border border-border/50 overflow-hidden shadow-lg flex flex-col"
+      className={`bg-card rounded-2xl overflow-hidden flex flex-col transition-all duration-300 ${
+        isFocused 
+          ? "border-2 border-primary/30 shadow-2xl scale-100 z-10 flex-shrink-0 w-[40%]" 
+          : "border border-border/40 shadow-lg scale-95 opacity-90 flex-shrink-0 w-[30%]"
+      }`}
+      style={{ 
+        marginTop: isFocused ? 0 : '20px',
+      }}
     >
       {/* Solution Heading */}
-      <div className="p-3 bg-muted/30">
-        <div className="px-4 py-2.5 rounded-lg bg-primary/10 border border-primary/20">
-          <h3 className="text-xs md:text-sm font-semibold text-primary leading-tight">
+      <div className={`${isFocused ? 'p-4' : 'p-3'} bg-muted/30`}>
+        <div className={`${isFocused ? 'px-5 py-3' : 'px-4 py-2.5'} rounded-xl bg-primary/10 border border-primary/20`}>
+          <h3 className={`${isFocused ? 'text-sm md:text-base' : 'text-xs md:text-sm'} font-bold text-primary leading-tight`}>
             {solution.heading}
           </h3>
         </div>
       </div>
       
       {/* Screenshot */}
-      <div className="relative bg-background flex-1 p-2">
+      <div className="relative bg-background flex-1 p-3">
         <img
           src={requirementIntake}
           alt={solution.heading}
-          className="w-full h-[140px] md:h-[160px] object-cover object-top rounded-md"
+          className={`w-full object-cover object-top rounded-lg ${
+            isFocused ? 'h-[200px] md:h-[280px]' : 'h-[150px] md:h-[200px]'
+          }`}
         />
       </div>
     </motion.div>
@@ -360,29 +338,29 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
             </p>
           </motion.div>
 
-          {/* Solution Cards - First large, others smaller on right */}
-          <div className="flex items-stretch gap-4 flex-1 min-h-0">
-            {/* First large card */}
-            <SolutionCard 
-              key={`${animationKey}-0`} 
-              solution={stepData.solutions[0]} 
-              delay={4000} 
-              index={0}
-              isFirst={true}
-            />
-            
-            {/* Right column with smaller cards */}
-            <div className="flex flex-col gap-3 w-full md:w-[42%]">
-              {stepData.solutions.slice(1).map((solution, idx) => (
-                <SolutionCard 
-                  key={`${animationKey}-${idx + 1}`} 
-                  solution={solution} 
-                  delay={4400 + idx * 400} 
-                  index={idx + 1}
-                  isFirst={false}
-                />
-              ))}
-            </div>
+          {/* Solution Cards - Horizontal carousel with middle focused */}
+          <div className="flex items-center justify-center gap-4 flex-1 min-h-0">
+            {stepData.solutions.map((solution, idx) => (
+              <SolutionCard 
+                key={`${animationKey}-${idx}`} 
+                solution={solution} 
+                delay={4000 + idx * 400} 
+                index={idx}
+                isFocused={idx === 1} // Middle card is focused
+              />
+            ))}
+          </div>
+          
+          {/* Carousel dots indicator */}
+          <div className="flex justify-center gap-2 mt-4">
+            {stepData.solutions.map((_, idx) => (
+              <div 
+                key={idx}
+                className={`h-2 rounded-full transition-all ${
+                  idx === 1 ? 'w-6 bg-primary' : 'w-2 bg-muted-foreground/30'
+                }`}
+              />
+            ))}
           </div>
         </div>
       </div>
