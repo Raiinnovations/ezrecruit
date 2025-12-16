@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion, useScroll, useTransform, MotionValue, AnimatePresence } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
 import { User, FileText, Users, Search, FileCheck, Send, Trophy } from "lucide-react";
 
 import requirementIntake from "@/assets/screens/requirement-intake.png";
@@ -193,29 +193,29 @@ const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: str
       transition={{ duration: 0.5, ease: "easeOut" }}
       className={`bg-card rounded-2xl overflow-hidden flex flex-col transition-all duration-300 ${
         isFocused 
-          ? "border-2 border-primary/30 shadow-2xl scale-100 z-10 flex-shrink-0 w-[40%]" 
-          : "border border-border/40 shadow-lg scale-95 opacity-90 flex-shrink-0 w-[30%]"
+          ? "border-2 border-primary/30 shadow-2xl scale-100 z-10 flex-shrink-0 w-[35%] md:w-[38%]" 
+          : "border border-border/40 shadow-lg scale-95 opacity-90 flex-shrink-0 w-[25%] md:w-[28%]"
       }`}
       style={{ 
-        marginTop: isFocused ? 0 : '20px',
+        marginTop: isFocused ? 0 : '16px',
       }}
     >
       {/* Solution Heading */}
-      <div className={`${isFocused ? 'p-4' : 'p-3'} bg-muted/30`}>
-        <div className={`${isFocused ? 'px-5 py-3' : 'px-4 py-2.5'} rounded-xl bg-primary/10 border border-primary/20`}>
-          <h3 className={`${isFocused ? 'text-sm md:text-base' : 'text-xs md:text-sm'} font-bold text-primary leading-tight`}>
+      <div className={`${isFocused ? 'p-3 md:p-4' : 'p-2 md:p-3'} bg-muted/30`}>
+        <div className={`${isFocused ? 'px-3 md:px-5 py-2 md:py-3' : 'px-2 md:px-4 py-1.5 md:py-2.5'} rounded-xl bg-primary/10 border border-primary/20`}>
+          <h3 className={`${isFocused ? 'text-xs md:text-sm' : 'text-[10px] md:text-xs'} font-bold text-primary leading-tight`}>
             {solution.heading}
           </h3>
         </div>
       </div>
       
       {/* Screenshot */}
-      <div className="relative bg-background flex-1 p-3">
+      <div className="relative bg-background flex-1 p-2 md:p-3">
         <img
           src={requirementIntake}
           alt={solution.heading}
           className={`w-full object-cover object-top rounded-lg ${
-            isFocused ? 'h-[200px] md:h-[280px]' : 'h-[150px] md:h-[200px]'
+            isFocused ? 'h-[140px] md:h-[220px]' : 'h-[100px] md:h-[160px]'
           }`}
         />
       </div>
@@ -223,26 +223,73 @@ const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: str
   );
 };
 
-interface StepCardProps {
+interface ScrollCardProps {
   stepData: typeof stepsData[0];
-  animationKey: number;
+  scrollYProgress: MotionValue<number>;
+  index: number;
+  total: number;
 }
 
-const StepCard = ({ stepData, animationKey }: StepCardProps) => {
+const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps) => {
+  const [isActive, setIsActive] = useState(index === 0);
+  const [animationKey, setAnimationKey] = useState(0);
+  
+  const stepStart = index / total;
+  const stepEnd = (index + 1) / total;
+  
+  // First card starts visible, others fade in
+  const opacityIn = index === 0 ? [1, 1] : [0, 1];
+  const opacityOut = index === total - 1 ? [1, 1] : [1, 0];
+  
+  const opacity = useTransform(
+    scrollYProgress,
+    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
+    [...opacityIn, ...opacityOut]
+  );
+  
+  const yIn = index === 0 ? [0, 0] : [60, 0];
+  const yOut = index === total - 1 ? [0, 0] : [0, -60];
+  
+  const y = useTransform(
+    scrollYProgress,
+    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
+    [...yIn, ...yOut]
+  );
+  
+  const scaleIn = index === 0 ? [1, 1] : [0.95, 1];
+  const scaleOut = index === total - 1 ? [1, 1] : [1, 0.95];
+  
+  const scale = useTransform(
+    scrollYProgress,
+    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
+    [...scaleIn, ...scaleOut]
+  );
+
+  // Track when this card becomes active to restart animations
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (value) => {
+      const wasActive = isActive;
+      const nowActive = value >= stepStart && value < stepEnd;
+      
+      if (!wasActive && nowActive) {
+        setAnimationKey(prev => prev + 1);
+      }
+      setIsActive(nowActive);
+    });
+    return () => unsubscribe();
+  }, [scrollYProgress, stepStart, stepEnd, isActive]);
+
   const Icon = stepData.icon;
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.4 }}
-      className="h-full flex flex-col"
+      style={{ opacity, y, scale }}
+      className="absolute inset-0 flex flex-col"
     >
       {/* Browser-style window frame */}
       <div className="rounded-2xl border border-border/50 bg-muted/30 shadow-xl overflow-hidden h-full flex flex-col">
         {/* Browser header bar */}
-        <div className="flex items-center gap-2 px-4 py-3 bg-muted/50 border-b border-border/30">
+        <div className="flex items-center gap-2 px-4 py-2.5 bg-muted/50 border-b border-border/30">
           <div className="flex gap-1.5">
             <div className="w-3 h-3 rounded-full bg-red-400/70" />
             <div className="w-3 h-3 rounded-full bg-yellow-400/70" />
@@ -257,20 +304,20 @@ const StepCard = ({ stepData, animationKey }: StepCardProps) => {
         </div>
 
         {/* Content area */}
-        <div className="p-6 md:p-8 bg-gradient-to-br from-background to-muted/20 flex-1 flex flex-col">
+        <div className="p-4 md:p-6 bg-gradient-to-br from-background to-muted/20 flex-1 flex flex-col min-h-0">
           {/* Problem Section with Chat Bubbles */}
-          <div className="mb-6" key={animationKey}>
-            <p className="text-sm text-muted-foreground mb-4">It usually starts with a problem.</p>
+          <div className="mb-4" key={animationKey}>
+            <p className="text-xs md:text-sm text-muted-foreground mb-3">It usually starts with a problem.</p>
             
             {/* Chat Bubbles with User Icon */}
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-3">
               {/* User Avatar */}
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-amber-300 to-orange-400 flex items-center justify-center shadow-lg ring-2 ring-white dark:ring-background">
-                <User className="w-5 h-5 text-white" />
+              <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-amber-300 to-orange-400 flex items-center justify-center shadow-lg ring-2 ring-white dark:ring-background">
+                <User className="w-4 h-4 md:w-5 md:h-5 text-white" />
               </div>
               
               {/* Chat Bubbles Container */}
-              <div className="flex flex-col gap-2.5 pt-1">
+              <div className="flex flex-col gap-2 pt-1">
                 {stepData.painPoints.map((msg, idx) => (
                   <ChatBubble key={`${animationKey}-${idx}`} message={msg} delay={idx * 1000} resetKey={animationKey} />
                 ))}
@@ -284,15 +331,15 @@ const StepCard = ({ stepData, animationKey }: StepCardProps) => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 3.5, duration: 0.5 }}
-            className="text-right mb-4"
+            className="text-right mb-3"
           >
-            <p className="text-base md:text-lg font-semibold">
+            <p className="text-sm md:text-base font-semibold">
               <span className="text-primary">EzRecruit</span> <span className="text-foreground">{stepData.solutionIntro}</span>
             </p>
           </motion.div>
 
           {/* Solution Cards - Horizontal carousel with middle focused */}
-          <div className="flex items-center justify-center gap-4 flex-1 min-h-0">
+          <div className="flex items-center justify-center gap-2 md:gap-4 flex-1 min-h-0">
             {stepData.solutions.map((solution, idx) => (
               <SolutionCard 
                 key={`${animationKey}-${idx}`} 
@@ -304,12 +351,12 @@ const StepCard = ({ stepData, animationKey }: StepCardProps) => {
           </div>
           
           {/* Carousel dots indicator */}
-          <div className="flex justify-center gap-2 mt-4">
+          <div className="flex justify-center gap-2 mt-3">
             {stepData.solutions.map((_, idx) => (
               <div 
                 key={idx}
-                className={`h-2 rounded-full transition-all ${
-                  idx === 1 ? 'w-6 bg-primary' : 'w-2 bg-muted-foreground/30'
+                className={`h-1.5 md:h-2 rounded-full transition-all ${
+                  idx === 1 ? 'w-5 md:w-6 bg-primary' : 'w-1.5 md:w-2 bg-muted-foreground/30'
                 }`}
               />
             ))}
@@ -320,67 +367,100 @@ const StepCard = ({ stepData, animationKey }: StepCardProps) => {
   );
 };
 
-const AgencyPainPoints = () => {
-  const [activeStep, setActiveStep] = useState(0);
-  const [animationKey, setAnimationKey] = useState(0);
+interface StepIndicatorProps {
+  step: typeof stepsData[0];
+  scrollYProgress: MotionValue<number>;
+  index: number;
+  total: number;
+}
 
-  const handleStepChange = (index: number) => {
-    if (index !== activeStep) {
-      setActiveStep(index);
-      setAnimationKey(prev => prev + 1);
-    }
-  };
+const StepIndicator = ({ step, scrollYProgress, index, total }: StepIndicatorProps) => {
+  const stepStart = index / total;
+  const stepEnd = (index + 1) / total;
+  
+  // First indicator starts active
+  const scaleIn = index === 0 ? [1.2, 1.2] : [1, 1.2];
+  const scaleOut = index === total - 1 ? [1.2, 1.2] : [1.2, 1];
+  
+  const scale = useTransform(
+    scrollYProgress,
+    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
+    [...scaleIn, ...scaleOut]
+  );
+  
+  const opacityIn = index === 0 ? [1, 1] : [0.3, 1];
+  const opacityOut = index === total - 1 ? [1, 1] : [1, 0.3];
+  
+  const bgOpacity = useTransform(
+    scrollYProgress,
+    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
+    [...opacityIn, ...opacityOut]
+  );
 
   return (
-    <section className="bg-background py-16 md:py-24">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-8"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            The pain we face as agency <span className="text-primary">at every step</span>
-          </h2>
-        </motion.div>
+    <motion.div
+      style={{ scale }}
+      className="flex items-center gap-1"
+    >
+      <motion.div
+        style={{ opacity: bgOpacity }}
+        className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-primary flex items-center justify-center text-xs font-semibold text-primary-foreground"
+      >
+        {step.step}
+      </motion.div>
+    </motion.div>
+  );
+};
 
-        {/* Step Indicators - Clickable */}
-        <div className="flex justify-center gap-2 mb-8">
-          {stepsData.map((step, index) => {
-            const Icon = step.icon;
-            return (
-              <button
+const AgencyPainPoints = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  return (
+    <section ref={containerRef} className="relative bg-background" style={{ height: `${stepsData.length * 100}vh` }}>
+      {/* Sticky container */}
+      <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
+        <div className="container mx-auto px-4 py-6 md:py-8 flex-1 flex flex-col max-h-screen">
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-4 md:mb-6"
+          >
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground">
+              The pain we face as agency <span className="text-primary">at every step</span>
+            </h2>
+          </motion.div>
+
+          {/* Step Indicators */}
+          <div className="flex justify-center gap-1.5 md:gap-2 mb-4 md:mb-6">
+            {stepsData.map((step, index) => (
+              <StepIndicator
                 key={index}
-                onClick={() => handleStepChange(index)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 ${
-                  activeStep === index
-                    ? "bg-primary text-primary-foreground scale-110"
-                    : "bg-muted text-muted-foreground hover:bg-muted/80"
-                }`}
-              >
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold ${
-                  activeStep === index ? "bg-primary-foreground/20" : "bg-background/50"
-                }`}>
-                  {step.step}
-                </div>
-                <span className="hidden md:inline text-sm font-medium">{step.title}</span>
-              </button>
-            );
-          })}
-        </div>
+                step={step}
+                scrollYProgress={scrollYProgress}
+                index={index}
+                total={stepsData.length}
+              />
+            ))}
+          </div>
 
-        {/* Card Container - Increased height */}
-        <div className="max-w-7xl mx-auto h-[700px] md:h-[800px]">
-          <AnimatePresence mode="wait">
-            <StepCard 
-              key={activeStep}
-              stepData={stepsData[activeStep]} 
-              animationKey={animationKey}
-            />
-          </AnimatePresence>
+          {/* Cards Container */}
+          <div className="relative flex-1 max-w-6xl mx-auto w-full min-h-0">
+            {stepsData.map((step, index) => (
+              <ScrollCard
+                key={index}
+                stepData={step}
+                scrollYProgress={scrollYProgress}
+                index={index}
+                total={stepsData.length}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
