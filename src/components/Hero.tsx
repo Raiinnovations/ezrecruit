@@ -411,49 +411,7 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mt-20 relative"
         >
-          <div className="relative mx-auto max-w-4xl group">
-            {/* Moving glow border for dark mode */}
-            <div className="hidden dark:block absolute -inset-[1px] rounded-xl">
-              {/* Static subtle border */}
-              <div className="absolute inset-0 rounded-xl border border-primary/20" />
-              {/* Moving glow that travels along the border */}
-              <motion.div
-                className="absolute w-24 h-24 rounded-full pointer-events-none"
-                style={{
-                  background: "radial-gradient(circle, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.5) 40%, transparent 70%)",
-                  filter: "blur(8px)",
-                }}
-                animate={{
-                  left: ["0%", "calc(100% - 96px)", "calc(100% - 96px)", "0%", "0%"],
-                  top: ["0%", "0%", "calc(100% - 96px)", "calc(100% - 96px)", "0%"],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "linear",
-                  times: [0, 0.25, 0.5, 0.75, 1],
-                }}
-              />
-              {/* Second glow traveling opposite direction for fuller effect */}
-              <motion.div
-                className="absolute w-24 h-24 rounded-full pointer-events-none"
-                style={{
-                  background: "radial-gradient(circle, hsl(var(--primary-light)) 0%, hsl(var(--primary-light) / 0.4) 40%, transparent 70%)",
-                  filter: "blur(8px)",
-                }}
-                animate={{
-                  left: ["calc(100% - 96px)", "0%", "0%", "calc(100% - 96px)", "calc(100% - 96px)"],
-                  top: ["calc(100% - 96px)", "calc(100% - 96px)", "0%", "0%", "calc(100% - 96px)"],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "linear",
-                  times: [0, 0.25, 0.5, 0.75, 1],
-                }}
-              />
-            </div>
-            <div className="glass-card rounded-xl p-1.5 md:p-2 relative z-10 dark:bg-card/95">
+          <div className="glass-card rounded-xl p-1.5 md:p-2 mx-auto max-w-4xl relative">
             {/* AI Powered ATS Badge - positioned at top right corner */}
             <motion.div
               animate={{ y: [0, -6, 0] }}
@@ -622,7 +580,6 @@ const Hero = () => {
                   <Pause size={14} className="text-foreground" />
                 )}
               </button>
-            </div>
             </div>
           </div>
         </motion.div>
