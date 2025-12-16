@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
-import { useRef } from "react";
+import { motion, useScroll, useTransform, MotionValue, AnimatePresence } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
 import { User, FileText, Users, Search, FileCheck, Send, Trophy } from "lucide-react";
 
 import requirementIntake from "@/assets/screens/requirement-intake.png";
@@ -103,6 +103,106 @@ const stepsData = [
   },
 ];
 
+// Typing indicator component
+const TypingIndicator = () => (
+  <div className="flex gap-1 px-4 py-3">
+    {[0, 1, 2].map((i) => (
+      <motion.div
+        key={i}
+        className="w-2 h-2 rounded-full bg-slate-400"
+        animate={{ y: [0, -6, 0] }}
+        transition={{
+          duration: 0.6,
+          repeat: Infinity,
+          delay: i * 0.15,
+        }}
+      />
+    ))}
+  </div>
+);
+
+// Chat bubble component with animation
+const ChatBubble = ({ message, delay }: { message: string; delay: number }) => {
+  const [showTyping, setShowTyping] = useState(true);
+  const [showMessage, setShowMessage] = useState(false);
+
+  useEffect(() => {
+    const typingTimer = setTimeout(() => {
+      setShowTyping(false);
+      setShowMessage(true);
+    }, delay + 800);
+
+    return () => clearTimeout(typingTimer);
+  }, [delay]);
+
+  return (
+    <div className="relative group min-h-[40px]">
+      <AnimatePresence mode="wait">
+        {showTyping && (
+          <motion.div
+            key="typing"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            className="bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-800 dark:to-amber-900 rounded-2xl rounded-bl-sm inline-block"
+          >
+            <TypingIndicator />
+          </motion.div>
+        )}
+        {showMessage && (
+          <motion.div
+            key="message"
+            initial={{ opacity: 0, scale: 0.8, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="relative bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-800 dark:to-amber-900 px-4 py-2.5 rounded-2xl rounded-bl-sm text-sm text-slate-700 dark:text-slate-200 shadow-md border border-amber-200/50 dark:border-amber-600/50 inline-block"
+          >
+            <div className="absolute -left-1.5 bottom-1 w-3 h-3 bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-800 dark:to-amber-900 transform rotate-45 border-l border-b border-amber-200/50 dark:border-amber-600/50" />
+            <span className="relative z-10 font-medium">{message}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+// Solution card with staggered animation
+const SolutionCard = ({ solution, delay, index }: { solution: { heading: string }; delay: number; index: number }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30, scale: 0.9 }}
+      animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="bg-card rounded-xl border border-border/50 overflow-hidden shadow-md flex-1 min-w-[200px] max-w-[320px] flex flex-col"
+    >
+      {/* Solution Heading */}
+      <div className="p-3">
+        <div className="px-4 py-2.5 rounded-lg bg-muted">
+          <h3 className="text-xs md:text-sm font-semibold text-primary line-clamp-2">
+            {solution.heading}
+          </h3>
+        </div>
+      </div>
+      
+      {/* Screenshot */}
+      <div className="relative bg-background flex-1">
+        <img
+          src={requirementIntake}
+          alt={solution.heading}
+          className="w-full h-[180px] md:h-[220px] object-cover object-top"
+        />
+      </div>
+    </motion.div>
+  );
+};
+
 interface ScrollCardProps {
   stepData: typeof stepsData[0];
   scrollYProgress: MotionValue<number>;
@@ -111,6 +211,9 @@ interface ScrollCardProps {
 }
 
 const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps) => {
+  const [isActive, setIsActive] = useState(index === 0);
+  const [animationKey, setAnimationKey] = useState(0);
+  
   const stepStart = index / total;
   const stepEnd = (index + 1) / total;
   
@@ -142,6 +245,20 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
     [...scaleIn, ...scaleOut]
   );
 
+  // Track when this card becomes active to restart animations
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (value) => {
+      const wasActive = isActive;
+      const nowActive = value >= stepStart && value < stepEnd;
+      
+      if (!wasActive && nowActive) {
+        setAnimationKey(prev => prev + 1);
+      }
+      setIsActive(nowActive);
+    });
+    return () => unsubscribe();
+  }, [scrollYProgress, stepStart, stepEnd, isActive]);
+
   const Icon = stepData.icon;
 
   return (
@@ -169,7 +286,7 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
         {/* Content area */}
         <div className="p-6 md:p-8 bg-gradient-to-br from-background to-muted/20 flex-1 flex flex-col overflow-auto">
           {/* Problem Section with Chat Bubbles */}
-          <div className="mb-6">
+          <div className="mb-6" key={animationKey}>
             <p className="text-sm text-muted-foreground mb-4">It usually starts with a problem.</p>
             
             {/* Chat Bubbles with User Icon */}
@@ -182,49 +299,34 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
               {/* Chat Bubbles Container */}
               <div className="flex flex-col gap-2.5 pt-1">
                 {stepData.painPoints.map((msg, idx) => (
-                  <div key={idx} className="relative group">
-                    <div className="relative bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-700 dark:to-slate-800 px-4 py-2.5 rounded-2xl rounded-bl-sm text-sm text-slate-700 dark:text-slate-200 shadow-md border border-slate-200/50 dark:border-slate-600/50 inline-block">
-                      <div className="absolute -left-1.5 bottom-1 w-3 h-3 bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-700 dark:to-slate-800 transform rotate-45 border-l border-b border-slate-200/50 dark:border-slate-600/50" />
-                      <span className="relative z-10 font-medium">{msg}</span>
-                    </div>
-                  </div>
+                  <ChatBubble key={`${animationKey}-${idx}`} message={msg} delay={idx * 1000} />
                 ))}
               </div>
             </div>
           </div>
 
           {/* Solution Section */}
-          <div className="text-right mb-4">
+          <motion.div
+            key={`solution-header-${animationKey}`}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 3.5, duration: 0.5 }}
+            className="text-right mb-4"
+          >
             <p className="text-base md:text-lg font-semibold">
               <span className="text-primary">EzRecruit</span> <span className="text-foreground">{stepData.solutionIntro}</span>
             </p>
-          </div>
+          </motion.div>
 
           {/* Solution Cards */}
           <div className="flex items-stretch justify-center gap-4 flex-wrap md:flex-nowrap flex-1 min-h-0">
             {stepData.solutions.map((solution, idx) => (
-              <div
-                key={idx}
-                className="bg-card rounded-xl border border-border/50 overflow-hidden shadow-md flex-1 min-w-[200px] max-w-[320px] flex flex-col"
-              >
-                {/* Solution Heading */}
-                <div className="p-3">
-                  <div className="px-4 py-2.5 rounded-lg bg-muted">
-                    <h3 className="text-xs md:text-sm font-semibold text-primary line-clamp-2">
-                      {solution.heading}
-                    </h3>
-                  </div>
-                </div>
-                
-                {/* Screenshot */}
-                <div className="relative bg-background flex-1">
-                  <img
-                    src={requirementIntake}
-                    alt={solution.heading}
-                    className="w-full h-[180px] md:h-[220px] object-cover object-top"
-                  />
-                </div>
-              </div>
+              <SolutionCard 
+                key={`${animationKey}-${idx}`} 
+                solution={solution} 
+                delay={4000 + idx * 400} 
+                index={idx} 
+              />
             ))}
           </div>
         </div>
