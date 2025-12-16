@@ -58,9 +58,9 @@ const WhyEzRecruit = () => {
           <p className="text-lg text-muted-foreground">Every time.</p>
         </motion.div>
 
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto flex flex-col gap-6">
           {/* Top Row: Problem + First 2 Solutions */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Problem Card */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
