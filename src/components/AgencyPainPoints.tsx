@@ -114,22 +114,32 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
   const stepStart = index / total;
   const stepEnd = (index + 1) / total;
   
+  // First card starts visible, others fade in
+  const opacityIn = index === 0 ? [1, 1] : [0, 1];
+  const opacityOut = index === total - 1 ? [1, 1] : [1, 0];
+  
   const opacity = useTransform(
     scrollYProgress,
-    [stepStart, stepStart + 0.03, stepEnd - 0.03, stepEnd],
-    [0, 1, 1, 0]
+    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
+    [...opacityIn, ...opacityOut]
   );
+  
+  const yIn = index === 0 ? [0, 0] : [60, 0];
+  const yOut = index === total - 1 ? [0, 0] : [0, -60];
   
   const y = useTransform(
     scrollYProgress,
-    [stepStart, stepStart + 0.03, stepEnd - 0.03, stepEnd],
-    [80, 0, 0, -80]
+    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
+    [...yIn, ...yOut]
   );
+  
+  const scaleIn = index === 0 ? [1, 1] : [0.95, 1];
+  const scaleOut = index === total - 1 ? [1, 1] : [1, 0.95];
   
   const scale = useTransform(
     scrollYProgress,
-    [stepStart, stepStart + 0.03, stepEnd - 0.03, stepEnd],
-    [0.92, 1, 1, 0.92]
+    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
+    [...scaleIn, ...scaleOut]
   );
 
   const Icon = stepData.icon;
@@ -234,16 +244,23 @@ const StepIndicator = ({ step, scrollYProgress, index, total }: StepIndicatorPro
   const stepStart = index / total;
   const stepEnd = (index + 1) / total;
   
+  // First indicator starts active
+  const scaleIn = index === 0 ? [1.2, 1.2] : [1, 1.2];
+  const scaleOut = index === total - 1 ? [1.2, 1.2] : [1.2, 1];
+  
   const scale = useTransform(
     scrollYProgress,
     [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
-    [1, 1.2, 1.2, 1]
+    [...scaleIn, ...scaleOut]
   );
+  
+  const opacityIn = index === 0 ? [1, 1] : [0.3, 1];
+  const opacityOut = index === total - 1 ? [1, 1] : [1, 0.3];
   
   const bgOpacity = useTransform(
     scrollYProgress,
     [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
-    [0.3, 1, 1, 0.3]
+    [...opacityIn, ...opacityOut]
   );
 
   return (
