@@ -5,12 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import logo from "@/assets/logo.png";
 
-const navLinks = [
-  { name: "Features", href: "#features" },
-  { name: "How It Works", href: "#how-it-works" },
-  { name: "Pricing", href: "#pricing" },
-  { name: "Testimonials", href: "#testimonials" },
-];
+const navLinks: { name: string; href: string }[] = [];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
