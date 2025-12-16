@@ -119,27 +119,171 @@ const AgencyWorkflow = () => {
           </p>
         </motion.div>
 
-        {/* Steps and Tree Roots Container */}
+        {/* Tree Roots originating from top center (connected to carousel) */}
         <div className="relative max-w-6xl mx-auto">
-          {/* Steps Grid - Cards at top */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 mb-0">
+          {/* Root Branches SVG - originating from carousel connection point */}
+          <svg
+            className="w-full h-28 md:h-32"
+            viewBox="0 0 1200 110"
+            preserveAspectRatio="xMidYMin meet"
+          >
+            <defs>
+              {/* Gradient for animated glow effect */}
+              <linearGradient id="branchGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.2" />
+                <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.8" />
+                <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.2" />
+              </linearGradient>
+              
+              {/* Animated dash pattern */}
+              {steps.map((_, index) => (
+                <linearGradient key={`grad-${index}`} id={`flowGrad-${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.3">
+                    <animate
+                      attributeName="offset"
+                      values="-0.5;1"
+                      dur={`${1.5 + index * 0.2}s`}
+                      repeatCount="indefinite"
+                    />
+                  </stop>
+                  <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="1">
+                    <animate
+                      attributeName="offset"
+                      values="0;1.5"
+                      dur={`${1.5 + index * 0.2}s`}
+                      repeatCount="indefinite"
+                    />
+                  </stop>
+                  <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.3">
+                    <animate
+                      attributeName="offset"
+                      values="0.5;2"
+                      dur={`${1.5 + index * 0.2}s`}
+                      repeatCount="indefinite"
+                    />
+                  </stop>
+                </linearGradient>
+              ))}
+            </defs>
+            
+            {/* Central trunk from carousel */}
+            <motion.line
+              x1="600"
+              y1="0"
+              x2="600"
+              y2="20"
+              stroke="hsl(var(--primary))"
+              strokeWidth="3"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={isInView ? { pathLength: 1, opacity: 0.6 } : {}}
+              transition={{ duration: 0.3 }}
+            />
+            
+            {/* Pulsing center point */}
+            <motion.circle
+              cx="600"
+              cy="20"
+              r="4"
+              fill="hsl(var(--primary))"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={isInView ? { 
+                scale: [1, 1.5, 1], 
+                opacity: [0.8, 0.4, 0.8] 
+              } : {}}
+              transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }}
+            />
+            
+            {steps.map((_, index) => {
+              const startX = 600;
+              const startY = 20;
+              const stepWidth = 1200 / 6;
+              const endX = stepWidth * index + stepWidth / 2;
+              const endY = 110;
+              const midY = 50;
+              const pathD = `M ${startX} ${startY} Q ${startX} ${midY}, ${endX} ${endY}`;
+
+              return (
+                <g key={index}>
+                  {/* Base path */}
+                  <motion.path
+                    d={pathD}
+                    fill="none"
+                    stroke="hsl(var(--primary))"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    animate={isInView ? { pathLength: 1, opacity: 0.25 } : {}}
+                    transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
+                  />
+                  
+                  {/* Animated flowing overlay */}
+                  <motion.path
+                    d={pathD}
+                    fill="none"
+                    stroke={`url(#flowGrad-${index})`}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeDasharray="8 12"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    animate={isInView ? { 
+                      pathLength: 1, 
+                      opacity: 1,
+                      strokeDashoffset: [0, -40]
+                    } : {}}
+                    transition={{ 
+                      pathLength: { duration: 0.8, delay: 0.2 + index * 0.1 },
+                      opacity: { duration: 0.5, delay: 0.2 + index * 0.1 },
+                      strokeDashoffset: { duration: 2, repeat: Infinity, ease: "linear", delay: 0.8 + index * 0.1 }
+                    }}
+                  />
+                  
+                  {/* End point pulse */}
+                  <motion.circle
+                    cx={endX}
+                    cy={endY}
+                    r="3"
+                    fill="hsl(var(--primary))"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={isInView ? { 
+                      scale: [0.8, 1.2, 0.8], 
+                      opacity: [0.6, 1, 0.6] 
+                    } : {}}
+                    transition={{ 
+                      duration: 1.5, 
+                      repeat: Infinity, 
+                      delay: 0.8 + index * 0.15 
+                    }}
+                  />
+                </g>
+              );
+            })}
+          </svg>
+
+          {/* Steps Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
             {steps.map((step, index) => {
               const isActive = currentStep === index;
+              const isRevealed = revealedSteps.includes(index);
 
               return (
                 <motion.div
                   key={step.id}
                   initial={{ opacity: 0, y: 30 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                  transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
                   className="flex flex-col items-center text-center group"
                 >
                   {/* Card with icon, title and explanation inside */}
                   <motion.div
                     whileHover={{ scale: 1.02, y: -4 }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
-                    className={`relative p-4 md:p-5 rounded-2xl ${stepStyles.card} border flex flex-col items-center justify-start h-[180px] md:h-[200px] w-[140px] md:w-[160px] transition-all duration-300 ${isActive ? 'ring-2 ring-primary/50 shadow-lg' : ''}`}
+                    className={`relative p-4 md:p-5 rounded-2xl ${stepStyles.card} border flex flex-col items-center justify-start h-[200px] md:h-[220px] w-[140px] md:w-[160px] transition-all duration-300 ${isActive ? 'ring-2 ring-primary/50 shadow-lg' : ''}`}
                   >
+                    {/* Step Number Badge */}
+                    <div className={`absolute -top-2 -right-2 w-6 h-6 rounded-full ${stepStyles.badge} text-xs font-bold flex items-center justify-center shadow-md`}>
+                      {index + 1}
+                    </div>
+
                     {/* Icon */}
                     <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
                       <step.icon className={`w-6 h-6 md:w-7 md:h-7 ${stepStyles.icon}`} />
@@ -150,7 +294,7 @@ const AgencyWorkflow = () => {
                       {step.label}
                     </h3>
 
-                    {/* Explanation text inside card */}
+                    {/* Explanation text inside card - always visible */}
                     <p className={`text-[10px] md:text-xs ${stepStyles.explanation} leading-relaxed text-center`}>
                       {step.explanation}
                     </p>
@@ -160,126 +304,6 @@ const AgencyWorkflow = () => {
             })}
           </div>
 
-          {/* Tree Roots SVG - Branches going DOWN from cards to center point */}
-          <svg
-            className="w-full h-32 md:h-40"
-            viewBox="0 0 1200 140"
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <defs>
-              {/* Animated flowing gradient */}
-              {steps.map((_, index) => (
-                <linearGradient key={`grad-${index}`} id={`rootGrad-${index}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
-                </linearGradient>
-              ))}
-            </defs>
-
-            {steps.map((_, index) => {
-              const stepWidth = 1200 / 6;
-              const startX = stepWidth * index + stepWidth / 2;
-              const startY = 0;
-              const endX = 600;
-              const endY = 130;
-              
-              // Create smooth curved path from each card down to center
-              const controlX = startX + (endX - startX) * 0.3;
-              const controlY1 = 40;
-              const controlY2 = 90;
-              
-              const pathD = `M ${startX} ${startY} 
-                             C ${startX} ${controlY1}, 
-                               ${controlX} ${controlY2}, 
-                               ${endX} ${endY}`;
-
-              return (
-                <g key={index}>
-                  {/* Base path - subtle background line */}
-                  <motion.path
-                    d={pathD}
-                    fill="none"
-                    stroke="hsl(var(--primary))"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={isInView ? { pathLength: 1, opacity: 0.15 } : {}}
-                    transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
-                  />
-                  
-                  {/* Animated flowing line */}
-                  <motion.path
-                    d={pathD}
-                    fill="none"
-                    stroke={`url(#rootGrad-${index})`}
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeDasharray="6 10"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={isInView ? { 
-                      pathLength: 1, 
-                      opacity: 0.8,
-                      strokeDashoffset: [0, -32]
-                    } : {}}
-                    transition={{ 
-                      pathLength: { duration: 1, delay: 0.5 + index * 0.1 },
-                      opacity: { duration: 0.5, delay: 0.5 + index * 0.1 },
-                      strokeDashoffset: { duration: 1.5, repeat: Infinity, ease: "linear", delay: 1 + index * 0.1 }
-                    }}
-                  />
-                  
-                  {/* Start point at card */}
-                  <motion.circle
-                    cx={startX}
-                    cy={startY}
-                    r="4"
-                    fill="hsl(var(--primary))"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={isInView ? { scale: 1, opacity: 0.6 } : {}}
-                    transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
-                  />
-                </g>
-              );
-            })}
-            
-            {/* Central convergence point with pulse */}
-            <motion.circle
-              cx="600"
-              cy="130"
-              r="8"
-              fill="hsl(var(--primary))"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={isInView ? { 
-                scale: [1, 1.3, 1], 
-                opacity: [0.8, 0.5, 0.8] 
-              } : {}}
-              transition={{ 
-                duration: 2, 
-                repeat: Infinity, 
-                delay: 1.2 
-              }}
-            />
-            
-            {/* Outer glow ring */}
-            <motion.circle
-              cx="600"
-              cy="130"
-              r="12"
-              fill="none"
-              stroke="hsl(var(--primary))"
-              strokeWidth="2"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={isInView ? { 
-                scale: [1, 1.5, 1], 
-                opacity: [0.4, 0, 0.4] 
-              } : {}}
-              transition={{ 
-                duration: 2, 
-                repeat: Infinity, 
-                delay: 1.2 
-              }}
-            />
-          </svg>
         </div>
       </div>
     </section>
