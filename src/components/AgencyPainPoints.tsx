@@ -190,8 +190,8 @@ const AgencyPainPoints = () => {
                       onClick={() => setActiveSlide(index)}
                       className={`bg-card rounded-xl border overflow-hidden cursor-pointer transition-all duration-300 ${
                         isActive 
-                          ? 'border-primary shadow-2xl ring-2 ring-primary/30 z-10 w-full md:w-[420px]' 
-                          : 'border-border/50 shadow-md hover:shadow-lg opacity-60 w-full md:w-[280px]'
+                          ? 'border-primary shadow-2xl ring-2 ring-primary/30 z-10 w-full md:w-[520px]' 
+                          : 'border-border/50 shadow-md hover:shadow-lg opacity-60 w-full md:w-[320px]'
                       }`}
                     >
                       {/* Solution Heading - Minimalist Pill Style */}
