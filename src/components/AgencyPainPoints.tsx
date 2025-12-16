@@ -1,17 +1,43 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Users } from "lucide-react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+
+import requirementIntake from "@/assets/screens/requirement-intake.png";
+import evaluationQuestions from "@/assets/screens/evaluation-questions.png";
+import assignmentView from "@/assets/screens/assignment-view.png";
 
 const AgencyPainPoints = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-50px" });
+  const [activeSlide, setActiveSlide] = useState(0);
 
-  const pipelineStages = [
-    { label: "New", count: 42 },
-    { label: "Screening", count: 85 },
-    { label: "Interview", count: 67 },
-    { label: "Offer", count: 53 },
+  const chatMessages = [
+    { text: "We got the JD... but it's unclear", delay: 0.3 },
+    { text: "Different recruiters understood it differently.", delay: 0.8 },
+    { text: "Got the wrong briefs that led me to wrong submission", delay: 1.3 },
   ];
+
+  const solutions = [
+    {
+      heading: "Every role begins with structured job intake with clear mandatory field",
+      screenshot: requirementIntake,
+    },
+    {
+      heading: "Evaluation question for each requirement",
+      screenshot: evaluationQuestions,
+    },
+    {
+      heading: "Clear view who is working on which requirement",
+      screenshot: assignmentView,
+    },
+  ];
+
+  useEffect(() => {
+    if (!isInView) return;
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % solutions.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isInView, solutions.length]);
 
   return (
     <section ref={sectionRef} className="py-16 bg-background relative overflow-hidden">
@@ -33,7 +59,7 @@ const AgencyPainPoints = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-3xl mx-auto"
+          className="max-w-5xl mx-auto"
         >
           {/* Browser-style window frame */}
           <div className="rounded-2xl border border-border/50 bg-muted/30 shadow-xl overflow-hidden">
@@ -46,57 +72,82 @@ const AgencyPainPoints = () => {
               </div>
               <div className="flex-1 flex justify-center">
                 <div className="px-4 py-1 rounded-md bg-background/50 text-xs text-muted-foreground">
-                  Pipeline Overview
+                  Step-1-Get Requirement
                 </div>
               </div>
             </div>
 
             {/* Content area */}
             <div className="p-6 md:p-8 bg-gradient-to-br from-background to-muted/20">
-              {/* Active Candidates Card */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="bg-card rounded-xl border border-border/50 p-5 shadow-sm"
-              >
-                {/* Header */}
-                <div className="flex items-center justify-between mb-5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Users className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground text-sm">Active Candidates</h3>
-                      <p className="text-xs text-muted-foreground">247 in pipeline</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <span className="px-3 py-1 rounded-full border border-border text-xs text-muted-foreground hover:border-primary/50 cursor-pointer transition-colors">
-                      Screening
-                    </span>
-                    <span className="px-3 py-1 rounded-full border border-primary/50 bg-primary/5 text-xs text-primary cursor-pointer transition-colors">
-                      Interview
-                    </span>
-                  </div>
-                </div>
-
-                {/* Pipeline Stats Grid */}
-                <div className="grid grid-cols-4 gap-4">
-                  {pipelineStages.map((stage, index) => (
+              {/* Problem Section */}
+              <div className="mb-6">
+                <p className="text-sm text-muted-foreground mb-4">It usually starts with a problem.</p>
+                
+                {/* Animated Chat Bubbles */}
+                <div className="flex flex-wrap gap-3 mb-6">
+                  {chatMessages.map((msg, index) => (
                     <motion.div
-                      key={stage.label}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                      transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
-                      className="p-3 rounded-lg bg-muted/30 border border-border/30 hover:border-primary/30 transition-colors"
+                      key={index}
+                      initial={{ opacity: 0, x: -20, scale: 0.9 }}
+                      animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: -20, scale: 0.9 }}
+                      transition={{ duration: 0.4, delay: msg.delay }}
+                      className="bg-amber-100 dark:bg-amber-900/30 text-amber-900 dark:text-amber-100 px-4 py-2 rounded-lg text-sm border border-amber-200 dark:border-amber-800/50 shadow-sm"
                     >
-                      <p className="text-xs text-muted-foreground mb-1">{stage.label}</p>
-                      <p className="text-2xl font-bold text-foreground">{stage.count}</p>
+                      {msg.text}
                     </motion.div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
+
+              {/* Solution Section */}
+              <div className="text-right mb-4">
+                <p className="text-sm text-foreground font-medium">EzRecruit changes that from the first step.</p>
+              </div>
+
+              {/* Screenshot Carousel */}
+              <div className="relative">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeSlide}
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={{ duration: 0.5 }}
+                    className="bg-card rounded-xl border border-border/50 overflow-hidden shadow-lg"
+                  >
+                    {/* Solution Heading */}
+                    <div className="bg-primary/5 border-b border-border/30 px-4 py-3">
+                      <h3 className="text-sm md:text-base font-semibold text-primary">
+                        {solutions[activeSlide].heading}
+                      </h3>
+                    </div>
+                    
+                    {/* Screenshot */}
+                    <div className="relative">
+                      <img
+                        src={solutions[activeSlide].screenshot}
+                        alt={solutions[activeSlide].heading}
+                        className="w-full h-auto max-h-[400px] object-cover object-top"
+                      />
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Slide Indicators */}
+                <div className="flex justify-center gap-2 mt-4">
+                  {solutions.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setActiveSlide(index)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        index === activeSlide
+                          ? "bg-primary w-6"
+                          : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
