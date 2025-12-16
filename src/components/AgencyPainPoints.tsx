@@ -166,44 +166,46 @@ const AgencyPainPoints = () => {
                 <p className="text-sm text-foreground font-medium">EzRecruit changes that from the first step.</p>
               </div>
 
-              {/* Stacked Screenshot Cards - All Visible */}
-              <div className="relative h-[400px] md:h-[480px]">
+              {/* Stacked Screenshot Cards - Diagonal Stack */}
+              <div className="relative h-[320px] md:h-[380px] flex items-center justify-center">
                 {solutions.map((solution, index) => {
                   const isActive = index === activeSlide;
-                  // Stack from bottom to top with offset
-                  const stackOffset = (solutions.length - 1 - index) * 25;
-                  const horizontalOffset = (solutions.length - 1 - index) * 15;
+                  // Stack diagonally from bottom-left to top-right
+                  const xOffset = index * 60; // Move right
+                  const yOffset = (solutions.length - 1 - index) * 20; // Move down for earlier cards
                   
                   return (
                     <motion.div
                       key={index}
-                      initial={{ opacity: 0, y: 80 }}
+                      initial={{ opacity: 0, x: -100, y: 50 }}
                       animate={isInView ? {
                         opacity: 1,
-                        y: stackOffset,
-                        x: horizontalOffset,
-                        scale: isActive ? 1.02 : 1,
-                        zIndex: isActive ? 10 : solutions.length - index,
-                      } : { opacity: 0, y: 80 }}
+                        x: xOffset,
+                        y: yOffset,
+                        scale: isActive ? 1.05 : 1,
+                        zIndex: index + (isActive ? 10 : 0),
+                      } : { opacity: 0, x: -100, y: 50 }}
                       transition={{ 
                         duration: 0.6,
-                        delay: isInView ? (solutions.length - 1 - index) * 0.15 : 0
+                        delay: isInView ? index * 0.12 : 0
                       }}
                       onClick={() => setActiveSlide(index)}
-                      className={`absolute left-0 right-0 top-0 bg-card rounded-xl border overflow-hidden cursor-pointer transition-shadow duration-300 ${
+                      className={`absolute bg-card rounded-lg border overflow-hidden cursor-pointer transition-all duration-300 w-[280px] md:w-[380px] ${
                         isActive 
-                          ? 'border-primary shadow-2xl ring-2 ring-primary/20' 
-                          : 'border-border/50 shadow-lg hover:shadow-xl'
+                          ? 'border-primary shadow-2xl ring-2 ring-primary/30' 
+                          : 'border-border/50 shadow-xl'
                       }`}
                       style={{
-                        width: `calc(100% - ${horizontalOffset * 2}px)`,
+                        left: '50%',
+                        top: '50%',
+                        transform: `translate(-50%, -50%)`,
                       }}
                     >
                       {/* Solution Heading */}
-                      <div className={`border-b border-border/30 px-4 py-3 transition-colors duration-300 ${
-                        isActive ? 'bg-primary text-white' : 'bg-muted/50'
+                      <div className={`border-b border-border/30 px-3 py-2 transition-colors duration-300 ${
+                        isActive ? 'bg-primary text-white' : 'bg-primary/10'
                       }`}>
-                        <h3 className={`text-sm md:text-base font-semibold ${
+                        <h3 className={`text-xs md:text-sm font-semibold ${
                           isActive ? 'text-white' : 'text-primary'
                         }`}>
                           {solution.heading}
@@ -215,7 +217,7 @@ const AgencyPainPoints = () => {
                         <img
                           src={solution.screenshot}
                           alt={solution.heading}
-                          className="w-full h-auto max-h-[280px] md:max-h-[350px] object-cover object-top"
+                          className="w-full h-[180px] md:h-[240px] object-cover object-top"
                         />
                       </div>
                     </motion.div>
