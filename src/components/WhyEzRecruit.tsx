@@ -133,9 +133,13 @@ const WhyEzRecruit = () => {
                   className="flex-1"
                 >
                   <div className="h-full bg-primary/5 rounded-2xl border border-primary/10 p-5 hover:border-primary/20 transition-colors">
-                    <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
+                    <motion.div 
+                      className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center mb-3"
+                      animate={{ y: [0, -3, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
+                    >
                       <solution.icon className="w-4 h-4 text-primary" />
-                    </div>
+                    </motion.div>
                     
                     <h4 className="font-semibold text-foreground mb-1">{solution.title}</h4>
                     <p className="text-sm text-muted-foreground mb-3">{solution.description}</p>
@@ -164,9 +168,13 @@ const WhyEzRecruit = () => {
                 transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
               >
                 <div className="h-full bg-primary/5 rounded-2xl border border-primary/10 p-5 hover:border-primary/20 transition-colors">
-                  <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
+                  <motion.div 
+                    className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center mb-3"
+                    animate={{ y: [0, -3, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: (index + 2) * 0.3 }}
+                  >
                     <solution.icon className="w-4 h-4 text-primary" />
-                  </div>
+                  </motion.div>
                   
                   <h4 className="font-semibold text-foreground mb-1">{solution.title}</h4>
                   <p className="text-sm text-muted-foreground mb-3">{solution.description}</p>
