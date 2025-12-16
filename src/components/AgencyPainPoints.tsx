@@ -25,7 +25,7 @@ const stepsData = [
   {
     step: 2,
     title: "Brief Recruiter",
-    problemHeading: "Now the job is live — but another problem appears.",
+    problemHeading: "Lost visibility when briefing recruiters",
     icon: Users,
     painPoints: [
       "Managers can't see what recruiters are working on",
@@ -42,7 +42,7 @@ const stepsData = [
   {
     step: 3,
     title: "Hunt Candidates",
-    problemHeading: "This is where time and money usually drain fast.",
+    problemHeading: "Expensive sourcing with no quality control",
     icon: Search,
     painPoints: [
       "₹300–₹500 spent per profile — with no clarity on quality",
@@ -59,7 +59,7 @@ const stepsData = [
   {
     step: 4,
     title: "Screen CVs",
-    problemHeading: "Screening should build learning — not lose it.",
+    problemHeading: "Inconsistent screening without feedback",
     icon: FileCheck,
     painPoints: [
       "Different recruiters screen differently",
@@ -76,7 +76,7 @@ const stepsData = [
   {
     step: 5,
     title: "Submit to Client",
-    problemHeading: "Submission shouldn't feel like admin work.",
+    problemHeading: "Manual trackers killing productivity",
     icon: Send,
     painPoints: [
       "Recruiters spend 60–90 minutes daily on trackers",
@@ -93,7 +93,7 @@ const stepsData = [
   {
     step: 6,
     title: "Close Candidate",
-    problemHeading: "The final step is where deals are often lost.",
+    problemHeading: "Closure chaos with scattered data",
     icon: Trophy,
     painPoints: [
       "Interview drop-offs due to poor follow-ups",
