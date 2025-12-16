@@ -80,7 +80,7 @@ const AgencyWorkflow = () => {
   }, [isInView]);
 
   return (
-    <section ref={sectionRef} className="pt-0 pb-8 bg-background relative overflow-hidden -mt-4">
+    <section id="workflow" ref={sectionRef} className="pt-0 pb-8 bg-background relative overflow-hidden -mt-4">
       {/* Connection point from Hero carousel - visual connector */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-8 bg-gradient-to-b from-primary/40 to-transparent" />
       
