@@ -411,7 +411,7 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mt-20 relative"
         >
-          <div className="glass-card rounded-xl p-1.5 md:p-2 mx-auto max-w-5xl relative">
+          <div className="glass-card rounded-xl p-1.5 md:p-2 mx-auto max-w-5xl relative dark:glow-border">
             {/* AI Powered ATS Badge - positioned at top right corner */}
             <motion.div
               animate={{ y: [0, -6, 0] }}
