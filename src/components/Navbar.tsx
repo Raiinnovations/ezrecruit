@@ -5,7 +5,11 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import logo from "@/assets/logo.png";
 
-const navLinks: { name: string; href: string }[] = [];
+const navLinks = [
+  { name: "Workflow", href: "#workflow" },
+  { name: "Challenges", href: "#challenges" },
+  { name: "Why EzRecruit", href: "#why-ezrecruit" },
+];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
