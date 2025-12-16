@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform, MotionValue, AnimatePresence } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import { User, FileText, Users, Search, FileCheck, Send, Trophy } from "lucide-react";
 
 import requirementIntake from "@/assets/screens/requirement-intake.png";
@@ -177,7 +177,7 @@ const ChatBubble = ({ message, delay, resetKey }: { message: string; delay: numb
 };
 
 // Solution card with staggered animation - carousel style (middle focused)
-const SolutionCard = ({ solution, delay, index, isFocused }: { solution: { heading: string }; delay: number; index: number; isFocused: boolean }) => {
+const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: string }; delay: number; isFocused: boolean }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -223,68 +223,21 @@ const SolutionCard = ({ solution, delay, index, isFocused }: { solution: { headi
   );
 };
 
-interface ScrollCardProps {
+interface StepCardProps {
   stepData: typeof stepsData[0];
-  scrollYProgress: MotionValue<number>;
-  index: number;
-  total: number;
+  animationKey: number;
 }
 
-const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps) => {
-  const [isActive, setIsActive] = useState(index === 0);
-  const [animationKey, setAnimationKey] = useState(0);
-  
-  const stepStart = index / total;
-  const stepEnd = (index + 1) / total;
-  
-  // First card starts visible, others fade in
-  const opacityIn = index === 0 ? [1, 1] : [0, 1];
-  const opacityOut = index === total - 1 ? [1, 1] : [1, 0];
-  
-  const opacity = useTransform(
-    scrollYProgress,
-    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
-    [...opacityIn, ...opacityOut]
-  );
-  
-  const yIn = index === 0 ? [0, 0] : [60, 0];
-  const yOut = index === total - 1 ? [0, 0] : [0, -60];
-  
-  const y = useTransform(
-    scrollYProgress,
-    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
-    [...yIn, ...yOut]
-  );
-  
-  const scaleIn = index === 0 ? [1, 1] : [0.95, 1];
-  const scaleOut = index === total - 1 ? [1, 1] : [1, 0.95];
-  
-  const scale = useTransform(
-    scrollYProgress,
-    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
-    [...scaleIn, ...scaleOut]
-  );
-
-  // Track when this card becomes active to restart animations
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (value) => {
-      const wasActive = isActive;
-      const nowActive = value >= stepStart && value < stepEnd;
-      
-      if (!wasActive && nowActive) {
-        setAnimationKey(prev => prev + 1);
-      }
-      setIsActive(nowActive);
-    });
-    return () => unsubscribe();
-  }, [scrollYProgress, stepStart, stepEnd, isActive]);
-
+const StepCard = ({ stepData, animationKey }: StepCardProps) => {
   const Icon = stepData.icon;
 
   return (
     <motion.div
-      style={{ opacity, y, scale }}
-      className="absolute inset-0 flex flex-col"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.4 }}
+      className="h-full flex flex-col"
     >
       {/* Browser-style window frame */}
       <div className="rounded-2xl border border-border/50 bg-muted/30 shadow-xl overflow-hidden h-full flex flex-col">
@@ -304,7 +257,7 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
         </div>
 
         {/* Content area */}
-        <div className="p-6 md:p-8 bg-gradient-to-br from-background to-muted/20 flex-1 flex flex-col overflow-auto">
+        <div className="p-6 md:p-8 bg-gradient-to-br from-background to-muted/20 flex-1 flex flex-col">
           {/* Problem Section with Chat Bubbles */}
           <div className="mb-6" key={animationKey}>
             <p className="text-sm text-muted-foreground mb-4">It usually starts with a problem.</p>
@@ -345,8 +298,7 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
                 key={`${animationKey}-${idx}`} 
                 solution={solution} 
                 delay={4000 + idx * 400} 
-                index={idx}
-                isFocused={idx === 1} // Middle card is focused
+                isFocused={idx === 1}
               />
             ))}
           </div>
@@ -368,100 +320,67 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
   );
 };
 
-interface StepIndicatorProps {
-  step: typeof stepsData[0];
-  scrollYProgress: MotionValue<number>;
-  index: number;
-  total: number;
-}
-
-const StepIndicator = ({ step, scrollYProgress, index, total }: StepIndicatorProps) => {
-  const stepStart = index / total;
-  const stepEnd = (index + 1) / total;
-  
-  // First indicator starts active
-  const scaleIn = index === 0 ? [1.2, 1.2] : [1, 1.2];
-  const scaleOut = index === total - 1 ? [1.2, 1.2] : [1.2, 1];
-  
-  const scale = useTransform(
-    scrollYProgress,
-    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
-    [...scaleIn, ...scaleOut]
-  );
-  
-  const opacityIn = index === 0 ? [1, 1] : [0.3, 1];
-  const opacityOut = index === total - 1 ? [1, 1] : [1, 0.3];
-  
-  const bgOpacity = useTransform(
-    scrollYProgress,
-    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
-    [...opacityIn, ...opacityOut]
-  );
-
-  return (
-    <motion.div
-      style={{ scale }}
-      className="flex items-center gap-1"
-    >
-      <motion.div
-        style={{ opacity: bgOpacity }}
-        className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-semibold text-primary-foreground"
-      >
-        {step.step}
-      </motion.div>
-    </motion.div>
-  );
-};
-
 const AgencyPainPoints = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  const [activeStep, setActiveStep] = useState(0);
+  const [animationKey, setAnimationKey] = useState(0);
+
+  const handleStepChange = (index: number) => {
+    if (index !== activeStep) {
+      setActiveStep(index);
+      setAnimationKey(prev => prev + 1);
+    }
+  };
 
   return (
-    <section ref={containerRef} className="relative bg-background" style={{ height: `${stepsData.length * 100}vh` }}>
-      {/* Sticky container */}
-      <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
-        <div className="container mx-auto px-4 py-8 flex-1 flex flex-col">
-          {/* Section Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-6"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              The pain we face as agency <span className="text-primary">at every step</span>
-            </h2>
-          </motion.div>
+    <section className="bg-background py-16 md:py-24">
+      <div className="container mx-auto px-4">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-8"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+            The pain we face as agency <span className="text-primary">at every step</span>
+          </h2>
+        </motion.div>
 
-          {/* Step Indicators */}
-          <div className="flex justify-center gap-2 mb-6">
-            {stepsData.map((step, index) => (
-              <StepIndicator
+        {/* Step Indicators - Clickable */}
+        <div className="flex justify-center gap-2 mb-8">
+          {stepsData.map((step, index) => {
+            const Icon = step.icon;
+            return (
+              <button
                 key={index}
-                step={step}
-                scrollYProgress={scrollYProgress}
-                index={index}
-                total={stepsData.length}
-              />
-            ))}
-          </div>
+                onClick={() => handleStepChange(index)}
+                className={`flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 ${
+                  activeStep === index
+                    ? "bg-primary text-primary-foreground scale-110"
+                    : "bg-muted text-muted-foreground hover:bg-muted/80"
+                }`}
+              >
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold ${
+                  activeStep === index ? "bg-primary-foreground/20" : "bg-background/50"
+                }`}>
+                  {step.step}
+                </div>
+                <span className="hidden md:inline text-sm font-medium">{step.title}</span>
+              </button>
+            );
+          })}
+        </div>
 
-          {/* Cards Container */}
-          <div className="relative flex-1 max-w-7xl mx-auto w-full">
-            {stepsData.map((step, index) => (
-              <ScrollCard
-                key={index}
-                stepData={step}
-                scrollYProgress={scrollYProgress}
-                index={index}
-                total={stepsData.length}
-              />
-            ))}
-          </div>
+        {/* Card Container - Increased height */}
+        <div className="max-w-7xl mx-auto h-[700px] md:h-[800px]">
+          <AnimatePresence mode="wait">
+            <StepCard 
+              key={activeStep}
+              stepData={stepsData[activeStep]} 
+              animationKey={animationKey}
+            />
+          </AnimatePresence>
         </div>
       </div>
     </section>
