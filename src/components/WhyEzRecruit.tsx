@@ -130,9 +130,16 @@ const WhyEzRecruit = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                   transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                  whileHover={{ 
+                    scale: 1.02, 
+                    rotateX: -2, 
+                    rotateY: 3,
+                    transition: { duration: 0.2 }
+                  }}
                   className="flex-1"
+                  style={{ perspective: 1000, transformStyle: "preserve-3d" }}
                 >
-                  <div className="h-full bg-primary/5 rounded-2xl border border-primary/10 p-5 hover:border-primary/20 transition-colors">
+                  <div className="h-full bg-primary/5 rounded-2xl border border-primary/10 p-5 hover:border-primary/20 hover:shadow-lg transition-all duration-300">
                     <motion.div 
                       className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center mb-3"
                       animate={{ y: [0, -3, 0] }}
@@ -166,8 +173,15 @@ const WhyEzRecruit = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                whileHover={{ 
+                  scale: 1.02, 
+                  rotateX: -2, 
+                  rotateY: index === 0 ? 3 : -3,
+                  transition: { duration: 0.2 }
+                }}
+                style={{ perspective: 1000, transformStyle: "preserve-3d" }}
               >
-                <div className="h-full bg-primary/5 rounded-2xl border border-primary/10 p-5 hover:border-primary/20 transition-colors">
+                <div className="h-full bg-primary/5 rounded-2xl border border-primary/10 p-5 hover:border-primary/20 hover:shadow-lg transition-all duration-300">
                   <motion.div 
                     className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center mb-3"
                     animate={{ y: [0, -3, 0] }}
