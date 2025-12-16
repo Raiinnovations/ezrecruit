@@ -67,45 +67,45 @@ const WhyEzRecruit = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="lg:col-span-2 lg:row-span-2"
           >
-            <div className="h-full bg-card rounded-2xl border border-border p-8 shadow-sm">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-destructive/10 flex items-center justify-center">
-                  <AlertCircle className="w-5 h-5 text-destructive" />
+            <div className="bg-card rounded-2xl border border-border p-6 shadow-sm">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-9 h-9 rounded-full bg-destructive/10 flex items-center justify-center">
+                  <AlertCircle className="w-4 h-4 text-destructive" />
                 </div>
-                <p className="text-sm text-muted-foreground uppercase tracking-wider font-medium">The Problem</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">The Problem</p>
               </div>
               
-              <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
+              <h3 className="text-lg md:text-xl font-bold text-foreground mb-1">
                 Agencies don't lack effort
               </h3>
-              <p className="text-2xl md:text-3xl font-light text-foreground/80 mb-6">
+              <p className="text-xl md:text-2xl font-light text-foreground/80 mb-4">
                 They lack <span className="text-destructive font-semibold">structure</span>.
               </p>
               
-              <div className="space-y-2 mb-8">
+              <div className="space-y-1.5 mb-5">
                 {problems.map((problem, i) => (
                   <motion.div 
                     key={i}
                     initial={{ opacity: 0, x: -20 }}
                     animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
-                    className="flex items-center gap-3 text-muted-foreground"
+                    className="flex items-center gap-2 text-sm text-muted-foreground"
                   >
-                    <span className="w-2 h-2 rounded-full bg-destructive/60" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
                     {problem}
                   </motion.div>
                 ))}
               </div>
 
               {/* Impact stats */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-muted/50 rounded-xl p-4">
-                  <p className="text-2xl md:text-3xl font-bold text-primary mb-1">20-30%</p>
-                  <p className="text-sm text-muted-foreground">Less sourcing delay with clear intake</p>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-muted/50 rounded-lg p-3">
+                  <p className="text-xl md:text-2xl font-bold text-primary mb-0.5">20-30%</p>
+                  <p className="text-xs text-muted-foreground">Less sourcing delay with clear intake</p>
                 </div>
-                <div className="bg-muted/50 rounded-xl p-4">
-                  <p className="text-2xl md:text-3xl font-bold text-primary mb-1">25-40%</p>
-                  <p className="text-sm text-muted-foreground">Less back-and-forth communication</p>
+                <div className="bg-muted/50 rounded-lg p-3">
+                  <p className="text-xl md:text-2xl font-bold text-primary mb-0.5">25-40%</p>
+                  <p className="text-xs text-muted-foreground">Less back-and-forth communication</p>
                 </div>
               </div>
             </div>
