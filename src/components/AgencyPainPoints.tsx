@@ -122,18 +122,28 @@ const TypingIndicator = () => (
 );
 
 // Chat bubble component with animation
-const ChatBubble = ({ message, delay }: { message: string; delay: number }) => {
-  const [showTyping, setShowTyping] = useState(true);
+const ChatBubble = ({ message, delay, resetKey }: { message: string; delay: number; resetKey: number }) => {
+  const [showTyping, setShowTyping] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
-    const typingTimer = setTimeout(() => {
+    setShowTyping(false);
+    setShowMessage(false);
+    
+    const showTypingTimer = setTimeout(() => {
+      setShowTyping(true);
+    }, delay);
+
+    const showMessageTimer = setTimeout(() => {
       setShowTyping(false);
       setShowMessage(true);
     }, delay + 800);
 
-    return () => clearTimeout(typingTimer);
-  }, [delay]);
+    return () => {
+      clearTimeout(showTypingTimer);
+      clearTimeout(showMessageTimer);
+    };
+  }, [delay, resetKey]);
 
   return (
     <div className="relative group min-h-[40px]">
@@ -166,37 +176,69 @@ const ChatBubble = ({ message, delay }: { message: string; delay: number }) => {
   );
 };
 
-// Solution card with staggered animation
-const SolutionCard = ({ solution, delay, index }: { solution: { heading: string }; delay: number; index: number }) => {
+// Solution card with staggered animation - different sizes based on index
+const SolutionCard = ({ solution, delay, index, isFirst }: { solution: { heading: string }; delay: number; index: number; isFirst: boolean }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    setIsVisible(false);
     const timer = setTimeout(() => setIsVisible(true), delay);
     return () => clearTimeout(timer);
   }, [delay]);
 
+  if (isFirst) {
+    // Large focused card on the left
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 30, scale: 0.9 }}
+        animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="bg-card rounded-2xl border-2 border-primary/30 overflow-hidden shadow-xl flex-shrink-0 w-full md:w-[55%] flex flex-col"
+      >
+        {/* Solution Heading */}
+        <div className="p-4 bg-muted/50">
+          <div className="px-5 py-3 rounded-xl bg-primary/10 border border-primary/20">
+            <h3 className="text-sm md:text-base font-bold text-primary">
+              {solution.heading}
+            </h3>
+          </div>
+        </div>
+        
+        {/* Large Screenshot */}
+        <div className="relative bg-background flex-1 p-3">
+          <img
+            src={requirementIntake}
+            alt={solution.heading}
+            className="w-full h-[250px] md:h-[320px] object-cover object-top rounded-lg shadow-inner"
+          />
+        </div>
+      </motion.div>
+    );
+  }
+
+  // Smaller cards on the right
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30, scale: 0.9 }}
-      animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : {}}
+      initial={{ opacity: 0, x: 30, scale: 0.9 }}
+      animate={isVisible ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: 30, scale: 0.9 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="bg-card rounded-xl border border-border/50 overflow-hidden shadow-md flex-1 min-w-[200px] max-w-[320px] flex flex-col"
+      className="bg-card rounded-xl border border-border/50 overflow-hidden shadow-lg flex flex-col"
     >
       {/* Solution Heading */}
-      <div className="p-3">
-        <div className="px-4 py-2.5 rounded-lg bg-muted">
-          <h3 className="text-xs md:text-sm font-semibold text-primary line-clamp-2">
+      <div className="p-3 bg-muted/30">
+        <div className="px-4 py-2.5 rounded-lg bg-primary/10 border border-primary/20">
+          <h3 className="text-xs md:text-sm font-semibold text-primary leading-tight">
             {solution.heading}
           </h3>
         </div>
       </div>
       
       {/* Screenshot */}
-      <div className="relative bg-background flex-1">
+      <div className="relative bg-background flex-1 p-2">
         <img
           src={requirementIntake}
           alt={solution.heading}
-          className="w-full h-[180px] md:h-[220px] object-cover object-top"
+          className="w-full h-[140px] md:h-[160px] object-cover object-top rounded-md"
         />
       </div>
     </motion.div>
@@ -299,7 +341,7 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
               {/* Chat Bubbles Container */}
               <div className="flex flex-col gap-2.5 pt-1">
                 {stepData.painPoints.map((msg, idx) => (
-                  <ChatBubble key={`${animationKey}-${idx}`} message={msg} delay={idx * 1000} />
+                  <ChatBubble key={`${animationKey}-${idx}`} message={msg} delay={idx * 1000} resetKey={animationKey} />
                 ))}
               </div>
             </div>
@@ -318,16 +360,29 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
             </p>
           </motion.div>
 
-          {/* Solution Cards */}
-          <div className="flex items-stretch justify-center gap-4 flex-wrap md:flex-nowrap flex-1 min-h-0">
-            {stepData.solutions.map((solution, idx) => (
-              <SolutionCard 
-                key={`${animationKey}-${idx}`} 
-                solution={solution} 
-                delay={4000 + idx * 400} 
-                index={idx} 
-              />
-            ))}
+          {/* Solution Cards - First large, others smaller on right */}
+          <div className="flex items-stretch gap-4 flex-1 min-h-0">
+            {/* First large card */}
+            <SolutionCard 
+              key={`${animationKey}-0`} 
+              solution={stepData.solutions[0]} 
+              delay={4000} 
+              index={0}
+              isFirst={true}
+            />
+            
+            {/* Right column with smaller cards */}
+            <div className="flex flex-col gap-3 w-full md:w-[42%]">
+              {stepData.solutions.slice(1).map((solution, idx) => (
+                <SolutionCard 
+                  key={`${animationKey}-${idx + 1}`} 
+                  solution={solution} 
+                  delay={4400 + idx * 400} 
+                  index={idx + 1}
+                  isFirst={false}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
