@@ -10,7 +10,7 @@ const CTA = () => {
   return (
     <section className="py-24 relative overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary-light to-primary opacity-95" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary-light to-primary opacity-95 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 dark:opacity-100" />
       
       {/* Animated shapes */}
       <motion.div
@@ -46,8 +46,8 @@ const CTA = () => {
           transition={{ duration: 0.5 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/90 mb-8">
-            <Sparkles size={16} />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/90 mb-8 dark:bg-primary/20 dark:border dark:border-primary/30">
+            <Sparkles size={16} className="dark:text-primary" />
             <span className="text-sm font-medium">
               Start your 14-day free trial
             </span>
@@ -65,7 +65,7 @@ const CTA = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button
               size="xl"
-              className="bg-white text-primary hover:bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-white text-primary hover:bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 dark:bg-primary dark:text-white dark:hover:bg-primary-light"
             >
               Get Started Free
               <ArrowRight size={20} />
@@ -73,7 +73,7 @@ const CTA = () => {
             <Button
               size="xl"
               variant="ghost"
-              className="text-white border-2 border-white/30 hover:bg-white/10 hover:text-white"
+              className="text-white border-2 border-white/30 hover:bg-white/10 hover:text-white dark:border-primary/50 dark:hover:bg-primary/20"
             >
               Schedule a Demo
             </Button>
