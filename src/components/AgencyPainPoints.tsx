@@ -162,8 +162,10 @@ const AgencyPainPoints = () => {
               </div>
 
               {/* Solution Section */}
-              <div className="text-right mb-4">
-                <p className="text-sm text-foreground font-medium">EzRecruit changes that from the first step.</p>
+              <div className="text-right mb-6">
+                <p className="text-base md:text-lg font-semibold">
+                  <span className="text-primary">EzRecruit</span> <span className="text-foreground">changes that from the first step.</span>
+                </p>
               </div>
 
               {/* Horizontal Cards - Side by Side */}
