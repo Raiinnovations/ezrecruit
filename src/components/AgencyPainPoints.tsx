@@ -8,6 +8,7 @@ const stepsData = [
   {
     step: 1,
     title: "Get Requirement",
+    problemHeading: "Unclear job briefs causing wrong submissions",
     icon: FileText,
     painPoints: [
       "We got the JD... but it's unclear",
@@ -24,6 +25,7 @@ const stepsData = [
   {
     step: 2,
     title: "Brief Recruiter",
+    problemHeading: "Lost visibility when briefing recruiters",
     icon: Users,
     painPoints: [
       "Managers can't see what recruiters are working on",
@@ -40,6 +42,7 @@ const stepsData = [
   {
     step: 3,
     title: "Hunt Candidates",
+    problemHeading: "Expensive sourcing with no quality control",
     icon: Search,
     painPoints: [
       "₹300–₹500 spent per profile — with no clarity on quality",
@@ -56,6 +59,7 @@ const stepsData = [
   {
     step: 4,
     title: "Screen CVs",
+    problemHeading: "Inconsistent screening without feedback",
     icon: FileCheck,
     painPoints: [
       "Different recruiters screen differently",
@@ -72,6 +76,7 @@ const stepsData = [
   {
     step: 5,
     title: "Submit to Client",
+    problemHeading: "Manual trackers killing productivity",
     icon: Send,
     painPoints: [
       "Recruiters spend 60–90 minutes daily on trackers",
@@ -88,6 +93,7 @@ const stepsData = [
   {
     step: 6,
     title: "Close Candidate",
+    problemHeading: "Closure chaos with scattered data",
     icon: Trophy,
     painPoints: [
       "Interview drop-offs due to poor follow-ups",
@@ -289,13 +295,20 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
     >
       {/* Browser-style window frame */}
       <div className="rounded-2xl border border-border/50 bg-muted/30 shadow-xl overflow-hidden h-full flex flex-col">
-        {/* Browser header bar */}
-        <div className="flex items-center gap-2 px-4 py-2.5 bg-muted/50 border-b border-border/30">
-          <div className="flex-1 flex justify-center">
-            <div className="px-4 py-1 rounded-md bg-background/50 text-xs text-muted-foreground flex items-center gap-2">
-              <Icon className="w-3 h-3" />
-              Step-{stepData.step}-{stepData.title}
+        {/* Header bar with problem heading */}
+        <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-b border-primary/20">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+              <Icon className="w-4 h-4 text-primary" />
             </div>
+            <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+              Step {stepData.step}
+            </span>
+          </div>
+          <div className="flex-1">
+            <h3 className="text-sm md:text-base font-semibold text-foreground">
+              {stepData.problemHeading}
+            </h3>
           </div>
         </div>
 
