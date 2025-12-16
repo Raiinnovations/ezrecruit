@@ -404,7 +404,7 @@ const AgencyPainPoints = () => {
     <section ref={containerRef} className="relative bg-background" style={{ height: `${stepsData.length * 100}vh` }}>
       {/* Sticky container */}
       <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
-        <div className="container mx-auto px-4 py-6 md:py-8 flex-1 flex flex-col max-h-screen">
+        <div className="container mx-auto px-4 pt-2 md:pt-4 pb-6 md:pb-8 flex-1 flex flex-col max-h-screen">
           {/* Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
