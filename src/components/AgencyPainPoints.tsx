@@ -176,7 +176,7 @@ const ChatBubble = ({ message, delay, resetKey }: { message: string; delay: numb
   );
 };
 
-// Solution card with staggered animation - carousel style
+// Solution card with scroll animation - center card zooms
 const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: string }; delay: number; isFocused: boolean }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -188,23 +188,23 @@ const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: str
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30, scale: 0.9 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={isVisible ? { 
-        opacity: isFocused ? 1 : 0.7, 
-        y: isFocused ? 0 : 8, 
-        scale: isFocused ? 1 : 0.9 
-      } : { opacity: 0, y: 30, scale: 0.9 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      className={`bg-card rounded-xl overflow-hidden flex flex-col transition-all duration-400 flex-shrink-0 ${
+        opacity: isFocused ? 1 : 0.5, 
+        y: 0, 
+        scale: isFocused ? 1.1 : 0.85,
+      } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={`bg-card rounded-xl overflow-hidden flex flex-col flex-shrink-0 w-[160px] md:w-[200px] transition-shadow duration-300 ${
         isFocused 
-          ? "border-2 border-primary/30 shadow-2xl z-10 w-[30%] md:w-[32%]" 
-          : "border border-border/40 shadow-lg w-[24%] md:w-[26%]"
+          ? "border-2 border-primary/40 shadow-2xl z-10" 
+          : "border border-border/30 shadow-md"
       }`}
     >
       {/* Solution Heading */}
-      <div className={`${isFocused ? 'p-2 md:p-3' : 'p-1.5 md:p-2'} bg-muted/30`}>
-        <div className={`${isFocused ? 'px-2 md:px-4 py-1.5 md:py-2' : 'px-2 md:px-3 py-1 md:py-1.5'} rounded-lg bg-primary/10 border border-primary/20`}>
-          <h3 className={`${isFocused ? 'text-[10px] md:text-xs' : 'text-[9px] md:text-[10px]'} font-bold text-primary leading-tight`}>
+      <div className="p-2 md:p-3 bg-muted/30">
+        <div className="px-2 md:px-3 py-1.5 md:py-2 rounded-lg bg-primary/10 border border-primary/20">
+          <h3 className="text-[9px] md:text-[11px] font-bold text-primary leading-tight">
             {solution.heading}
           </h3>
         </div>
@@ -215,9 +215,7 @@ const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: str
         <img
           src={requirementIntake}
           alt={solution.heading}
-          className={`w-full object-cover object-top rounded-md transition-all duration-400 ${
-            isFocused ? 'h-[100px] md:h-[160px]' : 'h-[80px] md:h-[120px]'
-          }`}
+          className="w-full h-[80px] md:h-[120px] object-cover object-top rounded-md"
         />
       </div>
     </motion.div>
@@ -362,16 +360,25 @@ const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData:
         </p>
       </motion.div>
 
-      {/* Solution Cards - Horizontal carousel with animated focus */}
-      <div className="flex items-center justify-center gap-2 md:gap-4 flex-1 min-h-0">
-        {stepData.solutions.map((solution, idx) => (
-          <SolutionCard 
-            key={`${animationKey}-${idx}`} 
-            solution={solution} 
-            delay={4000 + idx * 400} 
-            isFocused={idx === focusedIndex}
-          />
-        ))}
+      {/* Solution Cards - Horizontal scrolling carousel */}
+      <div className="flex items-center justify-center flex-1 min-h-0 overflow-hidden">
+        <motion.div 
+          className="flex items-center gap-4 md:gap-6"
+          animate={{ 
+            x: `calc(50% - ${focusedIndex * 180 + 90}px)` 
+          }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          style={{ marginLeft: '-50%' }}
+        >
+          {stepData.solutions.map((solution, idx) => (
+            <SolutionCard 
+              key={`${animationKey}-${idx}`} 
+              solution={solution} 
+              delay={4000 + idx * 300} 
+              isFocused={idx === focusedIndex}
+            />
+          ))}
+        </motion.div>
       </div>
       
       {/* Carousel dots indicator */}
