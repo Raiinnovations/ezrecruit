@@ -40,7 +40,7 @@ const WhyEzRecruit = () => {
   ];
 
   return (
-    <section id="why-ezrecruit" className="py-20 bg-background">
+    <section id="why-ezrecruit" className="pt-10 pb-20 bg-background">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
