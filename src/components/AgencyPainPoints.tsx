@@ -291,11 +291,6 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
       <div className="rounded-2xl border border-border/50 bg-muted/30 shadow-xl overflow-hidden h-full flex flex-col">
         {/* Browser header bar */}
         <div className="flex items-center gap-2 px-4 py-2.5 bg-muted/50 border-b border-border/30">
-          <div className="flex gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-red-400/70" />
-            <div className="w-3 h-3 rounded-full bg-yellow-400/70" />
-            <div className="w-3 h-3 rounded-full bg-green-400/70" />
-          </div>
           <div className="flex-1 flex justify-center">
             <div className="px-4 py-1 rounded-md bg-background/50 text-xs text-muted-foreground flex items-center gap-2">
               <Icon className="w-3 h-3" />
