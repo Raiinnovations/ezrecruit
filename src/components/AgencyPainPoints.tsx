@@ -215,7 +215,7 @@ const SolutionCard = ({ solution, delay, index, isFocused }: { solution: { headi
           src={requirementIntake}
           alt={solution.heading}
           className={`w-full object-cover object-top rounded-lg ${
-            isFocused ? 'h-[200px] md:h-[280px]' : 'h-[150px] md:h-[200px]'
+            isFocused ? 'h-[280px] md:h-[380px]' : 'h-[220px] md:h-[300px]'
           }`}
         />
       </div>
