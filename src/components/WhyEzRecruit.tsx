@@ -108,6 +108,14 @@ const WhyEzRecruit = () => {
                     <p className="text-xl md:text-2xl font-bold text-primary mb-0.5">25-40%</p>
                     <p className="text-xs text-muted-foreground">Less back-and-forth communication</p>
                   </div>
+                  <div className="bg-muted/50 rounded-lg p-3">
+                    <p className="text-xl md:text-2xl font-bold text-primary mb-0.5">30-50%</p>
+                    <p className="text-xs text-muted-foreground">Reduction in duplicate submissions</p>
+                  </div>
+                  <div className="bg-muted/50 rounded-lg p-3">
+                    <p className="text-xl md:text-2xl font-bold text-primary mb-0.5">15-20%</p>
+                    <p className="text-xs text-muted-foreground">Lower cost per placement</p>
+                  </div>
                 </div>
               </div>
             </motion.div>
