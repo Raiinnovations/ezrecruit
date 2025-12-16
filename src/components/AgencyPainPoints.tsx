@@ -96,32 +96,66 @@ const AgencyPainPoints = () => {
                     <User className="w-6 h-6 text-white" />
                   </motion.div>
                   
-                  {/* Chat Bubbles Container */}
-                  <div className="flex flex-wrap items-start gap-3 pt-1">
+                  {/* Chat Bubbles Container - Vertical Stack */}
+                  <div className="flex flex-col gap-3 pt-1">
                     {chatMessages.map((msg, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 10, scale: 0.9 }}
-                        animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 10, scale: 0.9 }}
-                        transition={{ 
-                          duration: 0.5, 
-                          delay: msg.delay,
-                          type: "spring",
-                          stiffness: 200,
-                          damping: 20
-                        }}
-                        className="relative group"
-                      >
-                        {/* Speech bubble */}
-                        <div className="relative bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-700 dark:to-slate-800 px-4 py-2.5 rounded-2xl rounded-bl-sm text-sm text-slate-700 dark:text-slate-200 shadow-md border border-slate-200/50 dark:border-slate-600/50 hover:shadow-lg transition-shadow duration-300">
-                          {/* Tail */}
-                          <div className="absolute -left-1.5 bottom-1 w-3 h-3 bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-700 dark:to-slate-800 transform rotate-45 border-l border-b border-slate-200/50 dark:border-slate-600/50" />
-                          <span className="relative z-10 font-medium">{msg.text}</span>
-                        </div>
-                        
-                        {/* Subtle glow effect on hover */}
-                        <div className="absolute inset-0 rounded-2xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl" />
-                      </motion.div>
+                      <div key={index} className="relative">
+                        {/* Typing Indicator - shows before message */}
+                        <motion.div
+                          initial={{ opacity: 1 }}
+                          animate={isInView ? { opacity: 0 } : { opacity: 1 }}
+                          transition={{ duration: 0.3, delay: msg.delay - 0.1 }}
+                          className="absolute inset-0"
+                        >
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={isInView ? { opacity: [0, 1, 1, 0], scale: 1 } : { opacity: 0 }}
+                            transition={{ 
+                              duration: msg.delay - (index > 0 ? chatMessages[index - 1].delay : 0),
+                              delay: index > 0 ? chatMessages[index - 1].delay + 0.3 : 0.3,
+                              times: [0, 0.1, 0.9, 1]
+                            }}
+                            className="bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-700 dark:to-slate-800 px-4 py-3 rounded-2xl rounded-bl-sm shadow-md border border-slate-200/50 dark:border-slate-600/50 inline-flex items-center gap-1"
+                          >
+                            <motion.span
+                              animate={{ opacity: [0.4, 1, 0.4] }}
+                              transition={{ duration: 0.8, repeat: Infinity, delay: 0 }}
+                              className="w-2 h-2 rounded-full bg-slate-400"
+                            />
+                            <motion.span
+                              animate={{ opacity: [0.4, 1, 0.4] }}
+                              transition={{ duration: 0.8, repeat: Infinity, delay: 0.2 }}
+                              className="w-2 h-2 rounded-full bg-slate-400"
+                            />
+                            <motion.span
+                              animate={{ opacity: [0.4, 1, 0.4] }}
+                              transition={{ duration: 0.8, repeat: Infinity, delay: 0.4 }}
+                              className="w-2 h-2 rounded-full bg-slate-400"
+                            />
+                          </motion.div>
+                        </motion.div>
+
+                        {/* Actual Message */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 10, scale: 0.9 }}
+                          transition={{ 
+                            duration: 0.4, 
+                            delay: msg.delay,
+                            type: "spring",
+                            stiffness: 200,
+                            damping: 20
+                          }}
+                          className="relative group"
+                        >
+                          {/* Speech bubble */}
+                          <div className="relative bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-700 dark:to-slate-800 px-4 py-2.5 rounded-2xl rounded-bl-sm text-sm text-slate-700 dark:text-slate-200 shadow-md border border-slate-200/50 dark:border-slate-600/50 hover:shadow-lg transition-shadow duration-300 inline-block">
+                            {/* Tail */}
+                            <div className="absolute -left-1.5 bottom-1 w-3 h-3 bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-700 dark:to-slate-800 transform rotate-45 border-l border-b border-slate-200/50 dark:border-slate-600/50" />
+                            <span className="relative z-10 font-medium">{msg.text}</span>
+                          </div>
+                        </motion.div>
+                      </div>
                     ))}
                   </div>
                 </div>
