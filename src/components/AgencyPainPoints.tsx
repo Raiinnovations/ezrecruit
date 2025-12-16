@@ -209,8 +209,8 @@ const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: str
       transition={{ duration: 0.4, ease: "easeOut" }}
       className={`bg-card rounded-xl overflow-hidden flex flex-col transition-all duration-400 flex-shrink-0 ${
         isFocused 
-          ? "border-2 border-primary/30 shadow-2xl z-10 w-[30%] md:w-[32%]" 
-          : "border border-border/40 shadow-lg w-[24%] md:w-[26%]"
+          ? "border-2 border-primary/30 shadow-2xl z-10 w-[28%] md:w-[30%]" 
+          : "border border-border/40 shadow-lg w-[20%] md:w-[24%]"
       }`}
     >
       {/* Solution Heading */}
@@ -228,7 +228,7 @@ const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: str
           src={requirementIntake}
           alt={solution.heading}
           className={`w-full object-cover object-top rounded-md transition-all duration-400 ${
-            isFocused ? 'h-[100px] md:h-[160px]' : 'h-[80px] md:h-[120px]'
+            isFocused ? 'h-[80px] md:h-[140px]' : 'h-[60px] md:h-[100px]'
           }`}
         />
       </div>
