@@ -170,37 +170,34 @@ const AgencyPainPoints = () => {
               <div className="relative h-[380px] md:h-[450px] flex items-center justify-center">
                 {solutions.map((solution, index) => {
                   const isActive = index === activeSlide;
-                  // Calculate position - stack from bottom-left to top-right
-                  const baseOffset = index * 40;
-                  const yOffset = (solutions.length - 1 - index) * 35;
-                  const xOffset = index * 50;
+                  // Fixed positions - stack from bottom-left to top-right
+                  const yOffset = (solutions.length - 1 - index) * 40;
+                  const xOffset = index * 55;
                   
                   return (
                     <motion.div
                       key={index}
-                      initial={{ opacity: 0, y: 100, x: -50 }}
                       animate={{
-                        opacity: 1,
-                        y: yOffset,
-                        x: xOffset,
-                        scale: isActive ? 1.03 : 0.95,
-                        zIndex: isActive ? 20 : index + 1,
+                        scale: isActive ? 1.03 : 1,
+                        filter: isActive ? 'brightness(1)' : 'brightness(0.9)',
                       }}
                       transition={{ 
                         type: "spring",
-                        stiffness: 120,
-                        damping: 20,
-                        mass: 0.8,
+                        stiffness: 300,
+                        damping: 25,
                       }}
-                      whileHover={{ scale: isActive ? 1.03 : 0.98 }}
+                      whileHover={{ scale: isActive ? 1.03 : 1.01 }}
                       onClick={() => setActiveSlide(index)}
-                      className={`absolute bg-card rounded-xl overflow-hidden cursor-pointer transition-shadow duration-500 ${
+                      className={`absolute bg-card rounded-xl overflow-hidden cursor-pointer transition-shadow duration-300 ${
                         isActive 
-                          ? 'shadow-2xl ring-2 ring-primary/30' 
-                          : 'shadow-lg hover:shadow-xl'
+                          ? 'shadow-2xl ring-2 ring-primary/40' 
+                          : 'shadow-lg'
                       }`}
                       style={{
-                        width: 'min(85%, 550px)',
+                        width: 'min(80%, 520px)',
+                        top: yOffset,
+                        left: `calc(50% - min(40%, 260px) + ${xOffset}px)`,
+                        zIndex: isActive ? 20 : index + 1,
                       }}
                     >
                       {/* Primary Color Header Bar */}
@@ -211,13 +208,11 @@ const AgencyPainPoints = () => {
                       </div>
                       
                       {/* Screenshot */}
-                      <div className="relative bg-background border-t-0">
+                      <div className="relative bg-background">
                         <img
                           src={solution.screenshot}
                           alt={solution.heading}
-                          className={`w-full h-auto max-h-[260px] md:max-h-[320px] object-cover object-top transition-opacity duration-300 ${
-                            isActive ? 'opacity-100' : 'opacity-90'
-                          }`}
+                          className="w-full h-auto max-h-[250px] md:max-h-[310px] object-cover object-top"
                         />
                       </div>
                     </motion.div>
