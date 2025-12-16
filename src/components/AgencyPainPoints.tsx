@@ -60,7 +60,7 @@ const AgencyPainPoints = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-5xl mx-auto"
+          className="max-w-7xl mx-auto"
         >
           {/* Browser-style window frame */}
           <div className="rounded-2xl border border-border/50 bg-muted/30 shadow-xl overflow-hidden">
