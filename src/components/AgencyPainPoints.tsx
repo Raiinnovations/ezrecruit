@@ -9,6 +9,7 @@ const stepsData = [
     step: 1,
     title: "Get Requirement",
     problemHeading: "Unclear job briefs causing wrong submissions",
+    stepIntro: "It usually starts with a problem.",
     icon: FileText,
     painPoints: [
       "We got the JD... but it's unclear",
@@ -26,6 +27,7 @@ const stepsData = [
     step: 2,
     title: "Brief Recruiter",
     problemHeading: "Lost visibility when briefing recruiters",
+    stepIntro: "Now the job is live — but another problem appears.",
     icon: Users,
     painPoints: [
       "Managers can't see what recruiters are working on",
@@ -43,6 +45,7 @@ const stepsData = [
     step: 3,
     title: "Hunt Candidates",
     problemHeading: "Expensive sourcing with no quality control",
+    stepIntro: "This is where time and money usually drain fast.",
     icon: Search,
     painPoints: [
       "₹300–₹500 spent per profile — with no clarity on quality",
@@ -60,6 +63,7 @@ const stepsData = [
     step: 4,
     title: "Screen CVs",
     problemHeading: "Inconsistent screening without feedback",
+    stepIntro: "Screening should build learning — not lose it.",
     icon: FileCheck,
     painPoints: [
       "Different recruiters screen differently",
@@ -77,6 +81,7 @@ const stepsData = [
     step: 5,
     title: "Submit to Client",
     problemHeading: "Manual trackers killing productivity",
+    stepIntro: "Submission shouldn't feel like admin work.",
     icon: Send,
     painPoints: [
       "Recruiters spend 60–90 minutes daily on trackers",
@@ -94,6 +99,7 @@ const stepsData = [
     step: 6,
     title: "Close Candidate",
     problemHeading: "Closure chaos with scattered data",
+    stepIntro: "The final step is where deals are often lost.",
     icon: Trophy,
     painPoints: [
       "Interview drop-offs due to poor follow-ups",
@@ -316,7 +322,7 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
         <div className="p-4 md:p-6 bg-gradient-to-br from-background to-muted/20 flex-1 flex flex-col min-h-0">
           {/* Problem Section with Chat Bubbles */}
           <div className="mb-4" key={animationKey}>
-            <p className="text-xs md:text-sm text-muted-foreground mb-3">It usually starts with a problem.</p>
+            <p className="text-xs md:text-sm text-muted-foreground mb-3">{stepData.stepIntro}</p>
             
             {/* Chat Bubbles with User Icon */}
             <div className="flex items-start gap-3">
