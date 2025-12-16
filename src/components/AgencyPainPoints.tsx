@@ -1,5 +1,6 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import { User } from "lucide-react";
 
 import requirementIntake from "@/assets/screens/requirement-intake.png";
 import evaluationQuestions from "@/assets/screens/evaluation-questions.png";
@@ -11,9 +12,9 @@ const AgencyPainPoints = () => {
   const [activeSlide, setActiveSlide] = useState(0);
 
   const chatMessages = [
-    { text: "We got the JD... but it's unclear", delay: 0.3 },
-    { text: "Different recruiters understood it differently.", delay: 0.8 },
-    { text: "Got the wrong briefs that led me to wrong submission", delay: 1.3 },
+    { text: "We got the JD... but it's unclear", delay: 0.5 },
+    { text: "Different recruiters understood it differently.", delay: 1.2 },
+    { text: "Got the wrong briefs that led me to wrong submission", delay: 1.9 },
   ];
 
   const solutions = [
@@ -79,23 +80,53 @@ const AgencyPainPoints = () => {
 
             {/* Content area */}
             <div className="p-6 md:p-8 bg-gradient-to-br from-background to-muted/20">
-              {/* Problem Section */}
-              <div className="mb-6">
+              {/* Problem Section with Chat Bubbles */}
+              <div className="mb-8">
                 <p className="text-sm text-muted-foreground mb-4">It usually starts with a problem.</p>
                 
-                {/* Animated Chat Bubbles */}
-                <div className="flex flex-wrap gap-3 mb-6">
-                  {chatMessages.map((msg, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: -20, scale: 0.9 }}
-                      animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: -20, scale: 0.9 }}
-                      transition={{ duration: 0.4, delay: msg.delay }}
-                      className="bg-amber-100 dark:bg-amber-900/30 text-amber-900 dark:text-amber-100 px-4 py-2 rounded-lg text-sm border border-amber-200 dark:border-amber-800/50 shadow-sm"
-                    >
-                      {msg.text}
-                    </motion.div>
-                  ))}
+                {/* Animated Chat Bubbles with User Icon */}
+                <div className="flex items-start gap-3">
+                  {/* User Avatar */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.3, delay: 0.2 }}
+                    className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-200 dark:bg-amber-800 flex items-center justify-center"
+                  >
+                    <User className="w-5 h-5 text-amber-800 dark:text-amber-200" />
+                  </motion.div>
+                  
+                  {/* Chat Bubbles Container */}
+                  <div className="flex flex-wrap items-center gap-2">
+                    {chatMessages.map((msg, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: -15, scale: 0.8 }}
+                        animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: -15, scale: 0.8 }}
+                        transition={{ duration: 0.4, delay: msg.delay }}
+                        className="relative"
+                      >
+                        {/* Speech bubble with tail */}
+                        <div className="relative bg-muted/80 dark:bg-muted/50 border border-border/50 px-4 py-2 rounded-lg text-sm text-foreground shadow-sm">
+                          {/* Tail for first bubble */}
+                          {index === 0 && (
+                            <div className="absolute -left-2 top-3 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[8px] border-r-muted/80 dark:border-r-muted/50" />
+                          )}
+                          {msg.text}
+                        </div>
+                        
+                        {/* Connecting line to next bubble */}
+                        {index < chatMessages.length - 1 && (
+                          <motion.div
+                            initial={{ scaleX: 0 }}
+                            animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
+                            transition={{ duration: 0.3, delay: msg.delay + 0.3 }}
+                            className="hidden md:block absolute top-1/2 -right-3 w-4 h-px bg-border origin-left"
+                          />
+                        )}
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
