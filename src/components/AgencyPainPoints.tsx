@@ -367,50 +367,6 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
   );
 };
 
-interface StepIndicatorProps {
-  step: typeof stepsData[0];
-  scrollYProgress: MotionValue<number>;
-  index: number;
-  total: number;
-}
-
-const StepIndicator = ({ step, scrollYProgress, index, total }: StepIndicatorProps) => {
-  const stepStart = index / total;
-  const stepEnd = (index + 1) / total;
-  
-  // First indicator starts active
-  const scaleIn = index === 0 ? [1.2, 1.2] : [1, 1.2];
-  const scaleOut = index === total - 1 ? [1.2, 1.2] : [1.2, 1];
-  
-  const scale = useTransform(
-    scrollYProgress,
-    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
-    [...scaleIn, ...scaleOut]
-  );
-  
-  const opacityIn = index === 0 ? [1, 1] : [0.3, 1];
-  const opacityOut = index === total - 1 ? [1, 1] : [1, 0.3];
-  
-  const bgOpacity = useTransform(
-    scrollYProgress,
-    [stepStart, stepStart + 0.05, stepEnd - 0.05, stepEnd],
-    [...opacityIn, ...opacityOut]
-  );
-
-  return (
-    <motion.div
-      style={{ scale }}
-      className="flex items-center gap-1"
-    >
-      <motion.div
-        style={{ opacity: bgOpacity }}
-        className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-primary flex items-center justify-center text-xs font-semibold text-primary-foreground"
-      >
-        {step.step}
-      </motion.div>
-    </motion.div>
-  );
-};
 
 const AgencyPainPoints = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -436,18 +392,6 @@ const AgencyPainPoints = () => {
             </h2>
           </motion.div>
 
-          {/* Step Indicators */}
-          <div className="flex justify-center gap-1.5 md:gap-2 mb-4 md:mb-6">
-            {stepsData.map((step, index) => (
-              <StepIndicator
-                key={index}
-                step={step}
-                scrollYProgress={scrollYProgress}
-                index={index}
-                total={stepsData.length}
-              />
-            ))}
-          </div>
 
           {/* Cards Container */}
           <div className="relative flex-1 max-w-6xl mx-auto w-full min-h-0">
