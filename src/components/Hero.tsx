@@ -411,17 +411,49 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mt-20 relative"
         >
-          <div className="relative mx-auto max-w-4xl">
-            {/* Glowing animated border for dark mode */}
-            <div className="hidden dark:block absolute -inset-[2px] rounded-xl bg-gradient-to-r from-transparent via-primary to-transparent opacity-75 blur-sm animate-spin-slow" />
-            <div className="hidden dark:block absolute -inset-[1px] rounded-xl overflow-hidden">
+          <div className="relative mx-auto max-w-4xl group">
+            {/* Moving glow border for dark mode */}
+            <div className="hidden dark:block absolute -inset-[1px] rounded-xl">
+              {/* Static subtle border */}
+              <div className="absolute inset-0 rounded-xl border border-primary/20" />
+              {/* Moving glow that travels along the border */}
               <motion.div
-                className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent_0%,hsl(var(--primary))_10%,hsl(var(--primary-light))_20%,transparent_30%)]"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                className="absolute w-24 h-24 rounded-full pointer-events-none"
+                style={{
+                  background: "radial-gradient(circle, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.5) 40%, transparent 70%)",
+                  filter: "blur(8px)",
+                }}
+                animate={{
+                  left: ["0%", "calc(100% - 96px)", "calc(100% - 96px)", "0%", "0%"],
+                  top: ["0%", "0%", "calc(100% - 96px)", "calc(100% - 96px)", "0%"],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "linear",
+                  times: [0, 0.25, 0.5, 0.75, 1],
+                }}
+              />
+              {/* Second glow traveling opposite direction for fuller effect */}
+              <motion.div
+                className="absolute w-24 h-24 rounded-full pointer-events-none"
+                style={{
+                  background: "radial-gradient(circle, hsl(var(--primary-light)) 0%, hsl(var(--primary-light) / 0.4) 40%, transparent 70%)",
+                  filter: "blur(8px)",
+                }}
+                animate={{
+                  left: ["calc(100% - 96px)", "0%", "0%", "calc(100% - 96px)", "calc(100% - 96px)"],
+                  top: ["calc(100% - 96px)", "calc(100% - 96px)", "0%", "0%", "calc(100% - 96px)"],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "linear",
+                  times: [0, 0.25, 0.5, 0.75, 1],
+                }}
               />
             </div>
-            <div className="glass-card rounded-xl p-1.5 md:p-2 relative z-10 dark:shadow-[0_0_40px_hsl(var(--primary)/0.2)]">
+            <div className="glass-card rounded-xl p-1.5 md:p-2 relative z-10 dark:bg-card/95">
             {/* AI Powered ATS Badge - positioned at top right corner */}
             <motion.div
               animate={{ y: [0, -6, 0] }}
