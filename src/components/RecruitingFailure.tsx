@@ -338,16 +338,23 @@ const RecruitingFailure = () => {
                         </motion.span>
                       )}
 
-                      {/* Waste label for duplication/rework/unclear */}
+                      {/* Waste label with price for duplication/rework/unclear */}
                       {getWasteLabel(storyAnimation.profiles[index].status) && (
                         <motion.div
                           initial={{ opacity: 0, x: 20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.3 }}
-                          className="flex items-center gap-1.5"
+                          className="flex items-center gap-2"
                         >
                           <motion.span
-                            animate={{ x: [0, 10, 10], opacity: [1, 1, 0.5] }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="text-sm font-semibold text-primary"
+                          >
+                            {storyAnimation.profiles[index].cost}
+                          </motion.span>
+                          <motion.span
+                            animate={{ x: [0, 5, 5], opacity: [1, 1, 0.7] }}
                             transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 0.5 }}
                             className={`text-xs font-medium ${
                               storyAnimation.profiles[index].status === "duplicate" ? "text-orange-500" :
@@ -369,33 +376,6 @@ const RecruitingFailure = () => {
                   </motion.div>
                 ))}
               </AnimatePresence>
-
-              {/* Waste funnel animation for Cost Detail step */}
-              {storyAnimation.showWaste && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2"
-                >
-                  <motion.div
-                    animate={{ 
-                      y: [0, 5, 0],
-                      rotate: [0, 5, -5, 0]
-                    }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="p-3 rounded-full bg-destructive/10 border border-destructive/30"
-                  >
-                    <Trash2 className="w-8 h-8 text-destructive/70" />
-                  </motion.div>
-                  <motion.span
-                    animate={{ opacity: [0.5, 1, 0.5] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                    className="text-xs text-destructive/70 font-medium"
-                  >
-                    Wasted Effort
-                  </motion.span>
-                </motion.div>
-              )}
 
               {/* Story message */}
               <motion.div
