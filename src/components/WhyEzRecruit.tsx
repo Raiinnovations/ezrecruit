@@ -270,7 +270,7 @@ const WhyEzRecruit = () => {
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
   return (
-    <section id="why-ezrecruit" className="pt-10 pb-8 bg-background relative overflow-hidden" ref={containerRef}>
+    <section id="why-ezrecruit" className="pt-6 md:pt-8 pb-8 bg-background relative overflow-hidden" ref={containerRef}>
       {/* Animated background */}
       <motion.div
         className="absolute inset-0 opacity-30"
