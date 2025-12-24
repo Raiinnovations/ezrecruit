@@ -23,6 +23,7 @@ interface FeaturePoint {
 
 interface Screen {
   title: string;
+  icon: LucideIcon;
   image: string;
   headline: string;
   description: string;
@@ -33,6 +34,7 @@ interface Screen {
 const screens: Screen[] = [
   { 
     title: "Brief", 
+    icon: FileText,
     image: Requirement, 
     headline: "Define Once, Brief Right Every Time",
     description: "Wrong briefs lead to wrong submissions and wrong outcomes. With the Requirement module, eliminate miscommunication.",
@@ -45,6 +47,7 @@ const screens: Screen[] = [
   },
   { 
     title: "Hunt", 
+    icon: Search,
     image: TaggedSearch, 
     headline: "Make Every Recruiter Effort Reusable",
     description: "Every screened profile has closure potential. Tag candidates to similar jobs and maximize your sourcing ROI.",
@@ -57,6 +60,7 @@ const screens: Screen[] = [
   },
   { 
     title: "Screen", 
+    icon: GitBranch,
     image: Workflow, 
     headline: "No Feedback, No Learning, No Growth",
     description: "Every profile costs ₹300-500 to source. Without feedback, money goes to waste. Track feedback at every interview stage.",
@@ -69,6 +73,7 @@ const screens: Screen[] = [
   },
   { 
     title: "Submit", 
+    icon: User,
     image: Candidate, 
     headline: "Your Talent Pool, Organized",
     description: "Build comprehensive candidate profiles with complete recruitment history and status tracking.",
@@ -81,6 +86,7 @@ const screens: Screen[] = [
   },
   { 
     title: "Close", 
+    icon: Trophy,
     image: Closure, 
     headline: "Celebrate & Track Your Wins",
     description: "View all candidates who have successfully closed against requirements. Maintain separate data for closed candidates.",
@@ -468,58 +474,37 @@ const Hero = () => {
               </AnimatePresence>
             </div>
 
-            {/* Navigation Controls */}
-            <div className="flex items-center justify-center gap-3 mt-2 pb-1">
-              {/* Prev Button */}
-              <button
-                onClick={goToPrev}
-                className="w-8 h-8 rounded-full bg-muted/50 hover:bg-muted border border-border flex items-center justify-center transition-all hover:scale-105"
-                aria-label="Previous slide"
-              >
-                <ChevronLeft size={16} className="text-foreground" />
-              </button>
-
-              {/* Dot Indicators */}
-              <div className="flex items-center gap-1.5">
-                {screens.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentIndex(index)}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      currentIndex === index
-                        ? "w-6 bg-primary"
-                        : "w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
+            {/* Tab Navigation - Like reference image */}
+            <div className="border-b border-border bg-background/50 rounded-b-lg">
+              <div className="flex items-center justify-center overflow-x-auto">
+                {screens.map((screen, index) => {
+                  const TabIcon = screen.icon;
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentIndex(index)}
+                      className={`relative flex items-center gap-2 px-4 md:px-6 py-3 text-sm font-medium transition-all whitespace-nowrap ${
+                        currentIndex === index
+                          ? "text-primary"
+                          : "text-muted-foreground hover:text-foreground"
+                      }`}
+                      aria-label={`View ${screen.title}`}
+                    >
+                      <TabIcon size={16} />
+                      <span className="hidden sm:inline">{screen.title}</span>
+                      {/* Active indicator line */}
+                      {currentIndex === index && (
+                        <motion.div
+                          layoutId="activeTab"
+                          className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+                          initial={false}
+                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                        />
+                      )}
+                    </button>
+                  );
+                })}
               </div>
-
-              {/* Next Button */}
-              <button
-                onClick={goToNext}
-                className="w-8 h-8 rounded-full bg-muted/50 hover:bg-muted border border-border flex items-center justify-center transition-all hover:scale-105"
-                aria-label="Next slide"
-              >
-                <ChevronRight size={16} className="text-foreground" />
-              </button>
-
-              {/* Pause/Play Button */}
-              <button
-                onClick={() => setIsPaused(!isPaused)}
-                className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all hover:scale-105 ${
-                  isPaused 
-                    ? "bg-primary/10 border-primary/30 hover:bg-primary/20" 
-                    : "bg-muted/50 border-border hover:bg-muted"
-                }`}
-                aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
-              >
-                {isPaused ? (
-                  <PlayCircle size={16} className="text-primary" />
-                ) : (
-                  <Pause size={14} className="text-foreground" />
-                )}
-              </button>
             </div>
           </div>
         </motion.div>
