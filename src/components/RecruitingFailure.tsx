@@ -1,6 +1,6 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { AlertTriangle, TrendingDown, IndianRupee, Target } from "lucide-react";
+import { AlertTriangle, TrendingDown, IndianRupee, Target, User, X, Check, AlertCircle } from "lucide-react";
 
 const impactPoints = [
   {
@@ -8,53 +8,32 @@ const impactPoints = [
     icon: AlertTriangle,
     title: "Root Cause",
     description: "Unstructured intake and fragmented recruiter work across distributed teams",
-    animationState: "fragmented"
   },
   {
     id: 2,
     icon: TrendingDown,
     title: "Business Impact",
     description: "Slower sourcing, repeated work, inconsistent quality, and rising cost per profile",
-    animationState: "declining"
   },
   {
     id: 3,
     icon: IndianRupee,
     title: "Cost Detail",
     description: "Each submitted profile costs ₹300–₹500*, with a significant share lost to duplication, rework, or unclear feedback",
-    animationState: "cost"
   },
   {
     id: 4,
     icon: Target,
     title: "Need",
     description: "A system that enforces clarity at intake and converts recruiter effort into reusable, searchable assets",
-    animationState: "target"
   }
 ];
 
-const jobBoardCards = [
-  { 
-    id: 1, 
-    icon: "in", 
-    label: "LinkedIn",
-    bgColor: "bg-primary", 
-    textColor: "text-primary-foreground",
-  },
-  { 
-    id: 2, 
-    icon: "n", 
-    label: "Naukri",
-    bgColor: "bg-primary/80", 
-    textColor: "text-primary-foreground",
-  },
-  { 
-    id: 3, 
-    icon: "i", 
-    label: "Indeed",
-    bgColor: "bg-primary/60", 
-    textColor: "text-primary-foreground",
-  }
+// Candidate profiles for animation
+const candidateProfiles = [
+  { id: 1, name: "Candidate A", role: "Senior Developer", avatar: "A" },
+  { id: 2, name: "Candidate B", role: "Product Manager", avatar: "B" },
+  { id: 3, name: "Candidate C", role: "UX Designer", avatar: "C" },
 ];
 
 const RecruitingFailure = () => {
@@ -68,58 +47,106 @@ const RecruitingFailure = () => {
     
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % impactPoints.length);
-    }, 3000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [isInView]);
 
-  // Get animation variant based on active card
-  const getCardAnimations = () => {
+  // Story-based animation states for each step
+  const getStoryAnimation = (): { 
+    profiles: { x: number; y: number; rotate: number; scale: number; opacity: number; status: string; cost?: string }[];
+    showConnections: boolean;
+    showWarnings: boolean;
+    message: string;
+  } => {
     switch (activeIndex) {
-      case 0: // Root Cause - Fragmented/scattered cards
+      case 0: // Root Cause - Scattered, chaotic, disconnected profiles
         return {
-          positions: [
-            { x: 0, y: 0, rotate: -5, scale: 1, opacity: 0.6 },
-            { x: 60, y: 80, rotate: 8, scale: 0.9, opacity: 0.5 },
-            { x: -40, y: 160, rotate: -3, scale: 0.85, opacity: 0.4 }
-          ]
+          profiles: [
+            { x: -30, y: -40, rotate: -15, scale: 0.9, opacity: 0.7, status: "scattered" },
+            { x: 80, y: 30, rotate: 10, scale: 0.85, opacity: 0.6, status: "scattered" },
+            { x: 0, y: 120, rotate: -5, scale: 0.8, opacity: 0.5, status: "scattered" }
+          ],
+          showConnections: false,
+          showWarnings: true,
+          message: "Fragmented Data"
         };
-      case 1: // Business Impact - Declining/falling cards
+      case 1: // Business Impact - Profiles falling/declining with rejection marks
         return {
-          positions: [
-            { x: 0, y: -20, rotate: 0, scale: 1, opacity: 1 },
-            { x: 30, y: 60, rotate: 5, scale: 0.95, opacity: 0.7 },
-            { x: 60, y: 140, rotate: 10, scale: 0.9, opacity: 0.5 }
-          ]
+          profiles: [
+            { x: 20, y: -20, rotate: 0, scale: 1, opacity: 1, status: "rejected" },
+            { x: 40, y: 60, rotate: 5, scale: 0.95, opacity: 0.8, status: "duplicate" },
+            { x: 60, y: 140, rotate: 8, scale: 0.9, opacity: 0.6, status: "rejected" }
+          ],
+          showConnections: false,
+          showWarnings: true,
+          message: "Repeated Work"
         };
-      case 2: // Cost Detail - Stacked with cost emphasis
+      case 2: // Cost Detail - Stacked profiles with cost indicators
         return {
-          positions: [
-            { x: 20, y: 0, rotate: 0, scale: 1, opacity: 1 },
-            { x: 10, y: 70, rotate: 0, scale: 1, opacity: 1 },
-            { x: 0, y: 140, rotate: 0, scale: 1, opacity: 1 }
-          ]
+          profiles: [
+            { x: 30, y: 0, rotate: 0, scale: 1, opacity: 1, status: "cost", cost: "₹400" },
+            { x: 30, y: 85, rotate: 0, scale: 1, opacity: 1, status: "cost", cost: "₹350" },
+            { x: 30, y: 170, rotate: 0, scale: 1, opacity: 1, status: "cost", cost: "₹500" }
+          ],
+          showConnections: false,
+          showWarnings: false,
+          message: "Rising Costs"
         };
-      case 3: // Need - Converging/organized cards
+      case 3: // Need - Organized, aligned, connected profiles
         return {
-          positions: [
-            { x: 40, y: 20, rotate: 0, scale: 1, opacity: 1 },
-            { x: 40, y: 90, rotate: 0, scale: 1, opacity: 1 },
-            { x: 40, y: 160, rotate: 0, scale: 1, opacity: 1 }
-          ]
+          profiles: [
+            { x: 50, y: 10, rotate: 0, scale: 1, opacity: 1, status: "organized" },
+            { x: 50, y: 95, rotate: 0, scale: 1, opacity: 1, status: "organized" },
+            { x: 50, y: 180, rotate: 0, scale: 1, opacity: 1, status: "organized" }
+          ],
+          showConnections: true,
+          showWarnings: false,
+          message: "Structured System"
         };
       default:
         return {
-          positions: [
-            { x: 0, y: 0, rotate: 0, scale: 1, opacity: 1 },
-            { x: 0, y: 70, rotate: 0, scale: 1, opacity: 1 },
-            { x: 0, y: 140, rotate: 0, scale: 1, opacity: 1 }
-          ]
+          profiles: [
+            { x: 30, y: 0, rotate: 0, scale: 1, opacity: 1, status: "normal" },
+            { x: 30, y: 85, rotate: 0, scale: 1, opacity: 1, status: "normal" },
+            { x: 30, y: 170, rotate: 0, scale: 1, opacity: 1, status: "normal" }
+          ],
+          showConnections: false,
+          showWarnings: false,
+          message: ""
         };
     }
   };
 
-  const cardAnimations = getCardAnimations();
+  const storyAnimation = getStoryAnimation();
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case "rejected":
+        return <X className="w-4 h-4 text-destructive" />;
+      case "duplicate":
+        return <AlertCircle className="w-4 h-4 text-yellow-500" />;
+      case "organized":
+        return <Check className="w-4 h-4 text-green-500" />;
+      default:
+        return null;
+    }
+  };
+
+  const getCardBorderColor = (status: string) => {
+    switch (status) {
+      case "rejected":
+        return "border-destructive/50";
+      case "duplicate":
+        return "border-yellow-500/50";
+      case "organized":
+        return "border-green-500/50";
+      case "cost":
+        return "border-primary/50";
+      default:
+        return "border-border/50";
+    }
+  };
 
   return (
     <section ref={sectionRef} className="py-16 md:py-24 bg-muted/30 relative overflow-hidden">
@@ -217,24 +244,33 @@ const RecruitingFailure = () => {
             })}
           </div>
 
-          {/* Right Side - Animated Job Board Cards */}
+          {/* Right Side - Animated Candidate Profile Cards */}
           <div className="flex-1 relative h-[400px] lg:h-[450px] w-full">
             {/* Background gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 rounded-2xl" />
             
             {/* Floating cards container */}
             <div className="relative h-full flex items-center justify-center">
+              {/* Connection lines for organized state */}
+              {storyAnimation.showConnections && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="absolute left-[calc(25%+20px)] top-[15%] w-1 h-[60%] bg-gradient-to-b from-primary/60 via-primary to-primary/60 rounded-full"
+                />
+              )}
+
               <AnimatePresence mode="sync">
-                {jobBoardCards.map((card, index) => (
+                {candidateProfiles.map((profile, index) => (
                   <motion.div
-                    key={card.id}
+                    key={profile.id}
                     initial={{ opacity: 0, y: 50 }}
                     animate={isInView ? { 
-                      opacity: cardAnimations.positions[index].opacity,
-                      x: cardAnimations.positions[index].x,
-                      y: cardAnimations.positions[index].y,
-                      rotate: cardAnimations.positions[index].rotate,
-                      scale: cardAnimations.positions[index].scale,
+                      opacity: storyAnimation.profiles[index].opacity,
+                      x: storyAnimation.profiles[index].x,
+                      y: storyAnimation.profiles[index].y,
+                      rotate: storyAnimation.profiles[index].rotate,
+                      scale: storyAnimation.profiles[index].scale,
                     } : {}}
                     transition={{
                       duration: 0.8,
@@ -243,44 +279,69 @@ const RecruitingFailure = () => {
                     className="absolute left-1/4"
                   >
                     <motion.div 
-                      className={`flex items-center gap-3 bg-background rounded-xl shadow-lg border transition-all duration-300 p-3 pr-6 ${
-                        activeIndex === index ? 'border-primary/50 shadow-primary/20' : 'border-border/50'
+                      className={`flex items-center gap-3 bg-background rounded-xl shadow-lg border transition-all duration-300 p-3 pr-5 min-w-[200px] ${
+                        getCardBorderColor(storyAnimation.profiles[index].status)
                       }`}
-                      animate={{
-                        boxShadow: activeIndex === index 
-                          ? '0 10px 40px -10px hsl(var(--primary) / 0.3)' 
-                          : '0 4px 20px -5px rgba(0,0,0,0.1)'
-                      }}
                     >
-                      {/* Icon */}
-                      <div className={`w-12 h-12 rounded-lg ${card.bgColor} flex items-center justify-center`}>
-                        <span className={`text-xl font-bold ${card.textColor}`}>{card.icon}</span>
+                      {/* Avatar */}
+                      <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center relative">
+                        <User className="w-6 h-6 text-primary" />
+                        {/* Status badge */}
+                        {getStatusIcon(storyAnimation.profiles[index].status) && (
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-background border border-border flex items-center justify-center"
+                          >
+                            {getStatusIcon(storyAnimation.profiles[index].status)}
+                          </motion.div>
+                        )}
                       </div>
-                      {/* Skeleton lines */}
-                      <div className="space-y-2">
-                        <div className="h-3 w-24 bg-muted rounded-full" />
-                        <div className="h-2 w-16 bg-muted/60 rounded-full" />
+                      
+                      {/* Profile info */}
+                      <div className="flex-1 space-y-1.5">
+                        <div className="h-3 w-20 bg-muted rounded-full" />
+                        <div className="h-2 w-14 bg-muted/60 rounded-full" />
                       </div>
+
+                      {/* Cost indicator for cost state */}
+                      {storyAnimation.profiles[index].status === "cost" && (
+                        <motion.span
+                          initial={{ opacity: 0, x: 10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          className="text-sm font-semibold text-primary"
+                        >
+                          {storyAnimation.profiles[index].cost}
+                        </motion.span>
+                      )}
                     </motion.div>
                   </motion.div>
                 ))}
               </AnimatePresence>
 
-              {/* Status indicator based on active state */}
+              {/* Story message */}
               <motion.div
-                key={activeIndex}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.5 }}
-                className="absolute bottom-8 left-1/2 -translate-x-1/2"
+                key={storyAnimation.message}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4 }}
+                className="absolute top-6 right-6 px-4 py-2 rounded-lg bg-background/80 border border-border/50 backdrop-blur-sm"
+              >
+                <span className="text-sm font-medium text-muted-foreground">{storyAnimation.message}</span>
+              </motion.div>
+
+              {/* Progress dots */}
+              <motion.div
+                className="absolute bottom-6 left-1/2 -translate-x-1/2"
               >
                 <div className="flex gap-2">
                   {impactPoints.map((_, idx) => (
-                    <motion.div
+                    <motion.button
                       key={idx}
+                      onClick={() => setActiveIndex(idx)}
                       className={`h-2 rounded-full transition-all duration-300 ${
-                        idx === activeIndex ? 'w-6 bg-primary' : 'w-2 bg-muted-foreground/30'
+                        idx === activeIndex ? 'w-6 bg-primary' : 'w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50'
                       }`}
                     />
                   ))}
