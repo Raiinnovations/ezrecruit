@@ -3,30 +3,30 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// Import screen images for each workflow step
+import RequirementScreen from "@/assets/screens/3-Requirement.png";
+import TaggedSearchScreen from "@/assets/screens/5-TaggedSearch.png";
+import CandidateScreen from "@/assets/screens/4-Candidate.png";
+import WorkflowScreen from "@/assets/screens/6-Workflow.png";
+import ClosureScreen from "@/assets/screens/7-Closure.png";
+
 // Workflow steps for the sliding product overview
 const workflowSteps = [
-  { id: "brief", label: "Brief", active: false },
-  { id: "hunt", label: "Hunt", active: false },
-  { id: "screen", label: "Screen", active: false },
-  { id: "submit", label: "Submit", active: false },
-  { id: "close", label: "Close", active: true },
-];
-
-// Placeholder candidate data for the preview
-const candidates = [
-  { initials: "AT", name: "Alex Thompson", role: "Data Analyst", status: "Sourced", statusColor: "text-green-500 bg-green-50 dark:bg-green-950/30" },
-  { initials: "AT", name: "Alex Thompson", role: "Data Analyst", status: "Submitted", statusColor: "text-blue-500 bg-blue-50 dark:bg-blue-950/30" },
-  { initials: "AT", name: "Alex Thompson", role: "Data Analyst", status: "Sourced", statusColor: "text-green-500 bg-green-50 dark:bg-green-950/30" },
+  { id: "brief", label: "Brief", screen: RequirementScreen },
+  { id: "hunt", label: "Hunt", screen: TaggedSearchScreen },
+  { id: "screen", label: "Screen", screen: CandidateScreen },
+  { id: "submit", label: "Submit", screen: WorkflowScreen },
+  { id: "close", label: "Close", screen: ClosureScreen },
 ];
 
 const Hero = () => {
-  const [activeStep, setActiveStep] = useState(4); // Start at "Close" (index 4)
+  const [activeStep, setActiveStep] = useState(0);
 
   // Auto-cycle through steps
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % workflowSteps.length);
-    }, 3000);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
@@ -107,9 +107,9 @@ const Hero = () => {
               </div>
 
               {/* Content */}
-              <div className="p-6">
+              <div className="p-4 md:p-6">
                 {/* Workflow Tabs */}
-                <div className="flex justify-center gap-6 mb-4">
+                <div className="flex justify-center gap-4 md:gap-6 mb-4">
                   {workflowSteps.map((step, index) => (
                     <button
                       key={step.id}
@@ -117,7 +117,7 @@ const Hero = () => {
                       className="flex flex-col items-center gap-2 group"
                     >
                       <motion.div
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                        className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${
                           index <= activeStep
                             ? index === activeStep
                               ? "bg-primary text-primary-foreground shadow-lg"
@@ -128,11 +128,11 @@ const Hero = () => {
                         transition={{ duration: 0.3 }}
                       >
                         {index < activeStep ? (
-                          <Check size={20} />
+                          <Check size={18} />
                         ) : index === activeStep ? (
-                          <CheckCircle2 size={20} />
+                          <CheckCircle2 size={18} />
                         ) : (
-                          <Check size={20} />
+                          <Check size={18} />
                         )}
                       </motion.div>
                       <span
@@ -149,7 +149,7 @@ const Hero = () => {
                 </div>
 
                 {/* Progress Bar */}
-                <div className="h-1 bg-muted rounded-full mb-6 overflow-hidden">
+                <div className="h-1 bg-muted rounded-full mb-4 overflow-hidden">
                   <motion.div
                     className="h-full bg-green-500 rounded-full"
                     initial={{ width: "0%" }}
@@ -158,32 +158,19 @@ const Hero = () => {
                   />
                 </div>
 
-                {/* Candidate Cards */}
-                <div className="space-y-3">
+                {/* Product Screenshot */}
+                <div className="relative rounded-lg overflow-hidden bg-muted/30 border border-border">
                   <AnimatePresence mode="wait">
-                    {candidates.map((candidate, index) => (
-                      <motion.div
-                        key={`${activeStep}-${index}`}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                        className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400 text-sm font-semibold">
-                            {candidate.initials}
-                          </div>
-                          <div>
-                            <div className="text-sm font-medium text-foreground">{candidate.name}</div>
-                            <div className="text-xs text-muted-foreground">{candidate.role}</div>
-                          </div>
-                        </div>
-                        <span className={`text-xs font-medium px-3 py-1 rounded-full border ${candidate.statusColor}`}>
-                          {candidate.status}
-                        </span>
-                      </motion.div>
-                    ))}
+                    <motion.img
+                      key={activeStep}
+                      src={workflowSteps[activeStep].screen}
+                      alt={`${workflowSteps[activeStep].label} screen`}
+                      className="w-full h-auto object-cover"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.4 }}
+                    />
                   </AnimatePresence>
                 </div>
 
