@@ -261,7 +261,7 @@ const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData:
         transition={{ delay: 3.5, duration: 0.5 }}
         className="text-right mb-4"
       >
-        <p className="text-2xl md:text-4xl font-bold">
+        <p className="text-sm md:text-base font-semibold">
           <span className="text-primary">EzRecruit</span> <span className="text-foreground">{solutionIntro}</span>
         </p>
       </motion.div>
