@@ -121,7 +121,7 @@ const TypingIndicator = () => (
     {[0, 1, 2].map((i) => (
       <motion.div
         key={i}
-        className="w-2 h-2 rounded-full bg-slate-400"
+        className="w-2 h-2 rounded-full bg-primary/60"
         animate={{ y: [0, -6, 0] }}
         transition={{
           duration: 0.6,
@@ -166,7 +166,7 @@ const ChatBubble = ({ message, delay, resetKey }: { message: string; delay: numb
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            className="bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-800 dark:to-amber-900 rounded-2xl rounded-bl-sm inline-block"
+            className="bg-gradient-to-br from-accent to-accent/80 dark:from-accent dark:to-accent/70 rounded-2xl rounded-bl-sm inline-block border border-primary/20"
           >
             <TypingIndicator />
           </motion.div>
@@ -177,9 +177,9 @@ const ChatBubble = ({ message, delay, resetKey }: { message: string; delay: numb
             initial={{ opacity: 0, scale: 0.8, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="relative bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-800 dark:to-amber-900 px-4 py-2.5 rounded-2xl rounded-bl-sm text-sm text-slate-700 dark:text-slate-200 shadow-md border border-amber-200/50 dark:border-amber-600/50 inline-block"
+            className="relative bg-gradient-to-br from-accent to-accent/80 dark:from-accent dark:to-accent/70 px-4 py-2.5 rounded-2xl rounded-bl-sm text-sm text-foreground shadow-md border border-primary/30 inline-block"
           >
-            <div className="absolute -left-1.5 bottom-1 w-3 h-3 bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-800 dark:to-amber-900 transform rotate-45 border-l border-b border-amber-200/50 dark:border-amber-600/50" />
+            <div className="absolute -left-1.5 bottom-1 w-3 h-3 bg-gradient-to-br from-accent to-accent/80 dark:from-accent dark:to-accent/70 transform rotate-45 border-l border-b border-primary/30" />
             <span className="relative z-10 font-medium">{message}</span>
           </motion.div>
         )}
@@ -327,8 +327,8 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
             {/* Chat Bubbles with User Icon */}
             <div className="flex items-start gap-3">
               {/* User Avatar */}
-              <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-amber-300 to-orange-400 flex items-center justify-center shadow-lg ring-2 ring-white dark:ring-background">
-                <User className="w-4 h-4 md:w-5 md:h-5 text-white" />
+              <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-lg ring-2 ring-white dark:ring-background">
+                <User className="w-4 h-4 md:w-5 md:h-5 text-primary-foreground" />
               </div>
               
               {/* Chat Bubbles Container */}
