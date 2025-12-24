@@ -297,66 +297,67 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center max-w-4xl mx-auto">
-          {/* Badge */}
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+          {/* Left Side - Text Content */}
+          <div className="flex-shrink-0 lg:w-[40%] text-center lg:text-left">
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 text-primary mb-6"
+            >
+              <Zap size={16} className="text-primary" />
+              <span className="text-sm font-medium">AI-Powered Recruitment</span>
+            </motion.div>
+
+            {/* Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-foreground leading-[1.2] tracking-tight mb-6"
+            >
+              EzRecruit The Agency
+              <br />
+              <span className="gradient-text">Operating System</span>
+            </motion.h1>
+
+            {/* Subheadline */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-base md:text-lg text-muted-foreground max-w-xl lg:max-w-none mb-8 leading-relaxed"
+            >
+              A recruiter-centric ATS, built by recruitment practitioners, for streamlined operations, lower cost per profile, and better submissions.
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4"
+            >
+              <Button variant="hero" size="xl">
+                Start Free Trial
+                <ArrowRight size={20} />
+              </Button>
+              <Button variant="heroOutline" size="xl">
+                <Play size={20} />
+                Watch Demo
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* Right Side - Product Overview Carousel */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 text-primary mb-8"
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex-1 w-full lg:w-[60%] relative"
           >
-            <Zap size={16} className="text-primary" />
-            <span className="text-sm font-medium">AI-Powered Recruitment</span>
-          </motion.div>
-
-          {/* Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-[1.3] tracking-tight mb-8"
-          >
-            EzRecruit The Agency
-            <br />
-            <span className="gradient-text">Operating System</span>
-          </motion.h1>
-
-          {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-12 leading-relaxed"
-          >
-            A recruiter-centric ATS, built by recruitment practitioners, for streamlined operations, lower cost per profile, and better submissions.
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
-          >
-            <Button variant="hero" size="xl">
-              Start Free Trial
-              <ArrowRight size={20} />
-            </Button>
-            <Button variant="heroOutline" size="xl">
-              <Play size={20} />
-              Watch Demo
-            </Button>
-          </motion.div>
-
-        </div>
-
-        {/* Hero Image / Dashboard Preview - Autoplay Carousel */}
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-20 relative"
-        >
           <div className="glass-card rounded-xl p-1.5 md:p-2 mx-auto max-w-6xl relative dark:glow-border">
             {/* AI Powered ATS Badge - positioned at top right corner */}
             <motion.div
@@ -494,6 +495,7 @@ const Hero = () => {
             </div>
           </div>
         </motion.div>
+        </div>
       </div>
     </section>
   );
