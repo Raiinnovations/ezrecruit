@@ -15,6 +15,13 @@ import Assignment from "@/assets/screens/8-Assignment.png";
 import AISearch from "@/assets/screens/9-AISearch.png";
 import GoalManagement from "@/assets/screens/10-GoalManagement.png";
 
+// Hero workflow screenshots
+import BriefScreen from "@/assets/screens/brief-requirement.png";
+import HuntScreen from "@/assets/screens/hunt-tagged-search.png";
+import ScreenWorkflow from "@/assets/screens/screen-workflow.png";
+import SubmitScreen from "@/assets/screens/submit-trackers.png";
+import CloseScreen from "@/assets/screens/close-closure.png";
+
 interface FeaturePoint {
   icon: LucideIcon;
   text: string;
@@ -153,13 +160,13 @@ const screens: Screen[] = [
   },
 ];
 
-// Animated Workflow Steps for Hero Section
+// Animated Workflow Steps for Hero Section with Product Screenshots
 const workflowSteps = [
-  { id: 1, label: "Brief", icon: ClipboardList },
-  { id: 2, label: "Hunt", icon: Search },
-  { id: 3, label: "Screen", icon: FileText },
-  { id: 4, label: "Submit", icon: CheckCircle2 },
-  { id: 5, label: "Close", icon: Trophy },
+  { id: 1, label: "Brief", icon: ClipboardList, image: BriefScreen },
+  { id: 2, label: "Hunt", icon: Search, image: HuntScreen },
+  { id: 3, label: "Screen", icon: FileText, image: ScreenWorkflow },
+  { id: 4, label: "Submit", icon: CheckCircle2, image: SubmitScreen },
+  { id: 5, label: "Close", icon: Trophy, image: CloseScreen },
 ];
 
 const WorkflowAnimation = () => {
@@ -168,115 +175,92 @@ const WorkflowAnimation = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % workflowSteps.length);
-    }, 1500);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="relative w-full max-w-xl ml-auto">
-      {/* Background glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 rounded-2xl" />
-      
-      {/* Main container */}
-      <div className="relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-6 md:p-8">
-        {/* Header */}
-        <div className="text-center mb-6">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-3"
-          >
-            <motion.div
-              className="w-2 h-2 rounded-full bg-primary"
-              animate={{ scale: [1, 1.3, 1], opacity: [1, 0.6, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
-            <span className="text-xs font-medium text-primary">Agency Workflow</span>
-          </motion.div>
-          <h3 className="text-base font-semibold text-foreground">Your Recruitment Pipeline</h3>
-        </div>
-
-        {/* Workflow Steps - Horizontal Flow */}
-        <div className="flex items-center justify-between gap-2">
-          {workflowSteps.map((step, index) => {
-            const isActive = activeStep === index;
-            const isPast = index < activeStep;
-            const StepIcon = step.icon;
-
-            return (
-              <div key={step.id} className="flex items-center flex-1">
-                {/* Step Card */}
-                <motion.div
-                  className={`relative flex flex-col items-center p-3 rounded-xl transition-all duration-300 w-full ${
-                    isActive 
-                      ? 'bg-primary/15 border border-primary shadow-md shadow-primary/20' 
-                      : isPast 
-                        ? 'bg-primary/5 border border-primary/30' 
-                        : 'bg-muted/50 border border-border/50'
-                  }`}
-                  animate={isActive ? { scale: 1.05, y: -2 } : { scale: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {/* Step Number */}
-                  <div className={`absolute -top-2 -right-2 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center ${
-                    isActive || isPast ? 'bg-primary text-primary-foreground' : 'bg-muted-foreground/30 text-muted-foreground'
-                  }`}>
-                    {step.id}
-                  </div>
-                  
-                  {/* Icon */}
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-2 ${
-                    isActive 
-                      ? 'bg-primary text-primary-foreground' 
-                      : isPast 
-                        ? 'bg-primary/20 text-primary' 
-                        : 'bg-muted text-muted-foreground'
-                  }`}>
-                    <StepIcon className="w-5 h-5" />
-                  </div>
-                  
-                  {/* Label */}
-                  <span className={`text-xs font-medium ${
-                    isActive ? 'text-primary' : isPast ? 'text-foreground' : 'text-muted-foreground'
-                  }`}>
-                    {step.label}
-                  </span>
-
-                  {/* Active Pulse */}
-                  {isActive && (
-                    <motion.div
-                      className="absolute inset-0 rounded-xl border border-primary"
-                      animate={{ opacity: [0.5, 0, 0.5] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    />
-                  )}
-                </motion.div>
-
-                {/* Connector Arrow */}
-                {index < workflowSteps.length - 1 && (
-                  <motion.div 
-                    className={`flex-shrink-0 mx-1 ${
-                      isPast ? 'text-primary' : 'text-muted-foreground/30'
-                    }`}
-                    animate={isActive ? { x: [0, 2, 0] } : {}}
-                    transition={{ duration: 0.8, repeat: Infinity }}
-                  >
-                    <ArrowRight className="w-4 h-4" />
-                  </motion.div>
-                )}
+    <div className="relative w-full max-w-2xl ml-auto">
+      {/* Product Screenshot Display */}
+      <div className="relative">
+        {/* Screenshot Container with frame */}
+        <div className="relative bg-gradient-to-br from-primary/10 via-background to-primary/5 rounded-2xl p-3 shadow-2xl border border-border/50">
+          {/* Browser-like header */}
+          <div className="flex items-center gap-2 mb-3 px-2">
+            <div className="flex gap-1.5">
+              <div className="w-3 h-3 rounded-full bg-red-400/80" />
+              <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
+              <div className="w-3 h-3 rounded-full bg-green-400/80" />
+            </div>
+            <div className="flex-1 flex justify-center">
+              <div className="px-4 py-1 rounded-full bg-muted/50 text-xs text-muted-foreground">
+                ezrecruit.app
               </div>
-            );
-          })}
+            </div>
+          </div>
+          
+          {/* Screenshot with sliding animation */}
+          <div className="relative overflow-hidden rounded-xl bg-background aspect-[16/10]">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={activeStep}
+                src={workflowSteps[activeStep].image}
+                alt={workflowSteps[activeStep].label}
+                className="w-full h-full object-cover object-left-top"
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+              />
+            </AnimatePresence>
+          </div>
         </div>
 
-        {/* Progress bar */}
-        <div className="mt-6 h-1.5 bg-muted rounded-full overflow-hidden">
-          <motion.div
-            className="h-full bg-gradient-to-r from-primary to-primary-light rounded-full"
-            animate={{ width: `${((activeStep + 1) / workflowSteps.length) * 100}%` }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          />
-        </div>
+        {/* Glow effect behind card */}
+        <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 rounded-3xl blur-2xl -z-10" />
+      </div>
+
+      {/* Workflow Steps Navigation */}
+      <div className="mt-6 flex items-center justify-center gap-2">
+        {workflowSteps.map((step, index) => {
+          const isActive = activeStep === index;
+          const isPast = index < activeStep;
+          const StepIcon = step.icon;
+
+          return (
+            <button
+              key={step.id}
+              onClick={() => setActiveStep(index)}
+              className={`relative flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 ${
+                isActive 
+                  ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/30' 
+                  : isPast 
+                    ? 'bg-primary/10 text-primary hover:bg-primary/20' 
+                    : 'bg-muted/50 text-muted-foreground hover:bg-muted'
+              }`}
+            >
+              <StepIcon className="w-4 h-4" />
+              <span className="text-xs font-medium hidden sm:inline">{step.label}</span>
+              
+              {/* Active indicator */}
+              {isActive && (
+                <motion.div
+                  className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary"
+                  layoutId="activeIndicator"
+                />
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Progress bar */}
+      <div className="mt-4 h-1 bg-muted rounded-full overflow-hidden">
+        <motion.div
+          className="h-full bg-gradient-to-r from-primary to-primary-light rounded-full"
+          animate={{ width: `${((activeStep + 1) / workflowSteps.length) * 100}%` }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        />
       </div>
     </div>
   );
