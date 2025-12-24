@@ -188,8 +188,8 @@ const ChatBubble = ({ message, delay, resetKey }: { message: string; delay: numb
   );
 };
 
-// Solution card with staggered animation - slider style
-const SolutionCard = ({ solution, delay, isActive }: { solution: { heading: string }; delay: number; isActive: boolean }) => {
+// Solution card with staggered animation - carousel style
+const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: string }; delay: number; isFocused: boolean }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -202,22 +202,21 @@ const SolutionCard = ({ solution, delay, isActive }: { solution: { heading: stri
     <motion.div
       initial={{ opacity: 0, y: 30, scale: 0.9 }}
       animate={isVisible ? { 
-        opacity: 1, 
-        y: 0, 
-        scale: 1 
+        opacity: isFocused ? 1 : 0.7, 
+        y: isFocused ? 0 : 8, 
+        scale: isFocused ? 1 : 0.9 
       } : { opacity: 0, y: 30, scale: 0.9 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className={`bg-card rounded-xl overflow-hidden flex flex-col transition-all duration-300 flex-shrink-0 cursor-pointer
-        ${isActive 
-          ? "border-2 border-primary/30 shadow-2xl ring-2 ring-primary/20" 
-          : "border border-border/40 shadow-lg hover:border-primary/20 hover:shadow-xl"
-        }`}
-      style={{ width: '280px' }}
+      className={`bg-card rounded-xl overflow-hidden flex flex-col transition-all duration-400 flex-shrink-0 ${
+        isFocused 
+          ? "border-2 border-primary/30 shadow-2xl z-10 w-[200px] md:w-[300px]" 
+          : "border border-border/40 shadow-lg w-[160px] md:w-[260px]"
+      }`}
     >
       {/* Solution Heading */}
-      <div className="p-2 md:p-3 bg-muted/30">
-        <div className="px-2 md:px-4 py-1.5 md:py-2 rounded-lg bg-primary/10 border border-primary/20">
-          <h3 className="text-[10px] md:text-xs font-bold text-primary leading-tight">
+      <div className={`${isFocused ? 'p-2 md:p-3' : 'p-1.5 md:p-2'} bg-muted/30`}>
+        <div className={`${isFocused ? 'px-2 md:px-4 py-1.5 md:py-2' : 'px-2 md:px-3 py-1 md:py-1.5'} rounded-lg bg-primary/10 border border-primary/20`}>
+          <h3 className={`${isFocused ? 'text-[10px] md:text-xs' : 'text-[9px] md:text-[10px]'} font-bold text-primary leading-tight`}>
             {solution.heading}
           </h3>
         </div>
@@ -228,7 +227,9 @@ const SolutionCard = ({ solution, delay, isActive }: { solution: { heading: stri
         <img
           src={requirementIntake}
           alt={solution.heading}
-          className="w-full h-[80px] md:h-[140px] object-cover object-top rounded-md"
+          className={`w-full object-cover object-top rounded-md transition-all duration-400 ${
+            isFocused ? 'h-[80px] md:h-[140px]' : 'h-[60px] md:h-[100px]'
+          }`}
         />
       </div>
     </motion.div>
@@ -347,55 +348,19 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
   );
 };
 
-// Continuous slider component for solution cards
+// Carousel component for solution cards
 const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData: typeof stepsData[0]; animationKey: number; solutionIntro: string }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const sliderRef = useRef<HTMLDivElement>(null);
+  const [focusedIndex, setFocusedIndex] = useState(0);
 
-  // Auto-scroll effect
   useEffect(() => {
-    if (isPaused) return;
+    setFocusedIndex(0);
     
     const interval = setInterval(() => {
-      setActiveIndex(prev => (prev + 1) % stepData.solutions.length);
-    }, 3000);
+      setFocusedIndex(prev => (prev + 1) % stepData.solutions.length);
+    }, 2000);
 
     return () => clearInterval(interval);
-  }, [animationKey, stepData.solutions.length, isPaused]);
-
-  // Scroll to active card
-  useEffect(() => {
-    if (sliderRef.current) {
-      const cardWidth = 296; // 280px + 16px gap
-      const containerWidth = sliderRef.current.offsetWidth;
-      const scrollPosition = activeIndex * cardWidth - (containerWidth / 2) + (cardWidth / 2);
-      
-      sliderRef.current.scrollTo({
-        left: Math.max(0, scrollPosition),
-        behavior: 'smooth'
-      });
-    }
-  }, [activeIndex]);
-
-  const handleCardClick = (index: number) => {
-    setActiveIndex(index);
-    setIsPaused(true);
-    // Resume auto-scroll after 5 seconds of inactivity
-    setTimeout(() => setIsPaused(false), 5000);
-  };
-
-  const handlePrev = () => {
-    setActiveIndex(prev => (prev - 1 + stepData.solutions.length) % stepData.solutions.length);
-    setIsPaused(true);
-    setTimeout(() => setIsPaused(false), 5000);
-  };
-
-  const handleNext = () => {
-    setActiveIndex(prev => (prev + 1) % stepData.solutions.length);
-    setIsPaused(true);
-    setTimeout(() => setIsPaused(false), 5000);
-  };
+  }, [animationKey, stepData.solutions.length]);
 
   return (
     <>
@@ -411,67 +376,30 @@ const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData:
         </p>
       </motion.div>
 
-      {/* Solution Cards - Continuous slider */}
-      <div className="relative flex-1 min-h-0">
-        {/* Navigation Arrows */}
-        <button 
-          onClick={handlePrev}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 md:w-10 md:h-10 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all"
-          aria-label="Previous"
-        >
-          <svg className="w-4 h-4 md:w-5 md:h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        
-        <button 
-          onClick={handleNext}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 md:w-10 md:h-10 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all"
-          aria-label="Next"
-        >
-          <svg className="w-4 h-4 md:w-5 md:h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-
-        {/* Slider Container */}
-        <div 
-          ref={sliderRef}
-          className="flex items-center gap-4 overflow-x-auto scrollbar-hide px-10 md:px-12 h-full scroll-smooth"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          {stepData.solutions.map((solution, idx) => (
-            <div key={`${animationKey}-${idx}`} onClick={() => handleCardClick(idx)}>
-              <SolutionCard 
-                solution={solution} 
-                delay={4000 + idx * 400} 
-                isActive={idx === activeIndex}
-              />
-            </div>
-          ))}
-        </div>
+      {/* Solution Cards - Horizontal carousel with animated focus */}
+      <div className="flex items-center justify-center gap-2 md:gap-4 flex-1 min-h-0">
+        {stepData.solutions.map((solution, idx) => (
+          <SolutionCard 
+            key={`${animationKey}-${idx}`} 
+            solution={solution} 
+            delay={4000 + idx * 400} 
+            isFocused={idx === focusedIndex}
+          />
+        ))}
       </div>
       
-      {/* Progress indicator dots */}
+      {/* Carousel dots indicator */}
       <div className="flex justify-center gap-2 mt-3">
         {stepData.solutions.map((_, idx) => (
-          <button 
+          <motion.div 
             key={idx}
-            onClick={() => handleCardClick(idx)}
-            className="focus:outline-none"
-            aria-label={`Go to slide ${idx + 1}`}
-          >
-            <motion.div 
-              animate={{ 
-                width: idx === activeIndex ? 24 : 8,
-                backgroundColor: idx === activeIndex ? 'hsl(var(--primary))' : 'hsl(var(--muted-foreground) / 0.3)'
-              }}
-              transition={{ duration: 0.3 }}
-              className="h-1.5 md:h-2 rounded-full cursor-pointer hover:opacity-80"
-            />
-          </button>
+            animate={{ 
+              width: idx === focusedIndex ? 24 : 8,
+              backgroundColor: idx === focusedIndex ? 'hsl(var(--primary))' : 'hsl(var(--muted-foreground) / 0.3)'
+            }}
+            transition={{ duration: 0.3 }}
+            className="h-1.5 md:h-2 rounded-full"
+          />
         ))}
       </div>
     </>
