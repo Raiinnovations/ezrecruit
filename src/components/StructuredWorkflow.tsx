@@ -120,7 +120,7 @@ const StructuredWorkflow = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-6 md:mb-8"
+          className="text-center mb-2 md:mb-4"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
             <span className="text-primary">Enforcing Structured</span> way of sourcing
