@@ -58,8 +58,7 @@ const CTA = () => {
           </h2>
 
           <p className="text-white/80 text-lg mb-10 max-w-2xl mx-auto">
-            Join hundreds of agencies already using EZRecruit to source better
-            candidates, faster. No credit card required.
+            Join EZRecruit to source better candidates, faster.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
