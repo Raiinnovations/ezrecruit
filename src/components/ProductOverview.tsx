@@ -116,9 +116,6 @@ const ProductOverview = () => {
           transition={{ duration: 0.5 }}
           className="text-center max-w-3xl mx-auto mb-12"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-4">
-            Your Complete Toolkit
-          </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
             Product <span className="text-primary">Overview</span>
           </h2>
