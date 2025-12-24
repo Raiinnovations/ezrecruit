@@ -153,6 +153,135 @@ const screens: Screen[] = [
   },
 ];
 
+// Animated Workflow Steps for Hero Section
+const workflowSteps = [
+  { id: 1, label: "Brief", icon: ClipboardList },
+  { id: 2, label: "Hunt", icon: Search },
+  { id: 3, label: "Screen", icon: FileText },
+  { id: 4, label: "Submit", icon: CheckCircle2 },
+  { id: 5, label: "Close", icon: Trophy },
+];
+
+const WorkflowAnimation = () => {
+  const [activeStep, setActiveStep] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % workflowSteps.length);
+    }, 1500);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative w-full">
+      {/* Background glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 rounded-3xl" />
+      
+      {/* Main container */}
+      <div className="relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-3xl p-8 md:p-10">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-4"
+          >
+            <motion.div
+              className="w-2 h-2 rounded-full bg-primary"
+              animate={{ scale: [1, 1.3, 1], opacity: [1, 0.6, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+            <span className="text-xs font-medium text-primary">Agency Workflow</span>
+          </motion.div>
+          <h3 className="text-lg font-semibold text-foreground">Your Recruitment Pipeline</h3>
+        </div>
+
+        {/* Workflow Steps - Horizontal Flow */}
+        <div className="flex items-center justify-between gap-2 md:gap-4">
+          {workflowSteps.map((step, index) => {
+            const isActive = activeStep === index;
+            const isPast = index < activeStep;
+            const StepIcon = step.icon;
+
+            return (
+              <div key={step.id} className="flex items-center flex-1">
+                {/* Step Card */}
+                <motion.div
+                  className={`relative flex flex-col items-center p-3 md:p-4 rounded-xl transition-all duration-300 w-full ${
+                    isActive 
+                      ? 'bg-primary/15 border-2 border-primary shadow-lg shadow-primary/20' 
+                      : isPast 
+                        ? 'bg-primary/5 border border-primary/30' 
+                        : 'bg-muted/50 border border-border/50'
+                  }`}
+                  animate={isActive ? { scale: 1.05, y: -4 } : { scale: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {/* Step Number */}
+                  <div className={`absolute -top-2 -right-2 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center ${
+                    isActive || isPast ? 'bg-primary text-primary-foreground' : 'bg-muted-foreground/30 text-muted-foreground'
+                  }`}>
+                    {step.id}
+                  </div>
+                  
+                  {/* Icon */}
+                  <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center mb-2 ${
+                    isActive 
+                      ? 'bg-primary text-primary-foreground' 
+                      : isPast 
+                        ? 'bg-primary/20 text-primary' 
+                        : 'bg-muted text-muted-foreground'
+                  }`}>
+                    <StepIcon className="w-5 h-5 md:w-6 md:h-6" />
+                  </div>
+                  
+                  {/* Label */}
+                  <span className={`text-xs md:text-sm font-medium ${
+                    isActive ? 'text-primary' : isPast ? 'text-foreground' : 'text-muted-foreground'
+                  }`}>
+                    {step.label}
+                  </span>
+
+                  {/* Active Pulse */}
+                  {isActive && (
+                    <motion.div
+                      className="absolute inset-0 rounded-xl border-2 border-primary"
+                      animate={{ opacity: [0.5, 0, 0.5] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    />
+                  )}
+                </motion.div>
+
+                {/* Connector Arrow */}
+                {index < workflowSteps.length - 1 && (
+                  <motion.div 
+                    className={`flex-shrink-0 mx-1 md:mx-2 ${
+                      isPast ? 'text-primary' : 'text-muted-foreground/30'
+                    }`}
+                    animate={isActive ? { x: [0, 4, 0] } : {}}
+                    transition={{ duration: 0.8, repeat: Infinity }}
+                  >
+                    <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
+                  </motion.div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Progress bar */}
+        <div className="mt-8 h-1.5 bg-muted rounded-full overflow-hidden">
+          <motion.div
+            className="h-full bg-gradient-to-r from-primary to-primary-light rounded-full"
+            animate={{ width: `${((activeStep + 1) / workflowSteps.length) * 100}%` }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -349,57 +478,67 @@ const Hero = () => {
       </div> */}
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center max-w-4xl mx-auto">
-          {/* Badge */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left Side - Text Content */}
+          <div className="text-left">
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 text-primary mb-8"
+            >
+              <Zap size={16} className="text-primary" />
+              <span className="text-sm font-medium">Built for Recruitment Agencies</span>
+            </motion.div>
+
+            {/* Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-foreground leading-[1.2] tracking-tight mb-6"
+            >
+              <span className="gradient-text">Ez Recruit</span> The Agency{" "}
+              <span className="block">Operating System</span>
+            </motion.h1>
+
+            {/* Subheadline */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-base md:text-lg text-muted-foreground max-w-lg mb-10 leading-relaxed"
+            >
+              Bringing structure, visibility and consistency to your workflow.
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-start gap-4"
+            >
+              <Button variant="hero" size="xl">
+                Request Demo
+                <ArrowRight size={20} />
+              </Button>
+              <Button variant="heroOutline" size="xl">
+                Talk to Us
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* Right Side - Animated Workflow Visual */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 text-primary mb-8"
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="relative hidden lg:block"
           >
-            <Zap size={16} className="text-primary" />
-            <span className="text-sm font-medium">AI-Powered Recruitment</span>
+            <WorkflowAnimation />
           </motion.div>
-
-          {/* Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-foreground leading-[1.3] tracking-tight mb-8"
-          >
-            The Agency
-            <br />
-            <span className="gradient-text">Operating System</span>
-          </motion.h1>
-
-          {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-12 leading-relaxed"
-          >
-            A recruiter-centric ATS, built by recruitment practitioners, for streamlined operations, lower cost per profile, and better submissions.
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
-          >
-            <Button variant="hero" size="xl">
-              Start Free Trial
-              <ArrowRight size={20} />
-            </Button>
-            <Button variant="heroOutline" size="xl">
-              <Play size={20} />
-              Watch Demo
-            </Button>
-          </motion.div>
-
         </div>
 
         {/* Hero Image / Dashboard Preview - Autoplay Carousel */}
