@@ -405,23 +405,6 @@ const AgencyPainPoints = () => {
           </h2>
         </motion.div>
 
-        {/* Step Navigation Dots */}
-        <div className="flex justify-center items-center gap-3 mb-6">
-          {stepsData.map((step, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300 ${
-                index === activeIndex 
-                  ? 'bg-primary text-primary-foreground' 
-                  : 'bg-muted hover:bg-muted/80 text-muted-foreground'
-              }`}
-            >
-              <step.icon className="w-3 h-3 md:w-4 md:h-4" />
-              <span className="text-xs font-medium hidden sm:inline">{step.title}</span>
-            </button>
-          ))}
-        </div>
 
         {/* Slider Container */}
         <div className="relative max-w-6xl mx-auto">
