@@ -99,9 +99,9 @@ const StructuredWorkflow = () => {
     });
   }, [isInView]);
 
-  // Calculate Y position for each label to align with its corresponding box
+  // Calculate Y position for each label to align with the top edge of its corresponding box
   const getYPosition = (layerIndex: number) => {
-    return layerIndex * 70 + 25;
+    return layerIndex * 70 + 55;
   };
 
   return (
