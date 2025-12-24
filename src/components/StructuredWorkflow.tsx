@@ -71,8 +71,8 @@ const StructuredWorkflow = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-            EzRecruit: <span className="text-primary">Enforcing Structured</span> way of sourcing
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+            <span className="text-primary">Enforcing Structured</span> way of sourcing
           </h2>
         </motion.div>
 
@@ -107,80 +107,72 @@ const StructuredWorkflow = () => {
               })}
             </div>
 
-            {/* Center - Stacked 3D Layers */}
-            <div className="relative w-48 h-80 md:w-56 md:h-96 perspective-1000">
+            {/* Center - Stacked Ribbon Layers */}
+            <div className="relative w-56 h-80 md:w-64 md:h-[420px]">
               {layers.map((layer, index) => {
                 const isRevealed = revealedLayers.includes(index);
-                // Stack from top to bottom
-                const yOffset = index * 45;
+                const yOffset = index * 60;
                 
                 return (
                   <motion.div
                     key={layer.id}
                     initial={{ 
                       opacity: 0, 
-                      y: -100,
-                      rotateX: 45,
-                      scale: 0.8
+                      y: -80,
+                      scale: 0.9
                     }}
                     animate={isRevealed ? { 
                       opacity: 1, 
                       y: yOffset,
-                      rotateX: 45,
                       scale: 1
                     } : {}}
                     transition={{ 
-                      duration: 0.6,
+                      duration: 0.5,
                       type: "spring",
-                      stiffness: 100,
+                      stiffness: 120,
                       damping: 15
                     }}
                     className="absolute left-1/2 -translate-x-1/2"
-                    style={{ 
-                      zIndex: 10 - index,
-                      transformStyle: "preserve-3d",
-                      perspective: "1000px"
-                    }}
+                    style={{ zIndex: 10 - index }}
                   >
-                    {/* 3D Layer Box */}
-                    <div 
-                      className={`w-36 h-8 md:w-44 md:h-10 ${layer.color} rounded-sm shadow-lg`}
-                      style={{
-                        transform: "rotateX(0deg) skewX(-5deg)",
-                        boxShadow: `
-                          0 4px 6px -1px rgba(0, 0, 0, 0.3),
-                          inset 0 1px 0 rgba(255, 255, 255, 0.2)
-                        `
-                      }}
-                    >
-                      {/* Top face shine */}
+                    {/* Main ribbon body */}
+                    <div className="relative">
+                      {/* Top surface with 3D effect */}
                       <div 
-                        className="absolute inset-0 rounded-sm"
+                        className={`w-44 h-10 md:w-52 md:h-12 ${layer.color} rounded-l-sm`}
                         style={{
-                          background: "linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 50%)"
+                          clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                          boxShadow: "inset 0 2px 4px rgba(255,255,255,0.3), inset 0 -2px 4px rgba(0,0,0,0.1)"
+                        }}
+                      />
+                      
+                      {/* Right fold - creates the ribbon tail effect */}
+                      <div 
+                        className={`absolute top-0 right-0 w-6 md:w-8 h-10 md:h-12 ${layer.color}`}
+                        style={{
+                          clipPath: "polygon(0 0, 100% 20%, 100% 80%, 0 100%)",
+                          filter: "brightness(0.85)",
+                          transform: "translateX(100%)"
+                        }}
+                      />
+                      
+                      {/* Shadow underneath the fold */}
+                      <div 
+                        className="absolute top-2 -right-1 w-4 h-8 md:h-10 bg-black/20 blur-sm"
+                        style={{
+                          clipPath: "polygon(0 0, 100% 10%, 100% 90%, 0 100%)"
+                        }}
+                      />
+                      
+                      {/* Bottom edge shadow for depth */}
+                      <div 
+                        className={`absolute -bottom-2 left-0 w-44 md:w-52 h-2 ${layer.color} rounded-b-sm`}
+                        style={{
+                          filter: "brightness(0.6)",
+                          transform: "skewX(-45deg) translateX(4px)"
                         }}
                       />
                     </div>
-                    
-                    {/* Right side face */}
-                    <div 
-                      className={`absolute top-0 right-0 w-3 md:w-4 h-8 md:h-10 ${layer.color} rounded-r-sm`}
-                      style={{
-                        transform: "skewY(-45deg) translateX(2px)",
-                        filter: "brightness(0.7)",
-                        transformOrigin: "top left"
-                      }}
-                    />
-                    
-                    {/* Bottom face */}
-                    <div 
-                      className={`absolute bottom-0 left-0 w-36 md:w-44 h-3 md:h-4 ${layer.color} rounded-b-sm`}
-                      style={{
-                        transform: "skewX(-45deg) translateY(2px)",
-                        filter: "brightness(0.5)",
-                        transformOrigin: "top left"
-                      }}
-                    />
                   </motion.div>
                 );
               })}
