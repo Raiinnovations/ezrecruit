@@ -236,61 +236,84 @@ const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: str
   );
 };
 
-// Carousel component for solution cards
+// Carousel component for solution cards - shows one at a time
 const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData: typeof stepsData[0]; animationKey: number; solutionIntro: string }) => {
-  const [focusedIndex, setFocusedIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    setFocusedIndex(0);
+    setCurrentIndex(0);
     
     const interval = setInterval(() => {
-      setFocusedIndex(prev => (prev + 1) % stepData.solutions.length);
-    }, 2000);
+      setCurrentIndex(prev => (prev + 1) % stepData.solutions.length);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [animationKey, stepData.solutions.length]);
 
+  const currentSolution = stepData.solutions[currentIndex];
+
   return (
-    <>
+    <div className="flex flex-col h-full">
       <motion.div
         key={`solution-header-${animationKey}`}
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 3.5, duration: 0.5 }}
-        className="text-right mb-3"
+        className="text-right mb-4"
       >
         <p className="text-sm md:text-base font-semibold">
           <span className="text-primary">EzRecruit</span> <span className="text-foreground">{solutionIntro}</span>
         </p>
       </motion.div>
 
-      {/* Solution Cards - Horizontal carousel with animated focus */}
-      <div className="flex items-center justify-center gap-2 md:gap-4 flex-1 min-h-0">
-        {stepData.solutions.map((solution, idx) => (
-          <SolutionCard 
-            key={`${animationKey}-${idx}`} 
-            solution={solution} 
-            delay={4000 + idx * 400} 
-            isFocused={idx === focusedIndex}
-          />
-        ))}
+      {/* Single Solution Card - Full size */}
+      <div className="flex-1 flex items-center justify-center">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`solution-${animationKey}-${currentIndex}`}
+            initial={{ opacity: 0, x: 50, scale: 0.95 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -50, scale: 0.95 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="w-full max-w-md bg-card rounded-xl overflow-hidden flex flex-col border-2 border-primary/30 shadow-2xl"
+          >
+            {/* Solution Heading */}
+            <div className="p-3 md:p-4 bg-muted/30">
+              <div className="px-3 md:px-4 py-2 md:py-3 rounded-lg bg-primary/10 border border-primary/20">
+                <h3 className="text-sm md:text-base font-bold text-primary leading-tight">
+                  {currentSolution.heading}
+                </h3>
+              </div>
+            </div>
+            
+            {/* Screenshot */}
+            <div className="relative bg-background p-2 md:p-3">
+              <img
+                src={requirementIntake}
+                alt={currentSolution.heading}
+                className="w-full h-[120px] md:h-[200px] object-cover object-top rounded-md"
+              />
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
       
       {/* Carousel dots indicator */}
-      <div className="flex justify-center gap-2 mt-3">
+      <div className="flex justify-center gap-2 mt-4">
         {stepData.solutions.map((_, idx) => (
           <motion.div 
             key={idx}
             animate={{ 
-              width: idx === focusedIndex ? 24 : 8,
-              backgroundColor: idx === focusedIndex ? 'hsl(var(--primary))' : 'hsl(var(--muted-foreground) / 0.3)'
+              width: idx === currentIndex ? 24 : 8,
+              backgroundColor: idx === currentIndex ? 'hsl(var(--primary))' : 'hsl(var(--muted-foreground) / 0.3)'
             }}
             transition={{ duration: 0.3 }}
-            className="h-1.5 md:h-2 rounded-full"
+            className="h-1.5 md:h-2 rounded-full cursor-pointer"
+            onClick={() => setCurrentIndex(idx)}
           />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
@@ -325,10 +348,10 @@ const StepCard = ({ stepData, animationKey }: { stepData: typeof stepsData[0]; a
           </div>
         </div>
 
-        {/* Content area - Two column layout */}
+        {/* Content area - Two column layout 40/60 */}
         <div className="p-4 md:p-6 bg-gradient-to-br from-background to-muted/20 flex-1 flex flex-col md:flex-row gap-6 min-h-0">
-          {/* Left Side - Pain Section */}
-          <div className="flex-1 flex flex-col" key={animationKey}>
+          {/* Left Side - Pain Section (40%) */}
+          <div className="w-full md:w-[40%] flex flex-col" key={animationKey}>
             {/* Pain Heading */}
             <h4 className="text-lg md:text-xl font-bold text-foreground mb-4">Pain</h4>
             
@@ -350,8 +373,8 @@ const StepCard = ({ stepData, animationKey }: { stepData: typeof stepsData[0]; a
             </div>
           </div>
 
-          {/* Right Side - Solution Section */}
-          <div className="flex-1 flex flex-col">
+          {/* Right Side - Solution Section (60%) */}
+          <div className="w-full md:w-[60%] flex flex-col">
             <SolutionCarousel stepData={stepData} animationKey={animationKey} solutionIntro={stepData.solutionIntro} />
           </div>
         </div>
