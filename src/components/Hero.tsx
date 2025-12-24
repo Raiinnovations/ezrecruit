@@ -382,7 +382,7 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-12 leading-relaxed"
           >
-            A simple, structured way to run your recruiting operations. Built to help agencies work with more clarity, discipline and measurable efficiency.
+            A recruiter-centric ATS, built by recruitment practitioners, for streamlined operations, lower cost per profile, and better submissions.
           </motion.p>
 
           {/* CTA Buttons */}
