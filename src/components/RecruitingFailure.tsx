@@ -149,7 +149,7 @@ const RecruitingFailure = () => {
   };
 
   return (
-    <section ref={sectionRef} className="py-10 md:py-16 bg-muted/30 relative overflow-hidden">
+    <section ref={sectionRef} className="py-6 md:py-10 bg-muted/30 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
         <div className="absolute top-10 right-[10%] w-[300px] h-[300px] rounded-full border-[2px] border-muted-foreground" />
