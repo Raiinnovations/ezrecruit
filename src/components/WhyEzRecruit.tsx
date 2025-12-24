@@ -53,7 +53,7 @@ const WhyEzRecruit = () => {
             What Changes When <span className="text-primary">Structure Is Enforced</span>
           </h2>
           <p className="text-muted-foreground mt-3 text-base md:text-lg max-w-2xl mx-auto">
-            The discipline your agency needs to scale
+            Faster sourcing, less rework, cleaner feedback
           </p>
         </motion.div>
 
