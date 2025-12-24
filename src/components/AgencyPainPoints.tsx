@@ -421,9 +421,9 @@ const AgencyPainPoints = () => {
         <div className="container mx-auto px-4 pt-6 md:pt-10 pb-6 md:pb-8 flex-1 flex flex-col max-h-screen">
           {/* Section Header */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-center mb-4 md:mb-6"
           >
             <h2 className="text-2xl md:text-4xl font-bold text-foreground">
