@@ -370,9 +370,9 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-foreground leading-[1.3] tracking-tight mb-8"
           >
-            An ATS That Mirrors The
+            EzRecruit The Agency
             <br />
-            <span className="gradient-text">Rhythm Of Recruitment Agencies.</span>
+            <span className="gradient-text">Operating System</span>
           </motion.h1>
 
           {/* Subheadline */}
