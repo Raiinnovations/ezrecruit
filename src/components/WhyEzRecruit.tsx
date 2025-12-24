@@ -49,11 +49,8 @@ const WhyEzRecruit = () => {
           transition={{ duration: 0.5 }}
           className="text-center max-w-3xl mx-auto mb-12"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-            Why EzRecruit
-          </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            Structure beats <span className="text-primary">effort</span>. Every time.
+            What Changes When <span className="text-primary">Structure Is Enforced</span>
           </h2>
           <p className="text-muted-foreground mt-3 text-base md:text-lg max-w-2xl mx-auto">
             The discipline your agency needs to scale
