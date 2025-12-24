@@ -12,6 +12,8 @@ import {
   Sparkles,
   Target,
   Check,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 import Dashboard from "@/assets/screens/1-Dashboard.png";
@@ -169,10 +171,20 @@ const screens = [
 ];
 
 const ProductOverview = () => {
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const activeScreen = screens.find((s) => s.id === activeTab)!;
+  const activeScreen = screens[activeIndex];
   const ActiveIcon = activeScreen.icon;
+
+  const goToPrev = () => {
+    setActiveIndex((prev) => (prev === 0 ? screens.length - 1 : prev - 1));
+  };
+
+  const goToNext = () => {
+    setActiveIndex((prev) => (prev === screens.length - 1 ? 0 : prev + 1));
+  };
+
+  const progressPercentage = ((activeIndex + 1) / screens.length) * 100;
 
   return (
     <section className="py-20 bg-background relative overflow-hidden">
@@ -199,35 +211,50 @@ const ProductOverview = () => {
           </p>
         </motion.div>
 
-        {/* Tabs Navigation */}
+        {/* Progress Bar with Arrows */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-8"
+          className="mb-8 max-w-4xl mx-auto"
         >
-          <div className="flex justify-center">
-            <div className="inline-flex items-center gap-1 p-1.5 rounded-xl bg-muted/50 border border-border/50 backdrop-blur-sm overflow-x-auto max-w-full">
-              {screens.map((screen) => {
-                const Icon = screen.icon;
-                const isActive = activeTab === screen.id;
-                return (
-                  <button
-                    key={screen.id}
-                    onClick={() => setActiveTab(screen.id)}
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-300 ${
-                      isActive
-                        ? "bg-primary text-primary-foreground shadow-md"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span className="hidden sm:inline">{screen.label}</span>
-                  </button>
-                );
-              })}
+          <div className="flex items-center gap-4">
+            {/* Left Arrow */}
+            <button
+              onClick={goToPrev}
+              className="w-10 h-10 rounded-full bg-muted/80 hover:bg-muted border border-border/50 flex items-center justify-center transition-all duration-300 hover:scale-110 flex-shrink-0"
+            >
+              <ChevronLeft className="w-5 h-5 text-foreground" />
+            </button>
+
+            {/* Progress Bar */}
+            <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-primary rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${progressPercentage}%` }}
+                transition={{ duration: 0.3 }}
+              />
             </div>
+
+            {/* Right Arrow */}
+            <button
+              onClick={goToNext}
+              className="w-10 h-10 rounded-full bg-muted/80 hover:bg-muted border border-border/50 flex items-center justify-center transition-all duration-300 hover:scale-110 flex-shrink-0"
+            >
+              <ChevronRight className="w-5 h-5 text-foreground" />
+            </button>
+          </div>
+
+          {/* Current Screen Label */}
+          <div className="text-center mt-3">
+            <span className="text-sm text-muted-foreground">
+              {activeIndex + 1} / {screens.length}
+            </span>
+            <span className="text-sm text-foreground font-medium ml-2">
+              {activeScreen.label}
+            </span>
           </div>
         </motion.div>
 
@@ -235,7 +262,7 @@ const ProductOverview = () => {
         <div className="max-w-6xl mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
-              key={activeTab}
+              key={activeIndex}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -296,21 +323,6 @@ const ProductOverview = () => {
               </motion.div>
             </motion.div>
           </AnimatePresence>
-        </div>
-
-        {/* Tab Indicators */}
-        <div className="flex justify-center gap-1.5 mt-6">
-          {screens.map((screen) => (
-            <button
-              key={screen.id}
-              onClick={() => setActiveTab(screen.id)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                activeTab === screen.id
-                  ? "w-6 bg-primary"
-                  : "w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50"
-              }`}
-            />
-          ))}
         </div>
       </div>
     </section>
