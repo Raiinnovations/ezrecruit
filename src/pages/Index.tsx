@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import AgencyWorkflow from "@/components/AgencyWorkflow";
 import AgencyPainPoints from "@/components/AgencyPainPoints";
 import WhyEzRecruit from "@/components/WhyEzRecruit";
 import CTA from "@/components/CTA";
@@ -11,7 +10,6 @@ const Index = () => {
     <main className="min-h-screen">
       <Navbar />
       <Hero />
-      <AgencyWorkflow />
       <AgencyPainPoints />
       <WhyEzRecruit />
       <CTA />
