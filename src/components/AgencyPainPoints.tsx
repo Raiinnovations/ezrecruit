@@ -188,8 +188,8 @@ const ChatBubble = ({ message, delay, resetKey }: { message: string; delay: numb
   );
 };
 
-// Solution card with staggered animation - carousel style
-const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: string }; delay: number; isFocused: boolean }) => {
+// Solution card for continuous sliding
+const SolutionCard = ({ solution, delay }: { solution: { heading: string }; delay: number }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -201,22 +201,14 @@ const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: str
   return (
     <motion.div
       initial={{ opacity: 0, y: 30, scale: 0.9 }}
-      animate={isVisible ? { 
-        opacity: isFocused ? 1 : 0.7, 
-        y: isFocused ? 0 : 8, 
-        scale: isFocused ? 1 : 0.9 
-      } : { opacity: 0, y: 30, scale: 0.9 }}
+      animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className={`bg-card rounded-xl overflow-hidden flex flex-col transition-all duration-400 flex-shrink-0 ${
-        isFocused 
-          ? "border-2 border-primary/30 shadow-2xl z-10 w-[200px] md:w-[300px]" 
-          : "border border-border/40 shadow-lg w-[160px] md:w-[260px]"
-      }`}
+      className="bg-card rounded-xl overflow-hidden flex flex-col border border-primary/30 shadow-xl flex-shrink-0 w-[200px] md:w-[280px]"
     >
       {/* Solution Heading */}
-      <div className={`${isFocused ? 'p-2 md:p-3' : 'p-1.5 md:p-2'} bg-muted/30`}>
-        <div className={`${isFocused ? 'px-2 md:px-4 py-1.5 md:py-2' : 'px-2 md:px-3 py-1 md:py-1.5'} rounded-lg bg-primary/10 border border-primary/20`}>
-          <h3 className={`${isFocused ? 'text-[10px] md:text-xs' : 'text-[9px] md:text-[10px]'} font-bold text-primary leading-tight`}>
+      <div className="p-2 md:p-3 bg-muted/30">
+        <div className="px-2 md:px-4 py-1.5 md:py-2 rounded-lg bg-primary/10 border border-primary/20">
+          <h3 className="text-[10px] md:text-xs font-bold text-primary leading-tight">
             {solution.heading}
           </h3>
         </div>
@@ -227,9 +219,7 @@ const SolutionCard = ({ solution, delay, isFocused }: { solution: { heading: str
         <img
           src={requirementIntake}
           alt={solution.heading}
-          className={`w-full object-cover object-top rounded-md transition-all duration-400 ${
-            isFocused ? 'h-[80px] md:h-[140px]' : 'h-[60px] md:h-[100px]'
-          }`}
+          className="w-full h-[80px] md:h-[120px] object-cover object-top rounded-md"
         />
       </div>
     </motion.div>
@@ -348,19 +338,10 @@ const ScrollCard = ({ stepData, scrollYProgress, index, total }: ScrollCardProps
   );
 };
 
-// Carousel component for solution cards
+// Continuous sliding component for solution cards
 const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData: typeof stepsData[0]; animationKey: number; solutionIntro: string }) => {
-  const [focusedIndex, setFocusedIndex] = useState(0);
-
-  useEffect(() => {
-    setFocusedIndex(0);
-    
-    const interval = setInterval(() => {
-      setFocusedIndex(prev => (prev + 1) % stepData.solutions.length);
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, [animationKey, stepData.solutions.length]);
+  // Duplicate solutions for seamless infinite scroll
+  const duplicatedSolutions = [...stepData.solutions, ...stepData.solutions];
 
   return (
     <>
@@ -376,31 +357,27 @@ const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData:
         </p>
       </motion.div>
 
-      {/* Solution Cards - Horizontal carousel with animated focus */}
-      <div className="flex items-center justify-center gap-2 md:gap-4 flex-1 min-h-0">
-        {stepData.solutions.map((solution, idx) => (
-          <SolutionCard 
-            key={`${animationKey}-${idx}`} 
-            solution={solution} 
-            delay={4000 + idx * 400} 
-            isFocused={idx === focusedIndex}
-          />
-        ))}
-      </div>
-      
-      {/* Carousel dots indicator */}
-      <div className="flex justify-center gap-2 mt-3">
-        {stepData.solutions.map((_, idx) => (
-          <motion.div 
-            key={idx}
-            animate={{ 
-              width: idx === focusedIndex ? 24 : 8,
-              backgroundColor: idx === focusedIndex ? 'hsl(var(--primary))' : 'hsl(var(--muted-foreground) / 0.3)'
-            }}
-            transition={{ duration: 0.3 }}
-            className="h-1.5 md:h-2 rounded-full"
-          />
-        ))}
+      {/* Solution Cards - Continuous infinite sliding */}
+      <div className="overflow-hidden flex-1 min-h-0">
+        <motion.div 
+          className="flex items-center gap-4 md:gap-6"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            x: {
+              duration: 15,
+              repeat: Infinity,
+              ease: "linear",
+            },
+          }}
+        >
+          {duplicatedSolutions.map((solution, idx) => (
+            <SolutionCard 
+              key={`${animationKey}-${idx}`} 
+              solution={solution} 
+              delay={4000 + (idx % stepData.solutions.length) * 400} 
+            />
+          ))}
+        </motion.div>
       </div>
     </>
   );
