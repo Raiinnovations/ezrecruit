@@ -325,10 +325,13 @@ const StepCard = ({ stepData, animationKey }: { stepData: typeof stepsData[0]; a
           </div>
         </div>
 
-        {/* Content area */}
-        <div className="p-4 md:p-6 bg-gradient-to-br from-background to-muted/20 flex-1 flex flex-col min-h-0">
-          {/* Problem Section with Chat Bubbles */}
-          <div className="mb-4" key={animationKey}>
+        {/* Content area - Two column layout */}
+        <div className="p-4 md:p-6 bg-gradient-to-br from-background to-muted/20 flex-1 flex flex-col md:flex-row gap-6 min-h-0">
+          {/* Left Side - Pain Section */}
+          <div className="flex-1 flex flex-col" key={animationKey}>
+            {/* Pain Heading */}
+            <h4 className="text-lg md:text-xl font-bold text-foreground mb-4">Pain</h4>
+            
             <p className="text-xs md:text-sm text-muted-foreground mb-3">{stepData.stepIntro}</p>
             
             {/* Chat Bubbles with User Icon */}
@@ -347,8 +350,10 @@ const StepCard = ({ stepData, animationKey }: { stepData: typeof stepsData[0]; a
             </div>
           </div>
 
-          {/* Solution Section */}
-          <SolutionCarousel stepData={stepData} animationKey={animationKey} solutionIntro={stepData.solutionIntro} />
+          {/* Right Side - Solution Section */}
+          <div className="flex-1 flex flex-col">
+            <SolutionCarousel stepData={stepData} animationKey={animationKey} solutionIntro={stepData.solutionIntro} />
+          </div>
         </div>
       </div>
     </motion.div>
