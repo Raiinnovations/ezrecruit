@@ -32,7 +32,7 @@ interface Screen {
 
 const screens: Screen[] = [
   { 
-    title: "Requirement", 
+    title: "Brief", 
     image: Requirement, 
     headline: "Define Once, Brief Right Every Time",
     description: "Wrong briefs lead to wrong submissions and wrong outcomes. With the Requirement module, eliminate miscommunication.",
@@ -44,19 +44,7 @@ const screens: Screen[] = [
     cursorTop: "33%" 
   },
   { 
-    title: "Dashboard", 
-    image: Dashboard, 
-    headline: "Visibility That Scales With Your Team",
-    description: "Dedicated dashboards for every role provide clear visibility across your organization.",
-    features: [
-      { icon: LayoutDashboard, text: "Role-specific dashboards for managers & recruiters" },
-      { icon: TrendingUp, text: "Real-time analytics and performance metrics" },
-      { icon: Target, text: "Data-driven insights for informed decisions" },
-    ],
-    cursorTop: "18%" 
-  },
-  { 
-    title: "Tagged Search", 
+    title: "Hunt", 
     image: TaggedSearch, 
     headline: "Make Every Recruiter Effort Reusable",
     description: "Every screened profile has closure potential. Tag candidates to similar jobs and maximize your sourcing ROI.",
@@ -68,19 +56,7 @@ const screens: Screen[] = [
     cursorTop: "43%" 
   },
   { 
-    title: "AI Search", 
-    image: AISearch, 
-    headline: "Faster Sourcing, Cleaner Shortlisting",
-    description: "No more complex Boolean queries. AI generates search queries from requirement specs and finds matching candidates with scores.",
-    features: [
-      { icon: Sparkles, text: "AI-generated search queries from requirements" },
-      { icon: Target, text: "Matching scores for every candidate" },
-      { icon: Clock, text: "10x faster sourcing from your own database" },
-    ],
-    cursorTop: "46%" 
-  },
-  { 
-    title: "Workflow", 
+    title: "Screen", 
     image: Workflow, 
     headline: "No Feedback, No Learning, No Growth",
     description: "Every profile costs ₹300-500 to source. Without feedback, money goes to waste. Track feedback at every interview stage.",
@@ -92,55 +68,7 @@ const screens: Screen[] = [
     cursorTop: "48%" 
   },
   { 
-    title: "Closure", 
-    image: Closure, 
-    headline: "Celebrate & Track Your Wins",
-    description: "View all candidates who have successfully closed against requirements. Maintain separate data for closed candidates.",
-    features: [
-      { icon: Trophy, text: "Complete closure history for each requirement" },
-      { icon: CheckCircle2, text: "Track offer status and joining dates" },
-      { icon: TrendingUp, text: "Measure closure rates and success metrics" },
-    ],
-    cursorTop: "53%" 
-  },
-  { 
-    title: "Assignment", 
-    image: Assignment, 
-    headline: "Clear Ownership, Better Accountability",
-    description: "View all assigned requirements in one place. Know exactly who is working on what.",
-    features: [
-      { icon: ClipboardList, text: "Centralized view of all requirement assignments" },
-      { icon: Users, text: "Track workload distribution across team" },
-      { icon: Clock, text: "Monitor assignment deadlines and progress" },
-    ],
-    cursorTop: "58%" 
-  },
-  { 
-    title: "Goal Management", 
-    image: GoalManagement, 
-    headline: "Set Goals, Track Performance Daily",
-    description: "Define expected CV count per requirement for each recruiter. Track daily targets and achievement rates.",
-    features: [
-      { icon: Target, text: "Set daily/weekly CV submission targets" },
-      { icon: TrendingUp, text: "Track goal achievement in real-time" },
-      { icon: Trophy, text: "Identify top performers and those needing support" },
-    ],
-    cursorTop: "63%" 
-  },
-  { 
-    title: "Client", 
-    image: Client, 
-    headline: "Manage Client Relationships",
-    description: "Centralize all client information, contacts, and requirements in one organized place.",
-    features: [
-      { icon: Users, text: "Store all client contacts and SPOCs" },
-      { icon: FileText, text: "Link requirements to specific clients" },
-      { icon: Clock, text: "Track client-specific SLAs and deadlines" },
-    ],
-    cursorTop: "28%" 
-  },
-  { 
-    title: "Candidate", 
+    title: "Submit", 
     image: Candidate, 
     headline: "Your Talent Pool, Organized",
     description: "Build comprehensive candidate profiles with complete recruitment history and status tracking.",
@@ -150,6 +78,18 @@ const screens: Screen[] = [
       { icon: Database, text: "Growing talent pool from every interaction" },
     ],
     cursorTop: "38%" 
+  },
+  { 
+    title: "Close", 
+    image: Closure, 
+    headline: "Celebrate & Track Your Wins",
+    description: "View all candidates who have successfully closed against requirements. Maintain separate data for closed candidates.",
+    features: [
+      { icon: Trophy, text: "Complete closure history for each requirement" },
+      { icon: CheckCircle2, text: "Track offer status and joining dates" },
+      { icon: TrendingUp, text: "Measure closure rates and success metrics" },
+    ],
+    cursorTop: "53%" 
   },
 ];
 
