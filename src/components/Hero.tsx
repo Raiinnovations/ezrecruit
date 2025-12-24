@@ -370,9 +370,9 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-foreground leading-[1.3] tracking-tight mb-8"
           >
-            An ATS That Mirrors The
+            The Agency
             <br />
-            <span className="gradient-text">Rhythm Of Recruitment Agencies.</span>
+            <span className="gradient-text">Operating System</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -382,7 +382,7 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-12 leading-relaxed"
           >
-            A simple, structured way to run your recruiting operations. Built to help agencies work with more clarity, discipline and measurable efficiency.
+            A recruiter-centric ATS, built by recruitment practitioners, for streamlined operations, lower cost per profile, and better submissions.
           </motion.p>
 
           {/* CTA Buttons */}
