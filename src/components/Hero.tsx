@@ -369,17 +369,36 @@ const Hero = () => {
               </div>
               <span className="text-sm font-medium text-foreground whitespace-nowrap">AI Powered ATS</span>
             </motion.div>
-            {/* Browser Header */}
-            <div className="bg-muted/50 rounded-t-lg px-3 py-2 border-b border-border flex items-center gap-2">
-              <div className="flex gap-1">
-                <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
-                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-                <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-              </div>
-              <div className="flex-1 mx-3">
-                <div className="bg-background/50 rounded-md px-3 py-1 text-[10px] text-muted-foreground text-center max-w-xs mx-auto">
-                  ezrecruit.app/{screens[currentIndex].title.toLowerCase().replace(/\s+/g, '-')}
-                </div>
+            {/* Tab Navigation - Above the screenshot */}
+            <div className="border-b border-border bg-background/80 rounded-t-lg">
+              <div className="flex items-center justify-center overflow-x-auto">
+                {screens.map((screen, index) => {
+                  const TabIcon = screen.icon;
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentIndex(index)}
+                      className={`relative flex items-center gap-2 px-4 md:px-6 py-3 text-sm font-medium transition-all whitespace-nowrap ${
+                        currentIndex === index
+                          ? "text-primary"
+                          : "text-muted-foreground hover:text-foreground"
+                      }`}
+                      aria-label={`View ${screen.title}`}
+                    >
+                      <TabIcon size={16} />
+                      <span className="hidden sm:inline">{screen.title}</span>
+                      {/* Active indicator line */}
+                      {currentIndex === index && (
+                        <motion.div
+                          layoutId="activeTab"
+                          className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+                          initial={false}
+                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                        />
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -472,39 +491,6 @@ const Hero = () => {
                   </motion.div>
                 </motion.div>
               </AnimatePresence>
-            </div>
-
-            {/* Tab Navigation - Like reference image */}
-            <div className="border-b border-border bg-background/50 rounded-b-lg">
-              <div className="flex items-center justify-center overflow-x-auto">
-                {screens.map((screen, index) => {
-                  const TabIcon = screen.icon;
-                  return (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentIndex(index)}
-                      className={`relative flex items-center gap-2 px-4 md:px-6 py-3 text-sm font-medium transition-all whitespace-nowrap ${
-                        currentIndex === index
-                          ? "text-primary"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                      aria-label={`View ${screen.title}`}
-                    >
-                      <TabIcon size={16} />
-                      <span className="hidden sm:inline">{screen.title}</span>
-                      {/* Active indicator line */}
-                      {currentIndex === index && (
-                        <motion.div
-                          layoutId="activeTab"
-                          className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
-                          initial={false}
-                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                        />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
             </div>
           </div>
         </motion.div>
