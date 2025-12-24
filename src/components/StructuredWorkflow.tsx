@@ -53,30 +53,30 @@ const IsometricBox = ({ color, isRevealed, index }: { color: string; isRevealed:
         damping: 12
       }}
       className="relative"
-      style={{ width: "140px", height: "50px" }}
+      style={{ width: "260px", height: "80px" }}
     >
-      <svg viewBox="0 0 140 70" className="w-full h-full overflow-visible">
+      <svg viewBox="0 0 260 100" className="w-full h-full overflow-visible">
         {/* Top face */}
         <path
-          d={`M 20 25 L 70 5 L 120 25 L 70 45 Z`}
+          d={`M 30 35 L 130 5 L 230 35 L 130 65 Z`}
           fill={color}
           style={{ filter: "brightness(1.1)" }}
         />
         {/* Left face */}
         <path
-          d={`M 20 25 L 70 45 L 70 65 L 20 45 Z`}
+          d={`M 30 35 L 130 65 L 130 95 L 30 65 Z`}
           fill={color}
           style={{ filter: "brightness(0.9)" }}
         />
         {/* Right face */}
         <path
-          d={`M 70 45 L 120 25 L 120 45 L 70 65 Z`}
+          d={`M 130 65 L 230 35 L 230 65 L 130 95 Z`}
           fill={color}
           style={{ filter: "brightness(0.7)" }}
         />
         {/* Highlight on top */}
         <path
-          d={`M 25 25 L 70 8 L 100 22 L 55 38 Z`}
+          d={`M 40 35 L 130 10 L 190 32 L 100 55 Z`}
           fill="rgba(255,255,255,0.2)"
         />
       </svg>
@@ -101,7 +101,7 @@ const StructuredWorkflow = () => {
 
   // Calculate Y position for each label to align with its corresponding box
   const getYPosition = (layerIndex: number) => {
-    return layerIndex * 60 + 15;
+    return layerIndex * 70 + 25;
   };
 
   return (
@@ -126,8 +126,8 @@ const StructuredWorkflow = () => {
         </motion.div>
 
         {/* Desktop Layout */}
-        <div className="hidden md:block max-w-5xl mx-auto">
-          <div className="relative" style={{ height: "380px" }}>
+        <div className="hidden md:block max-w-6xl mx-auto">
+          <div className="relative" style={{ height: "480px" }}>
             
             {/* Left Labels */}
             {layers.filter(l => l.position === "left").map((layer) => {
@@ -141,7 +141,7 @@ const StructuredWorkflow = () => {
                   initial={{ opacity: 0, x: -30 }}
                   animate={isRevealed ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.4, delay: 0.2 }}
-                  className="absolute right-[calc(50%+90px)] flex items-center gap-3"
+                  className="absolute right-[calc(50%+150px)] flex items-center gap-3"
                   style={{ top: `${yPos}px`, width: "280px" }}
                 >
                   <div className="flex-1 text-right">
@@ -159,7 +159,7 @@ const StructuredWorkflow = () => {
             })}
 
             {/* Center Stack */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-0" style={{ width: "140px" }}>
+            <div className="absolute left-1/2 -translate-x-1/2 top-0" style={{ width: "260px" }}>
               {layers.map((layer, index) => {
                 const isRevealed = revealedLayers.includes(index);
                 
@@ -191,7 +191,7 @@ const StructuredWorkflow = () => {
                   initial={{ opacity: 0, x: 30 }}
                   animate={isRevealed ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.4, delay: 0.2 }}
-                  className="absolute left-[calc(50%+90px)] flex items-center gap-3"
+                  className="absolute left-[calc(50%+150px)] flex items-center gap-3"
                   style={{ top: `${yPos}px`, width: "280px" }}
                 >
                   <div className="w-10 h-[2px] bg-muted-foreground/40" />
@@ -214,7 +214,7 @@ const StructuredWorkflow = () => {
         <div className="md:hidden">
           {/* Stacked boxes */}
           <div className="flex justify-center mb-8">
-            <div style={{ width: "140px" }}>
+            <div style={{ width: "200px" }}>
               {layers.map((layer, index) => {
                 const isRevealed = revealedLayers.includes(index);
                 
