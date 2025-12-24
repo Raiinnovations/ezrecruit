@@ -303,7 +303,7 @@ const Hero = () => {
     setCurrentIndex((prev) => (prev + 1) % screens.length);
   };
   return (
-    <section className="relative flex items-center justify-center overflow-hidden hero-gradient min-h-[85vh] pt-20 pb-16 lg:pt-24 lg:pb-20">
+    <section className="relative flex items-center justify-center overflow-hidden hero-gradient min-h-[90vh] pt-24 pb-20 lg:pt-28 lg:pb-24">
       {/* Animated gradient blobs - COMMENTED OUT */}
       {/* <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
