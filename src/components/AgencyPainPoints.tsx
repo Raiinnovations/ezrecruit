@@ -1,103 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { User, FileText, Users, Search, FileCheck, Send, Trophy, ChevronLeft, ChevronRight, Trash2 } from "lucide-react";
+import { User, FileText, Users, Search, FileCheck, Send, Trophy, ChevronLeft, ChevronRight } from "lucide-react";
 
 import requirementIntake from "@/assets/screens/requirement-intake.png";
-
-// Profile card that falls into trash with money
-const FallingProfileCard = ({ price, delay, animationKey }: { price: number; delay: number; animationKey: number }) => {
-  const [phase, setPhase] = useState<'waiting' | 'falling' | 'fading'>('waiting');
-
-  useEffect(() => {
-    setPhase('waiting');
-    
-    const startFall = setTimeout(() => setPhase('falling'), delay);
-    const startFade = setTimeout(() => setPhase('fading'), delay + 1500);
-    
-    return () => {
-      clearTimeout(startFall);
-      clearTimeout(startFade);
-    };
-  }, [delay, animationKey]);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: -20, x: 0 }}
-      animate={
-        phase === 'waiting' 
-          ? { opacity: 0, y: -20, x: 0, scale: 1 }
-          : phase === 'falling'
-          ? { opacity: 1, y: 80, x: 20, scale: 0.9, rotate: 10 }
-          : { opacity: 0, y: 120, x: 30, scale: 0.5, rotate: 25 }
-      }
-      transition={{ duration: 1.2, ease: "easeIn" }}
-      className="absolute flex items-center gap-2 bg-card/90 backdrop-blur-sm border border-border/50 rounded-lg px-3 py-2 shadow-lg"
-    >
-      <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-        <User className="w-4 h-4 text-primary" />
-      </div>
-      <div className="flex-1 flex flex-col gap-1">
-        <div className="w-16 h-2 bg-muted-foreground/30 rounded" />
-        <div className="w-12 h-2 bg-muted-foreground/20 rounded" />
-      </div>
-      <span className="text-primary font-bold text-sm">₹{price}</span>
-    </motion.div>
-  );
-};
-
-// Money waste animation component
-const MoneyWasteAnimation = ({ animationKey }: { animationKey: number }) => {
-  const profiles = [
-    { price: 400, delay: 500 },
-    { price: 350, delay: 1800 },
-    { price: 500, delay: 3100 },
-  ];
-
-  return (
-    <div className="relative h-48 mt-4">
-      {/* Rising Costs Badge */}
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.3 }}
-        className="absolute top-0 right-0 px-4 py-2 bg-card/80 border border-border/50 rounded-lg text-sm font-medium text-muted-foreground"
-      >
-        Rising Costs
-      </motion.div>
-
-      {/* Falling Profile Cards */}
-      <div className="absolute top-8 left-1/2 -translate-x-1/2">
-        {profiles.map((profile, idx) => (
-          <FallingProfileCard
-            key={`${animationKey}-${idx}`}
-            price={profile.price}
-            delay={profile.delay}
-            animationKey={animationKey}
-          />
-        ))}
-      </div>
-
-      {/* Trash/Waste Zone */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5 }}
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center"
-      >
-        <div className="w-24 h-16 bg-destructive/10 border-2 border-dashed border-destructive/30 rounded-lg flex items-center justify-center">
-          <Trash2 className="w-6 h-6 text-destructive/50" />
-        </div>
-        <motion.span 
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="text-xs text-destructive/70 mt-1 font-medium"
-        >
-          Money Wasted
-        </motion.span>
-      </motion.div>
-    </div>
-  );
-};
 
 const stepsData = [
   {
@@ -448,9 +353,6 @@ const StepCard = ({ stepData, animationKey }: { stepData: typeof stepsData[0]; a
                 ))}
               </div>
             </div>
-
-            {/* Money Waste Animation */}
-            <MoneyWasteAnimation animationKey={animationKey} />
           </div>
 
           {/* Right Side - Solution Section (60%) */}
