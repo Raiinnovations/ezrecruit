@@ -74,7 +74,7 @@ const RecruitingFailure = () => {
           className="text-center mb-12"
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
-            How Recruiting <span className="text-destructive">Fails</span> without Structural Discipline
+            How Recruiting <span className="text-primary">Fails</span> without Structural Discipline
           </h2>
         </motion.div>
 
