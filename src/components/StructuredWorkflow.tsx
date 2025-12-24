@@ -53,30 +53,30 @@ const IsometricBox = ({ color, isRevealed, index }: { color: string; isRevealed:
         damping: 12
       }}
       className="relative"
-      style={{ width: "260px", height: "80px" }}
+      style={{ width: "280px", height: "90px" }}
     >
-      <svg viewBox="0 0 260 100" className="w-full h-full overflow-visible">
+      <svg viewBox="0 0 280 110" className="w-full h-full overflow-visible">
         {/* Top face */}
         <path
-          d={`M 30 35 L 130 5 L 230 35 L 130 65 Z`}
+          d={`M 30 40 L 140 5 L 250 40 L 140 75 Z`}
           fill={color}
           style={{ filter: "brightness(1.1)" }}
         />
         {/* Left face */}
         <path
-          d={`M 30 35 L 130 65 L 130 95 L 30 65 Z`}
+          d={`M 30 40 L 140 75 L 140 105 L 30 70 Z`}
           fill={color}
           style={{ filter: "brightness(0.9)" }}
         />
         {/* Right face */}
         <path
-          d={`M 130 65 L 230 35 L 230 65 L 130 95 Z`}
+          d={`M 140 75 L 250 40 L 250 70 L 140 105 Z`}
           fill={color}
           style={{ filter: "brightness(0.7)" }}
         />
         {/* Highlight on top */}
         <path
-          d={`M 40 35 L 130 10 L 190 32 L 100 55 Z`}
+          d={`M 45 40 L 140 10 L 200 35 L 105 60 Z`}
           fill="rgba(255,255,255,0.2)"
         />
       </svg>
@@ -100,9 +100,9 @@ const StructuredWorkflow = () => {
   }, [isInView]);
 
   // Calculate Y position for each label to align with the bottom edge of its corresponding box
-  // Each box is 80px tall with -10px margin overlap, so effective height per layer is 70px
+  // Each box is 90px tall with -10px margin overlap, so effective height per layer is 80px
   const getYPosition = (layerIndex: number) => {
-    return layerIndex * 70 + 45;
+    return layerIndex * 80 + 65;
   };
 
   return (
@@ -128,7 +128,7 @@ const StructuredWorkflow = () => {
 
         {/* Desktop Layout */}
         <div className="hidden md:block max-w-6xl mx-auto">
-          <div className="relative" style={{ height: "480px" }}>
+          <div className="relative" style={{ height: "520px" }}>
             
             {/* Left Labels */}
             {layers.filter(l => l.position === "left").map((layer) => {
@@ -160,7 +160,7 @@ const StructuredWorkflow = () => {
             })}
 
             {/* Center Stack */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-0" style={{ width: "260px" }}>
+            <div className="absolute left-1/2 -translate-x-1/2 top-0" style={{ width: "280px" }}>
               {layers.map((layer, index) => {
                 const isRevealed = revealedLayers.includes(index);
                 
