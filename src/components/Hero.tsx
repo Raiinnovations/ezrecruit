@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Play, Zap, User, CheckCircle2, Pointer, LayoutDashboard, FileText, Tags, Sparkles, GitBranch, Trophy, ClipboardList, Target, AlertTriangle, Clock, Users, Search, Database, TrendingUp, Shield, LucideIcon, ChevronLeft, ChevronRight, Pause, PlayCircle, Frown, Smile, Briefcase, Coffee } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import AgencyWorkflow from "./AgencyWorkflow";
 
 // Import all screen images
 import Dashboard from "@/assets/screens/1-Dashboard.png";
@@ -404,12 +405,15 @@ const Hero = () => {
 
         </div>
 
+        {/* Agency Workflow Section - placed above the product overview */}
+        <AgencyWorkflow />
+
         {/* Hero Image / Dashboard Preview - Autoplay Carousel */}
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-20 relative"
+          className="mt-8 relative"
         >
           <div className="glass-card rounded-xl p-1.5 md:p-2 mx-auto max-w-6xl relative dark:glow-border">
             {/* AI Powered ATS Badge - positioned at top right corner */}
