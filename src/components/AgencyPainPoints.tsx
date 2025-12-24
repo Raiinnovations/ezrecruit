@@ -402,6 +402,22 @@ const AgencyPainPoints = () => {
           </h2>
         </motion.div>
 
+        {/* Navigation Tabs */}
+        <div className="flex justify-center items-center gap-2 md:gap-4 mb-8 flex-wrap">
+          {['Briefing', 'Sourcing', 'Hunting', 'Screening', 'Submission', 'Closure'].map((tab, index) => (
+            <button
+              key={tab}
+              onClick={() => goToSlide(index)}
+              className={`px-4 md:px-6 py-2 md:py-2.5 rounded-full text-sm md:text-base font-medium transition-all duration-300 ${
+                index === activeIndex 
+                  ? 'bg-primary text-primary-foreground shadow-lg' 
+                  : 'bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground border border-border/50'
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
 
         {/* Slider Container */}
         <div className="relative max-w-6xl mx-auto">
