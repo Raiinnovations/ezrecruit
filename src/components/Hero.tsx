@@ -226,9 +226,9 @@ const Hero = () => {
                   key={i}
                   className="absolute"
                   style={{ left: recruiter.left }}
-                  initial={{ y: -100, opacity: 0 }}
+                  initial={{ y: 500, opacity: 0 }}
                   animate={{
-                    y: [-100, 150, 500],
+                    y: [500, 150, -100],
                     opacity: [0, 1, 0],
                   }}
                   transition={{
