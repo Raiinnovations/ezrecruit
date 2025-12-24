@@ -56,7 +56,7 @@ const Navbar = () => {
             Sign In
           </Button>
           <Button variant="hero" size="default">
-            Start Free Trial
+            Request Demo
           </Button>
         </div>
 
@@ -96,7 +96,7 @@ const Navbar = () => {
                 Sign In
               </Button>
               <Button variant="hero" className="w-full">
-                Start Free Trial
+                Request Demo
               </Button>
             </div>
           </div>
