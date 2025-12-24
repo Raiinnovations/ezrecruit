@@ -175,8 +175,8 @@ const Hero = () => {
   };
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient pt-20">
-      {/* Animated gradient blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Animated gradient blobs - COMMENTED OUT */}
+      {/* <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl"
           animate={{
@@ -201,10 +201,10 @@ const Hero = () => {
             ease: "easeInOut",
           }}
         />
-      </div>
+      </div> */}
 
-      {/* Left Side - Stressed Recruiters Entering */}
-      <div className="absolute left-0 top-0 h-full w-72 hidden lg:block pointer-events-none z-0">
+      {/* Left Side - Stressed Recruiters Entering - COMMENTED OUT */}
+      {/* <div className="absolute left-0 top-0 h-full w-72 hidden lg:block pointer-events-none z-0">
         {[
           { name: "Recruiter 1", status: "Struggling with manual search...", top: "15%", delay: 0 },
           { name: "Recruiter 2", status: "Too many spreadsheets...", top: "35%", delay: 2 },
@@ -242,10 +242,10 @@ const Hero = () => {
             </div>
           </motion.div>
         ))}
-      </div>
+      </div> */}
 
-      {/* Right Side - Happy Recruiters with Successful Placements */}
-      <div className="absolute right-0 top-0 h-full w-80 hidden lg:block pointer-events-none z-0">
+      {/* Right Side - Happy Recruiters with Successful Placements - COMMENTED OUT */}
+      {/* <div className="absolute right-0 top-0 h-full w-80 hidden lg:block pointer-events-none z-0">
         {[
           { name: "Recruiter 1", candidate: "Placed 3 candidates!", company: "TechCorp", top: "15%", delay: 2.5 },
           { name: "Recruiter 2", candidate: "5 closures this week!", company: "StartupXYZ", top: "35%", delay: 4.5 },
@@ -291,11 +291,10 @@ const Hero = () => {
             </div>
           </motion.div>
         ))}
-      </div>
+      </div> */}
 
-      {/* Center ATS Processing Animation */}
-      <div className="absolute inset-0 hidden lg:flex items-center justify-center pointer-events-none">
-        {/* Data flow particles */}
+      {/* Center ATS Processing Animation - COMMENTED OUT */}
+      {/* <div className="absolute inset-0 hidden lg:flex items-center justify-center pointer-events-none">
         {[0, 1, 2, 3, 4, 5].map((i) => (
           <motion.div
             key={`particle-${i}`}
@@ -320,7 +319,6 @@ const Hero = () => {
           />
         ))}
         
-        {/* CV Icons flowing through */}
         {[0, 1, 2].map((i) => (
           <motion.div
             key={`cv-${i}`}
@@ -348,7 +346,7 @@ const Hero = () => {
             </div>
           </motion.div>
         ))}
-      </div>
+      </div> */}
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
