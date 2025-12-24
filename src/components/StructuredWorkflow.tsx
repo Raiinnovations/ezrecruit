@@ -101,8 +101,9 @@ const StructuredWorkflow = () => {
 
   // Calculate Y position for each label to align with the bottom edge of its corresponding box
   // Each box is 90px tall with -10px margin overlap, so effective height per layer is 80px
+  // Numbers should align where each box meets the next one (bottom edge)
   const getYPosition = (layerIndex: number) => {
-    return layerIndex * 80 + 65;
+    return layerIndex * 80 + 75;
   };
 
   return (
