@@ -115,103 +115,101 @@ const StructuredWorkflow = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Desktop Layout - Two Column */}
-        <div className="hidden md:flex items-center gap-8 lg:gap-16 max-w-6xl mx-auto">
-          {/* Left Side - Workflow Steps */}
-          <div className="flex-1">
-            <div className="relative" style={{ height: "480px" }}>
-              {/* Left Labels */}
-              {layers.filter(l => l.position === "left").map((layer) => {
-                const layerIndex = layers.findIndex(l => l.id === layer.id);
-                const isRevealed = revealedLayers.includes(layerIndex);
-                const yPos = getYPosition(layerIndex);
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="text-center"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+            <span className="text-primary">Enforcing Structured</span> way of sourcing
+          </h2>
+        </motion.div>
+
+        {/* Desktop Layout */}
+        <div className="hidden md:block max-w-6xl mx-auto">
+          <div className="relative" style={{ height: "520px" }}>
+            
+            {/* Left Labels */}
+            {layers.filter(l => l.position === "left").map((layer) => {
+              const layerIndex = layers.findIndex(l => l.id === layer.id);
+              const isRevealed = revealedLayers.includes(layerIndex);
+              const yPos = getYPosition(layerIndex);
+              
+              return (
+                <motion.div
+                  key={layer.id}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={isRevealed ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.2 }}
+                  className="absolute right-[calc(50%+150px)] flex items-center gap-3"
+                  style={{ top: `${yPos}px`, width: "280px" }}
+                >
+                  <div className="flex-1 text-right">
+                    <h3 className="text-lg font-bold text-foreground mb-0.5">{layer.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-tight">
+                      {layer.description}
+                    </p>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0">
+                    <span className="text-sm font-semibold text-primary">{layer.id}</span>
+                  </div>
+                  <div className="w-10 h-[2px] bg-muted-foreground/40" />
+                </motion.div>
+              );
+            })}
+
+            {/* Center Stack */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-16" style={{ width: "280px" }}>
+              {layers.map((layer, index) => {
+                const isRevealed = revealedLayers.includes(index);
                 
                 return (
-                  <motion.div
+                  <div
                     key={layer.id}
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={isRevealed ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.4, delay: 0.2 }}
-                    className="absolute right-[calc(50%+120px)] lg:right-[calc(50%+140px)] flex items-center gap-2 lg:gap-3"
-                    style={{ top: `${yPos}px`, width: "220px" }}
+                    className="relative"
+                    style={{ marginTop: index === 0 ? 0 : "-10px" }}
                   >
-                    <div className="flex-1 text-right">
-                      <h3 className="text-base lg:text-lg font-bold text-foreground mb-0.5">{layer.title}</h3>
-                      <p className="text-xs lg:text-sm text-muted-foreground leading-tight">
-                        {layer.description}
-                      </p>
-                    </div>
-                    <div className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0">
-                      <span className="text-xs lg:text-sm font-semibold text-primary">{layer.id}</span>
-                    </div>
-                    <div className="w-6 lg:w-10 h-[2px] bg-muted-foreground/40" />
-                  </motion.div>
-                );
-              })}
-
-              {/* Center Stack */}
-              <div className="absolute left-1/2 -translate-x-1/2 top-8" style={{ width: "240px" }}>
-                {layers.map((layer, index) => {
-                  const isRevealed = revealedLayers.includes(index);
-                  
-                  return (
-                    <div
-                      key={layer.id}
-                      className="relative"
-                      style={{ marginTop: index === 0 ? 0 : "-10px" }}
-                    >
-                      <IsometricBox 
-                        color={layer.color} 
-                        isRevealed={isRevealed}
-                        index={index}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Right Labels */}
-              {layers.filter(l => l.position === "right").map((layer) => {
-                const layerIndex = layers.findIndex(l => l.id === layer.id);
-                const isRevealed = revealedLayers.includes(layerIndex);
-                const yPos = getYPosition(layerIndex);
-                
-                return (
-                  <motion.div
-                    key={layer.id}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={isRevealed ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.4, delay: 0.2 }}
-                    className="absolute left-[calc(50%+120px)] lg:left-[calc(50%+140px)] flex items-center gap-2 lg:gap-3"
-                    style={{ top: `${yPos}px`, width: "220px" }}
-                  >
-                    <div className="w-6 lg:w-10 h-[2px] bg-muted-foreground/40" />
-                    <div className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0">
-                      <span className="text-xs lg:text-sm font-semibold text-primary">{layer.id}</span>
-                    </div>
-                    <div className="flex-1 text-left">
-                      <h3 className="text-base lg:text-lg font-bold text-foreground mb-0.5">{layer.title}</h3>
-                      <p className="text-xs lg:text-sm text-muted-foreground leading-tight">
-                        {layer.description}
-                      </p>
-                    </div>
-                  </motion.div>
+                    <IsometricBox 
+                      color={layer.color} 
+                      isRevealed={isRevealed}
+                      index={index}
+                    />
+                  </div>
                 );
               })}
             </div>
-          </div>
 
-          {/* Right Side - Heading */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="w-[280px] lg:w-[320px] flex-shrink-0"
-          >
-            <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground leading-tight">
-              <span className="text-primary">Enforcing Structured</span> way of sourcing
-            </h2>
-          </motion.div>
+            {/* Right Labels */}
+            {layers.filter(l => l.position === "right").map((layer) => {
+              const layerIndex = layers.findIndex(l => l.id === layer.id);
+              const isRevealed = revealedLayers.includes(layerIndex);
+              const yPos = getYPosition(layerIndex);
+              
+              return (
+                <motion.div
+                  key={layer.id}
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={isRevealed ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.2 }}
+                  className="absolute left-[calc(50%+150px)] flex items-center gap-3"
+                  style={{ top: `${yPos}px`, width: "280px" }}
+                >
+                  <div className="w-10 h-[2px] bg-muted-foreground/40" />
+                  <div className="w-8 h-8 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0">
+                    <span className="text-sm font-semibold text-primary">{layer.id}</span>
+                  </div>
+                  <div className="flex-1 text-left">
+                    <h3 className="text-lg font-bold text-foreground mb-0.5">{layer.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-tight">
+                      {layer.description}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
 
         {/* Mobile Layout */}
