@@ -99,9 +99,10 @@ const StructuredWorkflow = () => {
     });
   }, [isInView]);
 
-  // Calculate Y position for each label to align with the top edge of its corresponding box
+  // Calculate Y position for each label to align with the bottom edge of its corresponding box
+  // Each box is 80px tall with -10px margin overlap, so effective height per layer is 70px
   const getYPosition = (layerIndex: number) => {
-    return layerIndex * 70 + 55;
+    return layerIndex * 70 + 45;
   };
 
   return (
