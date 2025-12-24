@@ -121,8 +121,8 @@ const Hero = () => {
   };
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient pt-20">
-      {/* Flowing wave animation background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Flowing wave animation background - positioned at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-[40%] overflow-hidden pointer-events-none">
         <WaveAnimation />
       </div>
 
