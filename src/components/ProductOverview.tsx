@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   LayoutDashboard,
   Users,
@@ -12,6 +11,7 @@ import {
   ClipboardList,
   Sparkles,
   Target,
+  Check,
 } from "lucide-react";
 
 import Dashboard from "@/assets/screens/1-Dashboard.png";
@@ -31,97 +31,148 @@ const screens = [
     label: "Dashboard",
     icon: LayoutDashboard,
     image: Dashboard,
-    title: "Unified Dashboard",
+    title: "Your Command Center",
     description:
-      "Get a bird's eye view of your entire recruitment pipeline. Track metrics, monitor progress, and make data-driven decisions from a single, intuitive interface.",
+      "Get a bird's eye view of your entire recruitment pipeline. Track metrics, monitor progress, and make data-driven decisions.",
+    features: [
+      "Real-time pipeline analytics",
+      "Team performance metrics",
+      "Quick access to all modules",
+    ],
   },
   {
     id: "client",
     label: "Client",
     icon: Users,
     image: Client,
-    title: "Client Management",
+    title: "Manage Client Relationships",
     description:
-      "Manage all your client relationships in one place. Track requirements, communication history, and maintain strong partnerships with organized client profiles.",
+      "Manage all your client relationships in one place. Track requirements, communication history, and maintain strong partnerships.",
+    features: [
+      "Organized client profiles",
+      "Requirement history tracking",
+      "Communication logs",
+    ],
   },
   {
     id: "requirement",
     label: "Requirement",
     icon: FileText,
     image: Requirement,
-    title: "Requirement Tracking",
+    title: "Structured Job Intake",
     description:
-      "Capture and manage job requirements with precision. Define skills, experience levels, and preferences to ensure perfect candidate matching.",
+      "Capture and manage job requirements with precision. Define skills, experience levels, and preferences for perfect matching.",
+    features: [
+      "Mandatory field validation",
+      "Evaluation questions setup",
+      "Clear recruiter assignments",
+    ],
   },
   {
     id: "candidate",
     label: "Candidate",
     icon: UserSearch,
     image: Candidate,
-    title: "Candidate Profiles",
+    title: "Complete Candidate Profiles",
     description:
-      "Comprehensive candidate management with detailed profiles, skill assessments, and complete interaction history at your fingertips.",
+      "Comprehensive candidate management with detailed profiles, skill assessments, and complete interaction history.",
+    features: [
+      "Detailed skill mapping",
+      "Interaction timeline",
+      "Document management",
+    ],
   },
   {
     id: "tagged-search",
     label: "Tagged Search",
     icon: Search,
     image: TaggedSearch,
-    title: "Smart Tagged Search",
+    title: "Find Candidates Instantly",
     description:
-      "Find the right candidates instantly with powerful tag-based search. Filter by skills, experience, location, and custom tags for precise results.",
+      "Find the right candidates instantly with powerful tag-based search. Filter by skills, experience, location, and custom tags.",
+    features: [
+      "Multi-filter search",
+      "Custom tag creation",
+      "Saved search queries",
+    ],
   },
   {
     id: "workflow",
     label: "Workflow",
     icon: GitBranch,
     image: Workflow,
-    title: "Workflow Automation",
+    title: "Automate Your Process",
     description:
-      "Streamline your recruitment process with customizable workflows. Automate repetitive tasks and ensure consistent candidate experiences.",
+      "Streamline your recruitment process with customizable workflows. Automate repetitive tasks and ensure consistency.",
+    features: [
+      "Custom workflow stages",
+      "Automated notifications",
+      "Progress tracking",
+    ],
   },
   {
     id: "closure",
     label: "Closure",
     icon: CheckCircle,
     image: Closure,
-    title: "Closure Management",
+    title: "Celebrate & Track Your Wins",
     description:
-      "Track placements from offer to onboarding. Manage documentation, follow-ups, and ensure smooth transitions for successful closures.",
+      "View all candidates who have successfully closed against requirements. Maintain separate data for tracking.",
+    features: [
+      "Complete closure history for each requirement",
+      "Track offer status and joining dates",
+      "Performance analytics",
+    ],
   },
   {
     id: "assignment",
     label: "Assignment",
     icon: ClipboardList,
     image: Assignment,
-    title: "Assignment Tracking",
+    title: "Efficient Task Assignment",
     description:
-      "Assign candidates to requirements efficiently. Monitor progress, track submissions, and manage the entire assignment lifecycle.",
+      "Assign candidates to requirements efficiently. Monitor progress, track submissions, and manage the lifecycle.",
+    features: [
+      "Bulk assignment options",
+      "Progress monitoring",
+      "Deadline tracking",
+    ],
   },
   {
     id: "ai-search",
     label: "AI Search",
     icon: Sparkles,
     image: AISearch,
-    title: "AI-Powered Search",
+    title: "AI-Powered Matching",
     description:
-      "Leverage artificial intelligence to find the best candidates. Our AI understands context and matches candidates based on deep skill analysis.",
+      "Leverage artificial intelligence to find the best candidates. Our AI understands context and matches based on deep analysis.",
+    features: [
+      "Semantic skill matching",
+      "Auto-generated Boolean queries",
+      "Smart recommendations",
+    ],
   },
   {
     id: "goals",
     label: "Goals",
     icon: Target,
     image: GoalManagement,
-    title: "Goal Management",
+    title: "Drive Team Performance",
     description:
-      "Set, track, and achieve recruitment targets. Monitor team performance, individual goals, and drive accountability across your organization.",
+      "Set, track, and achieve recruitment targets. Monitor team performance and drive accountability across your organization.",
+    features: [
+      "Individual & team goals",
+      "Progress dashboards",
+      "Achievement tracking",
+    ],
   },
 ];
 
 const ProductOverview = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
 
-  const activeScreen = screens.find((s) => s.id === activeTab);
+  const activeScreen = screens.find((s) => s.id === activeTab)!;
+  const ActiveIcon = activeScreen.icon;
 
   return (
     <section className="py-20 bg-background relative overflow-hidden">
@@ -138,7 +189,7 @@ const ProductOverview = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-10"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Product Overview
@@ -148,75 +199,119 @@ const ProductOverview = () => {
           </p>
         </motion.div>
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <TabsList className="flex flex-wrap justify-center gap-2 bg-transparent h-auto p-2 mb-8">
+        {/* Tabs Navigation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mb-8"
+        >
+          <div className="flex justify-center">
+            <div className="inline-flex items-center gap-1 p-1.5 rounded-xl bg-muted/50 border border-border/50 backdrop-blur-sm overflow-x-auto max-w-full">
               {screens.map((screen) => {
                 const Icon = screen.icon;
+                const isActive = activeTab === screen.id;
                 return (
-                  <TabsTrigger
+                  <button
                     key={screen.id}
-                    value={screen.id}
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border/50 bg-card/50 backdrop-blur-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary transition-all duration-300 hover:border-primary/50"
+                    onClick={() => setActiveTab(screen.id)}
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-300 ${
+                      isActive
+                        ? "bg-primary text-primary-foreground shadow-md"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    }`}
                   >
                     <Icon className="w-4 h-4" />
                     <span className="hidden sm:inline">{screen.label}</span>
-                  </TabsTrigger>
+                  </button>
                 );
               })}
-            </TabsList>
-          </motion.div>
+            </div>
+          </div>
+        </motion.div>
 
-          {/* Content */}
+        {/* Screenshot with Overlay Card */}
+        <div className="max-w-6xl mx-auto">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+              className="relative"
+            >
+              {/* Screenshot Container */}
+              <div className="rounded-xl overflow-hidden border border-border/50 shadow-2xl bg-card">
+                <img
+                  src={activeScreen.image}
+                  alt={activeScreen.title}
+                  className="w-full h-auto"
+                />
+              </div>
+
+              {/* Overlay Description Card */}
+              <motion.div
+                initial={{ opacity: 0, x: -20, y: 20 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+                className="absolute bottom-4 left-4 md:bottom-8 md:left-8 max-w-sm"
+              >
+                <div className="bg-background/95 backdrop-blur-md rounded-xl border border-border/50 shadow-xl p-4 md:p-6">
+                  {/* Icon and Title */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
+                      <ActiveIcon className="w-5 h-5 text-primary" />
+                    </div>
+                    <span className="text-primary font-semibold text-lg">
+                      {activeScreen.label}
+                    </span>
+                  </div>
+
+                  {/* Headline */}
+                  <h3 className="text-lg md:text-xl font-bold text-foreground mb-2">
+                    {activeScreen.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                    {activeScreen.description}
+                  </p>
+
+                  {/* Features */}
+                  <div className="space-y-2">
+                    {activeScreen.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-start gap-2">
+                        <div className="w-4 h-4 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Check className="w-2.5 h-2.5 text-primary" />
+                        </div>
+                        <span className="text-sm text-muted-foreground">
+                          {feature}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Tab Indicators */}
+        <div className="flex justify-center gap-1.5 mt-6">
           {screens.map((screen) => (
-            <TabsContent key={screen.id} value={screen.id} className="mt-0">
-              <AnimatePresence mode="wait">
-                {activeTab === screen.id && (
-                  <motion.div
-                    key={screen.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.4 }}
-                    className="grid lg:grid-cols-2 gap-8 items-center"
-                  >
-                    {/* Text Content */}
-                    <div className="order-2 lg:order-1 space-y-6">
-                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium">
-                        <screen.icon className="w-4 h-4" />
-                        {screen.label}
-                      </div>
-                      <h3 className="text-2xl md:text-3xl font-bold text-foreground">
-                        {screen.title}
-                      </h3>
-                      <p className="text-muted-foreground text-lg leading-relaxed">
-                        {screen.description}
-                      </p>
-                    </div>
-
-                    {/* Image */}
-                    <div className="order-1 lg:order-2">
-                      <div className="relative rounded-xl overflow-hidden border border-border/50 shadow-2xl bg-card">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent pointer-events-none" />
-                        <img
-                          src={screen.image}
-                          alt={screen.title}
-                          className="w-full h-auto"
-                        />
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </TabsContent>
+            <button
+              key={screen.id}
+              onClick={() => setActiveTab(screen.id)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                activeTab === screen.id
+                  ? "w-6 bg-primary"
+                  : "w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+              }`}
+            />
           ))}
-        </Tabs>
+        </div>
       </div>
     </section>
   );
