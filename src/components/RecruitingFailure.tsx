@@ -1,6 +1,6 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { AlertTriangle, TrendingDown, IndianRupee, Target, User, X, Check, AlertCircle } from "lucide-react";
+import { AlertTriangle, TrendingDown, IndianRupee, Target, User, X, Check, AlertCircle, Copy, RotateCcw, MessageCircleWarning, Trash2 } from "lucide-react";
 
 const impactPoints = [
   {
@@ -57,6 +57,7 @@ const RecruitingFailure = () => {
     profiles: { x: number; y: number; rotate: number; scale: number; opacity: number; status: string; cost?: string }[];
     showConnections: boolean;
     showWarnings: boolean;
+    showWaste?: boolean;
     message: string;
   } => {
     switch (activeIndex) {
@@ -82,15 +83,16 @@ const RecruitingFailure = () => {
           showWarnings: true,
           message: "Repeated Work"
         };
-      case 2: // Cost Detail - Stacked profiles with cost indicators
+      case 2: // Cost Detail - Profiles going to duplication, rework, unclear feedback
         return {
           profiles: [
-            { x: 30, y: 0, rotate: 0, scale: 1, opacity: 1, status: "cost", cost: "₹400" },
-            { x: 30, y: 85, rotate: 0, scale: 1, opacity: 1, status: "cost", cost: "₹350" },
-            { x: 30, y: 170, rotate: 0, scale: 1, opacity: 1, status: "cost", cost: "₹500" }
+            { x: -20, y: 0, rotate: -8, scale: 0.9, opacity: 0.7, status: "duplicate", cost: "₹400" },
+            { x: -10, y: 85, rotate: 5, scale: 0.85, opacity: 0.6, status: "rework", cost: "₹350" },
+            { x: -30, y: 170, rotate: -3, scale: 0.8, opacity: 0.5, status: "unclear", cost: "₹500" }
           ],
           showConnections: false,
-          showWarnings: false,
+          showWarnings: true,
+          showWaste: true,
           message: "Rising Costs"
         };
       case 3: // Need - Organized, aligned, connected profiles
@@ -125,7 +127,11 @@ const RecruitingFailure = () => {
       case "rejected":
         return <X className="w-4 h-4 text-destructive" />;
       case "duplicate":
-        return <AlertCircle className="w-4 h-4 text-yellow-500" />;
+        return <Copy className="w-4 h-4 text-orange-500" />;
+      case "rework":
+        return <RotateCcw className="w-4 h-4 text-yellow-500" />;
+      case "unclear":
+        return <MessageCircleWarning className="w-4 h-4 text-red-400" />;
       case "organized":
         return <Check className="w-4 h-4 text-green-500" />;
       default:
@@ -138,13 +144,30 @@ const RecruitingFailure = () => {
       case "rejected":
         return "border-destructive/50";
       case "duplicate":
+        return "border-orange-500/50";
+      case "rework":
         return "border-yellow-500/50";
+      case "unclear":
+        return "border-red-400/50";
       case "organized":
         return "border-green-500/50";
       case "cost":
         return "border-primary/50";
       default:
         return "border-border/50";
+    }
+  };
+
+  const getWasteLabel = (status: string) => {
+    switch (status) {
+      case "duplicate":
+        return "Duplication";
+      case "rework":
+        return "Rework";
+      case "unclear":
+        return "Unclear Feedback";
+      default:
+        return null;
     }
   };
 
@@ -314,10 +337,65 @@ const RecruitingFailure = () => {
                           {storyAnimation.profiles[index].cost}
                         </motion.span>
                       )}
+
+                      {/* Waste label for duplication/rework/unclear */}
+                      {getWasteLabel(storyAnimation.profiles[index].status) && (
+                        <motion.div
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.3 }}
+                          className="flex items-center gap-1.5"
+                        >
+                          <motion.span
+                            animate={{ x: [0, 10, 10], opacity: [1, 1, 0.5] }}
+                            transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 0.5 }}
+                            className={`text-xs font-medium ${
+                              storyAnimation.profiles[index].status === "duplicate" ? "text-orange-500" :
+                              storyAnimation.profiles[index].status === "rework" ? "text-yellow-500" :
+                              "text-red-400"
+                            }`}
+                          >
+                            {getWasteLabel(storyAnimation.profiles[index].status)}
+                          </motion.span>
+                          <motion.div
+                            animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
+                            transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 1 }}
+                          >
+                            <Trash2 className="w-4 h-4 text-destructive/70" />
+                          </motion.div>
+                        </motion.div>
+                      )}
                     </motion.div>
                   </motion.div>
                 ))}
               </AnimatePresence>
+
+              {/* Waste funnel animation for Cost Detail step */}
+              {storyAnimation.showWaste && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2"
+                >
+                  <motion.div
+                    animate={{ 
+                      y: [0, 5, 0],
+                      rotate: [0, 5, -5, 0]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="p-3 rounded-full bg-destructive/10 border border-destructive/30"
+                  >
+                    <Trash2 className="w-8 h-8 text-destructive/70" />
+                  </motion.div>
+                  <motion.span
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                    className="text-xs text-destructive/70 font-medium"
+                  >
+                    Wasted Effort
+                  </motion.span>
+                </motion.div>
+              )}
 
               {/* Story message */}
               <motion.div
