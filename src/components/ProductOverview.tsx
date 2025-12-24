@@ -175,26 +175,26 @@ const ProductOverview = () => {
   const ActiveIcon = activeScreen.icon;
 
   return (
-    <section className="py-20 bg-background relative overflow-hidden">
+    <section className="h-screen py-8 bg-background relative overflow-hidden flex flex-col">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/4 left-0 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10 flex flex-col flex-1 min-h-0">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10"
+          className="text-center mb-4"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-2">
             Product Overview
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
             Explore every feature designed to transform your recruitment process
           </p>
         </motion.div>
@@ -205,10 +205,10 @@ const ProductOverview = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-8"
+          className="mb-4"
         >
           <div className="flex justify-center">
-            <div className="inline-flex items-center gap-1 p-1.5 rounded-xl bg-muted/50 border border-border/50 backdrop-blur-sm overflow-x-auto max-w-full">
+            <div className="inline-flex items-center gap-1 p-1 rounded-xl bg-muted/50 border border-border/50 backdrop-blur-sm overflow-x-auto max-w-full">
               {screens.map((screen) => {
                 const Icon = screen.icon;
                 const isActive = activeTab === screen.id;
@@ -216,13 +216,13 @@ const ProductOverview = () => {
                   <button
                     key={screen.id}
                     onClick={() => setActiveTab(screen.id)}
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-300 ${
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-300 ${
                       isActive
                         ? "bg-primary text-primary-foreground shadow-md"
                         : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-3.5 h-3.5" />
                     <span className="hidden sm:inline">{screen.label}</span>
                   </button>
                 );
@@ -232,7 +232,7 @@ const ProductOverview = () => {
         </motion.div>
 
         {/* Screenshot with Overlay Card */}
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto flex-1 min-h-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -240,14 +240,14 @@ const ProductOverview = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
-              className="relative"
+              className="relative h-full"
             >
               {/* Screenshot Container */}
-              <div className="rounded-xl overflow-hidden border border-border/50 shadow-2xl bg-card">
+              <div className="rounded-xl overflow-hidden border border-border/50 shadow-2xl bg-card h-full">
                 <img
                   src={activeScreen.image}
                   alt={activeScreen.title}
-                  className="w-full h-auto"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
 
@@ -299,7 +299,7 @@ const ProductOverview = () => {
         </div>
 
         {/* Tab Indicators */}
-        <div className="flex justify-center gap-1.5 mt-6">
+        <div className="flex justify-center gap-1.5 mt-4">
           {screens.map((screen) => (
             <button
               key={screen.id}
