@@ -4,6 +4,7 @@ import AgencyWorkflow from "@/components/AgencyWorkflow";
 import StructuredWorkflow from "@/components/StructuredWorkflow";
 import RecruitingFailure from "@/components/RecruitingFailure";
 import AgencyPainPoints from "@/components/AgencyPainPoints";
+import WhyEzRecruit from "@/components/WhyEzRecruit";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
@@ -16,6 +17,7 @@ const Index = () => {
       <StructuredWorkflow />
       <RecruitingFailure />
       <AgencyPainPoints />
+      <WhyEzRecruit />
       <CTA />
       <Footer />
     </main>
