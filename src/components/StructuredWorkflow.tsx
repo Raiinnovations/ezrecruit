@@ -107,7 +107,7 @@ const StructuredWorkflow = () => {
   };
 
   return (
-    <section ref={sectionRef} className="pt-2 pb-16 md:pt-4 md:pb-24 bg-background relative overflow-hidden">
+    <section ref={sectionRef} className="pt-2 pb-4 md:pt-4 md:pb-6 bg-background relative overflow-hidden">
       {/* Subtle background circles */}
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none">
         <div className="absolute top-20 left-[5%] w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full border-[2px] border-muted-foreground" />
