@@ -296,19 +296,19 @@ const Hero = () => {
         ))}
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+      <div className="container mx-auto px-4 lg:px-6 xl:px-8 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8 xl:gap-12">
           {/* Left Side - Text Content */}
-          <div className="flex-shrink-0 lg:w-[40%] text-center lg:text-left">
+          <div className="flex-shrink-0 w-full lg:w-[38%] xl:w-[40%] text-center lg:text-left">
             {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 text-primary mb-6"
+              className="inline-flex items-center gap-2 px-3 lg:px-4 py-1.5 lg:py-2 rounded-full bg-accent border border-primary/20 text-primary mb-4 lg:mb-6"
             >
-              <Zap size={16} className="text-primary" />
-              <span className="text-sm font-medium">AI-Powered Recruitment</span>
+              <Zap size={14} className="text-primary lg:w-4 lg:h-4" />
+              <span className="text-xs lg:text-sm font-medium">AI-Powered Recruitment</span>
             </motion.div>
 
             {/* Headline */}
@@ -316,7 +316,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-foreground leading-[1.2] tracking-tight mb-6"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-extrabold text-foreground leading-[1.2] tracking-tight mb-4 lg:mb-5 xl:mb-6"
             >
               EzRecruit The Agency
               <br />
@@ -328,7 +328,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-base md:text-lg text-muted-foreground max-w-xl lg:max-w-none mb-8 leading-relaxed"
+              className="text-sm md:text-base lg:text-sm xl:text-base text-muted-foreground max-w-xl lg:max-w-none mb-5 lg:mb-6 xl:mb-8 leading-relaxed"
             >
               A recruiter-centric ATS, built by recruitment practitioners, for streamlined operations, lower cost per profile, and better submissions.
             </motion.p>
@@ -338,14 +338,14 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4"
+              className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-3 lg:gap-3 xl:gap-4"
             >
-              <Button variant="hero" size="xl">
+              <Button variant="hero" size="lg" className="lg:text-sm xl:text-base lg:px-5 xl:px-6">
                 Start Free Trial
-                <ArrowRight size={20} />
+                <ArrowRight size={18} className="lg:w-4 lg:h-4 xl:w-5 xl:h-5" />
               </Button>
-              <Button variant="heroOutline" size="xl">
-                <Play size={20} />
+              <Button variant="heroOutline" size="lg" className="lg:text-sm xl:text-base lg:px-5 xl:px-6">
+                <Play size={18} className="lg:w-4 lg:h-4 xl:w-5 xl:h-5" />
                 Watch Demo
               </Button>
             </motion.div>
@@ -356,19 +356,19 @@ const Hero = () => {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex-1 w-full lg:w-[60%] relative"
+            className="flex-1 w-full lg:w-[62%] xl:w-[60%] relative"
           >
-          <div className="glass-card rounded-xl p-1.5 md:p-2 mx-auto max-w-6xl relative dark:glow-border">
+          <div className="glass-card rounded-xl p-1 lg:p-1.5 xl:p-2 relative dark:glow-border">
             {/* AI Powered ATS Badge - positioned at top right corner */}
             <motion.div
               animate={{ y: [0, -6, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-5 -right-12 glass-card rounded-lg px-4 py-2 hidden md:flex items-center gap-2 z-10"
+              className="absolute -top-4 -right-8 lg:-top-5 lg:-right-10 xl:-right-12 glass-card rounded-lg px-3 lg:px-4 py-1.5 lg:py-2 hidden lg:flex items-center gap-2 z-10"
             >
-              <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center">
-                <Zap size={14} className="text-primary" />
+              <div className="w-5 h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 rounded-full bg-primary/20 flex items-center justify-center">
+                <Zap size={12} className="text-primary lg:w-3.5 lg:h-3.5" />
               </div>
-              <span className="text-sm font-medium text-foreground whitespace-nowrap">AI Powered ATS</span>
+              <span className="text-xs lg:text-sm font-medium text-foreground whitespace-nowrap">AI Powered ATS</span>
             </motion.div>
             {/* Tab Navigation - Above the screenshot */}
             <div className="border-b border-border bg-background/80 rounded-t-lg">
@@ -379,14 +379,14 @@ const Hero = () => {
                     <button
                       key={index}
                       onClick={() => setCurrentIndex(index)}
-                      className={`relative flex items-center gap-2 px-4 md:px-6 py-3 text-sm font-medium transition-all whitespace-nowrap ${
+                      className={`relative flex items-center gap-1.5 lg:gap-2 px-2 lg:px-3 xl:px-4 py-2 lg:py-2.5 xl:py-3 text-xs lg:text-sm font-medium transition-all whitespace-nowrap ${
                         currentIndex === index
                           ? "text-primary"
                           : "text-muted-foreground hover:text-foreground"
                       }`}
                       aria-label={`View ${screen.title}`}
                     >
-                      <TabIcon size={16} />
+                      <TabIcon size={14} className="lg:w-4 lg:h-4" />
                       <span className="hidden sm:inline">{screen.title}</span>
                       {/* Active indicator line */}
                       {currentIndex === index && (
@@ -404,7 +404,7 @@ const Hero = () => {
             </div>
 
             {/* Screenshot Carousel */}
-            <div className="relative aspect-[16/8] overflow-hidden rounded-b-lg bg-secondary">
+            <div className="relative aspect-[16/9] lg:aspect-[16/8] overflow-hidden rounded-b-lg bg-secondary">
               <AnimatePresence initial={false}>
                 <motion.img
                   key={currentIndex}
