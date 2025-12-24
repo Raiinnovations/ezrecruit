@@ -422,23 +422,23 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mt-20 relative"
         >
-          {/* Tab Navigation - 2 Row Grid Layout */}
-          <div className="mb-6 max-w-5xl mx-auto px-4">
-            <div className="grid grid-cols-5 gap-1.5 md:gap-2">
+          {/* Tab Navigation */}
+          <div className="mb-4 overflow-x-auto scrollbar-hide">
+            <div className="flex items-center justify-center gap-1 md:gap-2 min-w-max px-4 md:px-0">
               {screens.map((screen, index) => {
                 const IconComponent = screen.icon;
                 return (
                   <button
                     key={index}
                     onClick={() => setCurrentIndex(index)}
-                    className={`flex items-center justify-center gap-1 md:gap-1.5 px-2 py-2 md:py-2.5 rounded-lg text-[10px] md:text-xs font-medium transition-all duration-200 ${
+                    className={`flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all duration-200 whitespace-nowrap ${
                       currentIndex === index
-                        ? "bg-primary text-primary-foreground shadow-lg"
-                        : "bg-card/90 text-muted-foreground hover:bg-card hover:text-foreground border border-border/50"
+                        ? "bg-primary text-primary-foreground shadow-md"
+                        : "bg-card/80 text-muted-foreground hover:bg-card hover:text-foreground border border-border"
                     }`}
                   >
-                    <IconComponent size={12} className="flex-shrink-0 md:w-3.5 md:h-3.5" />
-                    <span className="hidden lg:inline truncate">{screen.title}</span>
+                    <IconComponent size={14} className="flex-shrink-0" />
+                    <span className="hidden sm:inline">{screen.title}</span>
                   </button>
                 );
               })}
