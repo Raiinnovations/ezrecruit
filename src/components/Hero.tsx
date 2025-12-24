@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Play, Zap, User, CheckCircle2, Pointer, LayoutDashboard, FileText, Tags, Sparkles, GitBranch, Trophy, ClipboardList, Target, AlertTriangle, Clock, Users, Search, Database, TrendingUp, Shield, LucideIcon, ChevronLeft, ChevronRight, Pause, PlayCircle, Frown, Smile, Briefcase, Coffee } from "lucide-react";
+import { ArrowRight, Play, Zap, User, CheckCircle2, Pointer, LayoutDashboard, FileText, Tags, Sparkles, GitBranch, Trophy, ClipboardList, Target, AlertTriangle, Clock, Users, Search, Database, TrendingUp, Shield, LucideIcon, ChevronLeft, ChevronRight, Pause, PlayCircle, Frown, Smile, Briefcase, Coffee, Phone, Bot, Send, Chrome, Columns } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // Import all screen images
@@ -28,12 +28,14 @@ interface Screen {
   description: string;
   features: FeaturePoint[];
   cursorTop: string;
+  icon: LucideIcon;
 }
 
 const screens: Screen[] = [
   { 
     title: "Requirement", 
     image: Requirement, 
+    icon: FileText,
     headline: "Define Once, Brief Right Every Time",
     description: "Wrong briefs lead to wrong submissions and wrong outcomes. With the Requirement module, eliminate miscommunication.",
     features: [
@@ -46,6 +48,7 @@ const screens: Screen[] = [
   { 
     title: "Dashboard", 
     image: Dashboard, 
+    icon: LayoutDashboard,
     headline: "Visibility That Scales With Your Team",
     description: "Dedicated dashboards for every role provide clear visibility across your organization.",
     features: [
@@ -58,6 +61,7 @@ const screens: Screen[] = [
   { 
     title: "Tagged Search", 
     image: TaggedSearch, 
+    icon: Tags,
     headline: "Make Every Recruiter Effort Reusable",
     description: "Every screened profile has closure potential. Tag candidates to similar jobs and maximize your sourcing ROI.",
     features: [
@@ -70,6 +74,7 @@ const screens: Screen[] = [
   { 
     title: "AI Search", 
     image: AISearch, 
+    icon: Sparkles,
     headline: "Faster Sourcing, Cleaner Shortlisting",
     description: "No more complex Boolean queries. AI generates search queries from requirement specs and finds matching candidates with scores.",
     features: [
@@ -82,6 +87,7 @@ const screens: Screen[] = [
   { 
     title: "Workflow", 
     image: Workflow, 
+    icon: GitBranch,
     headline: "No Feedback, No Learning, No Growth",
     description: "Every profile costs ₹300-500 to source. Without feedback, money goes to waste. Track feedback at every interview stage.",
     features: [
@@ -94,6 +100,7 @@ const screens: Screen[] = [
   { 
     title: "Closure", 
     image: Closure, 
+    icon: Trophy,
     headline: "Celebrate & Track Your Wins",
     description: "View all candidates who have successfully closed against requirements. Maintain separate data for closed candidates.",
     features: [
@@ -106,6 +113,7 @@ const screens: Screen[] = [
   { 
     title: "Assignment", 
     image: Assignment, 
+    icon: ClipboardList,
     headline: "Clear Ownership, Better Accountability",
     description: "View all assigned requirements in one place. Know exactly who is working on what.",
     features: [
@@ -118,6 +126,7 @@ const screens: Screen[] = [
   { 
     title: "Goal Management", 
     image: GoalManagement, 
+    icon: Target,
     headline: "Set Goals, Track Performance Daily",
     description: "Define expected CV count per requirement for each recruiter. Track daily targets and achievement rates.",
     features: [
@@ -130,6 +139,7 @@ const screens: Screen[] = [
   { 
     title: "Client", 
     image: Client, 
+    icon: Users,
     headline: "Manage Client Relationships",
     description: "Centralize all client information, contacts, and requirements in one organized place.",
     features: [
@@ -142,6 +152,7 @@ const screens: Screen[] = [
   { 
     title: "Candidate", 
     image: Candidate, 
+    icon: User,
     headline: "Your Talent Pool, Organized",
     description: "Build comprehensive candidate profiles with complete recruitment history and status tracking.",
     features: [
@@ -411,6 +422,29 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mt-20 relative"
         >
+          {/* Tab Navigation */}
+          <div className="mb-4 overflow-x-auto scrollbar-hide">
+            <div className="flex items-center justify-center gap-1 md:gap-2 min-w-max px-4 md:px-0">
+              {screens.map((screen, index) => {
+                const IconComponent = screen.icon;
+                return (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentIndex(index)}
+                    className={`flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                      currentIndex === index
+                        ? "bg-primary text-primary-foreground shadow-md"
+                        : "bg-card/80 text-muted-foreground hover:bg-card hover:text-foreground border border-border"
+                    }`}
+                  >
+                    <IconComponent size={14} className="flex-shrink-0" />
+                    <span className="hidden sm:inline">{screen.title}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          
           <div className="glass-card rounded-xl p-1.5 md:p-2 mx-auto max-w-6xl relative dark:glow-border">
             {/* AI Powered ATS Badge - positioned at top right corner */}
             <motion.div
