@@ -275,23 +275,23 @@ const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData:
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: -50, scale: 0.95 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full max-w-md bg-card rounded-xl overflow-hidden flex flex-col border-2 border-primary/30 shadow-2xl"
+            className="w-full max-w-xl bg-card rounded-xl overflow-hidden flex flex-col border-2 border-primary/30 shadow-2xl"
           >
             {/* Solution Heading */}
-            <div className="p-3 md:p-4 bg-muted/30">
-              <div className="px-3 md:px-4 py-2 md:py-3 rounded-lg bg-primary/10 border border-primary/20">
-                <h3 className="text-sm md:text-base font-bold text-primary leading-tight">
+            <div className="p-4 md:p-5 bg-muted/30">
+              <div className="px-4 md:px-6 py-3 md:py-4 rounded-lg bg-primary/10 border border-primary/20">
+                <h3 className="text-base md:text-lg font-bold text-primary leading-tight">
                   {currentSolution.heading}
                 </h3>
               </div>
             </div>
             
             {/* Screenshot */}
-            <div className="relative bg-background p-2 md:p-3">
+            <div className="relative bg-background p-3 md:p-4">
               <img
                 src={requirementIntake}
                 alt={currentSolution.heading}
-                className="w-full h-[120px] md:h-[200px] object-cover object-top rounded-md"
+                className="w-full h-[180px] md:h-[280px] object-cover object-top rounded-md"
               />
             </div>
           </motion.div>
