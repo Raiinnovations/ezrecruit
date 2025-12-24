@@ -121,7 +121,7 @@ const Hero = () => {
   };
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient pt-20">
-      {/* Animated gradient blobs - COMMENTED OUT
+      {/* Animated gradient blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl"
@@ -148,9 +148,8 @@ const Hero = () => {
           }}
         />
       </div>
-      */}
 
-      {/* Left Side - Stressed Recruiters Entering - COMMENTED OUT
+      {/* Left Side - Stressed Recruiters Entering */}
       <div className="absolute left-0 top-0 h-full w-72 hidden lg:block pointer-events-none z-0">
         {[
           { name: "Recruiter 1", status: "Struggling with manual search...", top: "15%", delay: 0 },
@@ -190,9 +189,8 @@ const Hero = () => {
           </motion.div>
         ))}
       </div>
-      */}
 
-      {/* Right Side - Happy Recruiters with Successful Placements - COMMENTED OUT
+      {/* Right Side - Happy Recruiters with Successful Placements */}
       <div className="absolute right-0 top-0 h-full w-80 hidden lg:block pointer-events-none z-0">
         {[
           { name: "Recruiter 1", candidate: "Placed 3 candidates!", company: "TechCorp", top: "15%", delay: 2.5 },
@@ -240,10 +238,10 @@ const Hero = () => {
           </motion.div>
         ))}
       </div>
-      */}
 
-      {/* Center ATS Processing Animation - COMMENTED OUT
+      {/* Center ATS Processing Animation */}
       <div className="absolute inset-0 hidden lg:flex items-center justify-center pointer-events-none">
+        {/* Data flow particles */}
         {[0, 1, 2, 3, 4, 5].map((i) => (
           <motion.div
             key={`particle-${i}`}
@@ -268,6 +266,7 @@ const Hero = () => {
           />
         ))}
         
+        {/* CV Icons flowing through */}
         {[0, 1, 2].map((i) => (
           <motion.div
             key={`cv-${i}`}
@@ -296,8 +295,6 @@ const Hero = () => {
           </motion.div>
         ))}
       </div>
-      */}
-
 
       <div className="container mx-auto px-4 lg:px-6 xl:px-8 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8 xl:gap-12">
