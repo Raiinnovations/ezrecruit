@@ -303,7 +303,7 @@ const Hero = () => {
     setCurrentIndex((prev) => (prev + 1) % screens.length);
   };
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient pt-20">
+    <section className="relative flex items-center justify-center overflow-hidden hero-gradient pt-24 pb-12 lg:pt-28 lg:pb-16">
       {/* Animated gradient blobs - COMMENTED OUT */}
       {/* <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -478,7 +478,7 @@ const Hero = () => {
       </div> */}
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Side - Text Content */}
           <div className="text-left">
             {/* Badge */}
@@ -486,10 +486,10 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 text-primary mb-8"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent border border-primary/20 text-primary mb-5"
             >
-              <Zap size={16} className="text-primary" />
-              <span className="text-sm font-medium">Built for Recruitment Agencies</span>
+              <Zap size={14} className="text-primary" />
+              <span className="text-xs font-medium">Built for Recruitment Agencies</span>
             </motion.div>
 
             {/* Headline */}
@@ -497,7 +497,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-foreground leading-[1.2] tracking-tight mb-6"
+              className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-foreground leading-[1.2] tracking-tight mb-4"
             >
               <span className="gradient-text">Ez Recruit</span> The Agency{" "}
               <span className="block">Operating System</span>
@@ -508,7 +508,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-base md:text-lg text-muted-foreground max-w-lg mb-10 leading-relaxed"
+              className="text-sm md:text-base text-muted-foreground max-w-md mb-6 leading-relaxed"
             >
               Bringing structure, visibility and consistency to your workflow.
             </motion.p>
@@ -518,13 +518,13 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex flex-col sm:flex-row items-start gap-4"
+              className="flex flex-col sm:flex-row items-start gap-3"
             >
-              <Button variant="hero" size="xl">
+              <Button variant="hero" size="lg">
                 Request Demo
-                <ArrowRight size={20} />
+                <ArrowRight size={18} />
               </Button>
-              <Button variant="heroOutline" size="xl">
+              <Button variant="heroOutline" size="lg">
                 Talk to Us
               </Button>
             </motion.div>
