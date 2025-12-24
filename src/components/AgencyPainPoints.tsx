@@ -335,9 +335,9 @@ const StepCard = ({ stepData, animationKey }: { stepData: typeof stepsData[0]; a
           {/* Left Side - Pain Section (40%) */}
           <div className="w-full md:w-[40%] flex flex-col" key={animationKey}>
             {/* Pain Heading */}
-            <h4 className="text-lg md:text-xl font-bold text-foreground mb-4">Pain</h4>
+            <h4 className="text-2xl md:text-4xl font-bold text-foreground mb-4">Pain</h4>
             
-            <p className="text-xs md:text-sm text-muted-foreground mb-3">{stepData.stepIntro}</p>
+            <p className="text-sm md:text-base text-muted-foreground mb-4">{stepData.stepIntro}</p>
             
             {/* Chat Bubbles with User Icon */}
             <div className="flex items-start gap-3">
