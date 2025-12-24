@@ -52,9 +52,6 @@ const Navbar = () => {
 
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
-          <Button variant="ghost" size="default">
-            Sign In
-          </Button>
           <Button variant="hero" size="default">
             Request Demo
           </Button>
@@ -92,9 +89,6 @@ const Navbar = () => {
               <div className="flex justify-center pb-2">
                 <ThemeToggle />
               </div>
-              <Button variant="ghost" className="w-full">
-                Sign In
-              </Button>
               <Button variant="hero" className="w-full">
                 Request Demo
               </Button>
