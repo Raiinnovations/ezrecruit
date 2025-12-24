@@ -161,7 +161,7 @@ const StructuredWorkflow = () => {
             })}
 
             {/* Center Stack */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-6" style={{ width: "280px" }}>
+            <div className="absolute left-1/2 -translate-x-1/2 top-16" style={{ width: "280px" }}>
               {layers.map((layer, index) => {
                 const isRevealed = revealedLayers.includes(index);
                 
