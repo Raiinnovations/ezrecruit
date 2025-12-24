@@ -11,8 +11,8 @@ const benefits = [
       "Fewer duplicates and less rework",
       "Faster first-cycle sourcing",
     ],
-    gradient: "from-emerald-500/20 to-primary/20",
-    accentColor: "text-emerald-400",
+    gradient: "from-primary/10 to-primary/5",
+    accentColor: "text-primary",
   },
   {
     icon: Clock,
@@ -22,8 +22,8 @@ const benefits = [
       "Cleaner intake speeds decision making",
       "60–90 minutes reclaimed per day by removing trackers",
     ],
-    gradient: "from-blue-500/20 to-primary/20",
-    accentColor: "text-blue-400",
+    gradient: "from-primary/10 to-primary/5",
+    accentColor: "text-primary",
   },
   {
     icon: FileCheck,
@@ -33,8 +33,8 @@ const benefits = [
       "Standardised submissions improve client clarity",
       "Better reuse of candidate feedback",
     ],
-    gradient: "from-violet-500/20 to-primary/20",
-    accentColor: "text-violet-400",
+    gradient: "from-primary/10 to-primary/5",
+    accentColor: "text-primary",
   },
 ];
 
@@ -79,11 +79,11 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
               <span className="text-muted-foreground text-xs">-20%</span>
             </motion.div>
             <motion.div
-              className="absolute bottom-6 left-6 bg-background/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-emerald-500/30 shadow-lg"
+              className="absolute bottom-6 left-6 bg-background/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-primary/30 shadow-lg"
               animate={{ y: [0, -8, 0], opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 3, repeat: Infinity, delay: 1 }}
             >
-              <span className="text-emerald-400 font-bold text-sm">Saved</span>
+              <span className="text-primary font-bold text-sm">Saved</span>
             </motion.div>
           </div>
         );
@@ -117,7 +117,7 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
               <span className="text-foreground text-sm font-medium">+60 min/day</span>
             </motion.div>
             <motion.div
-              className="absolute bottom-6 left-4 bg-background/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-blue-500/30 shadow-lg"
+              className="absolute bottom-6 left-4 bg-background/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-primary/30 shadow-lg"
               animate={{ scale: [1, 1.05, 1] }}
               transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
             >
@@ -152,7 +152,7 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
                         animate={{ opacity: [0, 1, 0] }}
                         transition={{ duration: 2, repeat: Infinity }}
                       >
-                        <CheckCircle className="w-3 h-3 text-emerald-400" />
+                        <CheckCircle className="w-3 h-3 text-primary" />
                       </motion.div>
                     )}
                   </div>
@@ -161,7 +161,7 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
             </div>
             
             <motion.div
-              className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-violet-500/30 shadow-lg"
+              className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-primary/30 shadow-lg"
               animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
@@ -169,11 +169,11 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
               <span className="text-muted-foreground text-xs block">duplicates</span>
             </motion.div>
             <motion.div
-              className="absolute bottom-6 left-4 bg-background/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-emerald-500/30 shadow-lg"
+              className="absolute bottom-6 left-4 bg-background/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-primary/30 shadow-lg"
               animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
             >
-              <span className="text-emerald-400 font-bold text-sm">Standardised</span>
+              <span className="text-primary font-bold text-sm">Standardised</span>
             </motion.div>
           </div>
         );
