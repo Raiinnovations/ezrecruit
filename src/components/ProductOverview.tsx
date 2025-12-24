@@ -175,26 +175,26 @@ const ProductOverview = () => {
   const ActiveIcon = activeScreen.icon;
 
   return (
-    <section className="h-screen py-8 bg-background relative overflow-hidden flex flex-col">
+    <section className="h-screen max-h-screen py-6 bg-background relative overflow-hidden flex flex-col">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/4 left-0 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10 flex flex-col flex-1 min-h-0">
+      <div className="container mx-auto px-4 relative z-10 flex flex-col h-full overflow-hidden">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-4"
+          className="text-center mb-3 flex-shrink-0"
         >
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-2">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-1">
             Product Overview
           </h2>
-          <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xs md:text-sm text-muted-foreground max-w-2xl mx-auto">
             Explore every feature designed to transform your recruitment process
           </p>
         </motion.div>
@@ -205,10 +205,10 @@ const ProductOverview = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-4"
+          className="mb-3 flex-shrink-0"
         >
           <div className="flex justify-center">
-            <div className="inline-flex items-center gap-1 p-1 rounded-xl bg-muted/50 border border-border/50 backdrop-blur-sm overflow-x-auto max-w-full">
+            <div className="inline-flex items-center gap-0.5 p-1 rounded-lg bg-muted/50 border border-border/50 backdrop-blur-sm overflow-x-auto max-w-full">
               {screens.map((screen) => {
                 const Icon = screen.icon;
                 const isActive = activeTab === screen.id;
@@ -216,14 +216,14 @@ const ProductOverview = () => {
                   <button
                     key={screen.id}
                     onClick={() => setActiveTab(screen.id)}
-                    className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-300 ${
+                    className={`flex items-center gap-1 px-2 py-1.5 rounded-md text-[10px] font-medium whitespace-nowrap transition-all duration-300 ${
                       isActive
                         ? "bg-primary text-primary-foreground shadow-md"
                         : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }`}
                   >
-                    <Icon className="w-3.5 h-3.5" />
-                    <span className="hidden sm:inline">{screen.label}</span>
+                    <Icon className="w-3 h-3" />
+                    <span className="hidden md:inline">{screen.label}</span>
                   </button>
                 );
               })}
@@ -232,7 +232,7 @@ const ProductOverview = () => {
         </motion.div>
 
         {/* Screenshot with Overlay Card */}
-        <div className="max-w-6xl mx-auto flex-1 min-h-0 flex items-center">
+        <div className="max-w-5xl mx-auto flex-1 min-h-0 w-full">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -240,37 +240,37 @@ const ProductOverview = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
-              className="relative w-full"
+              className="relative h-full"
             >
               {/* Browser Mockup Container */}
-              <div className="rounded-2xl overflow-hidden shadow-2xl bg-card border border-border/30">
+              <div className="rounded-xl overflow-hidden shadow-2xl bg-card border border-border/30 h-full flex flex-col">
                 {/* Browser Chrome */}
-                <div className="bg-muted/80 px-4 py-3 flex items-center gap-3 border-b border-border/30">
+                <div className="bg-muted/80 px-3 py-2 flex items-center gap-2 border-b border-border/30 flex-shrink-0">
                   {/* Traffic Lights */}
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-400" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                    <div className="w-3 h-3 rounded-full bg-green-400" />
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
                   </div>
                   {/* URL Bar */}
                   <div className="flex-1 flex justify-center">
-                    <div className="bg-background/60 rounded-md px-4 py-1.5 text-xs text-muted-foreground font-medium">
+                    <div className="bg-background/60 rounded-md px-3 py-1 text-[10px] text-muted-foreground font-medium">
                       ezrecruit.app/{activeScreen.id}
                     </div>
                   </div>
                   {/* AI Badge */}
-                  <div className="hidden md:flex items-center gap-1.5 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold">
-                    <Sparkles className="w-3 h-3" />
+                  <div className="hidden md:flex items-center gap-1 bg-primary/10 text-primary px-2 py-0.5 rounded-full text-[10px] font-semibold">
+                    <Sparkles className="w-2.5 h-2.5" />
                     AI Powered ATS
                   </div>
                 </div>
 
                 {/* Screenshot */}
-                <div className="relative">
+                <div className="relative flex-1 min-h-0 overflow-hidden">
                   <img
                     src={activeScreen.image}
                     alt={activeScreen.title}
-                    className="w-full h-auto max-h-[55vh] object-cover object-top"
+                    className="w-full h-full object-cover object-top"
                   />
 
                   {/* Overlay Description Card */}
@@ -278,37 +278,37 @@ const ProductOverview = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.4, delay: 0.2 }}
-                    className="absolute bottom-6 left-6 max-w-xs"
+                    className="absolute bottom-4 left-4 max-w-[280px]"
                   >
-                    <div className="bg-background/95 backdrop-blur-md rounded-xl border border-border/50 shadow-2xl p-5">
+                    <div className="bg-background/95 backdrop-blur-md rounded-lg border border-border/50 shadow-2xl p-4">
                       {/* Icon and Title */}
-                      <div className="flex items-center gap-2.5 mb-2">
-                        <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
-                          <ActiveIcon className="w-4 h-4 text-primary" />
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <div className="w-6 h-6 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center">
+                          <ActiveIcon className="w-3 h-3 text-primary" />
                         </div>
-                        <span className="text-primary font-semibold">
+                        <span className="text-primary font-semibold text-sm">
                           {activeScreen.label}
                         </span>
                       </div>
 
                       {/* Headline */}
-                      <h3 className="text-base font-bold text-foreground mb-1.5">
+                      <h3 className="text-sm font-bold text-foreground mb-1">
                         {activeScreen.title}
                       </h3>
 
                       {/* Description */}
-                      <p className="text-xs text-muted-foreground mb-3 leading-relaxed line-clamp-2">
+                      <p className="text-[10px] text-muted-foreground mb-2 leading-relaxed line-clamp-2">
                         {activeScreen.description}
                       </p>
 
                       {/* Features */}
-                      <div className="space-y-1.5">
+                      <div className="space-y-1">
                         {activeScreen.features.map((feature, idx) => (
-                          <div key={idx} className="flex items-start gap-2">
-                            <div className="w-4 h-4 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                              <Check className="w-2.5 h-2.5 text-primary" />
+                          <div key={idx} className="flex items-start gap-1.5">
+                            <div className="w-3 h-3 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                              <Check className="w-2 h-2 text-primary" />
                             </div>
-                            <span className="text-xs text-muted-foreground line-clamp-1">
+                            <span className="text-[10px] text-muted-foreground line-clamp-1">
                               {feature}
                             </span>
                           </div>
@@ -323,15 +323,15 @@ const ProductOverview = () => {
         </div>
 
         {/* Tab Indicators */}
-        <div className="flex justify-center gap-1.5 mt-4">
+        <div className="flex justify-center gap-1 mt-3 flex-shrink-0">
           {screens.map((screen) => (
             <button
               key={screen.id}
               onClick={() => setActiveTab(screen.id)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
+              className={`h-1 rounded-full transition-all duration-300 ${
                 activeTab === screen.id
-                  ? "w-6 bg-primary"
-                  : "w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  ? "w-5 bg-primary"
+                  : "w-1 bg-muted-foreground/30 hover:bg-muted-foreground/50"
               }`}
             />
           ))}
