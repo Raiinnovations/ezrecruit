@@ -180,7 +180,7 @@ const WorkflowAnimation = () => {
       {/* Main container */}
       <div className="relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-6 md:p-8">
         {/* Header */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-8">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -193,39 +193,55 @@ const WorkflowAnimation = () => {
             />
             <span className="text-xs font-medium text-primary">Agency Workflow</span>
           </motion.div>
-          <h3 className="text-base font-semibold text-foreground">Your Recruitment Pipeline</h3>
+          <h3 className="text-lg font-semibold text-foreground">Your Recruitment Pipeline</h3>
         </div>
 
-        {/* Workflow Steps - Horizontal Flow */}
-        <div className="flex items-center justify-between gap-2">
+        {/* Workflow Steps - Circular with connecting lines */}
+        <div className="flex items-center justify-between relative px-2">
+          {/* Connecting line background */}
+          <div className="absolute top-8 left-[10%] right-[10%] h-[2px] bg-border/50 z-0" />
+          
+          {/* Animated progress line */}
+          <motion.div 
+            className="absolute top-8 left-[10%] h-[2px] bg-primary z-0"
+            animate={{ 
+              width: `${(activeStep / (workflowSteps.length - 1)) * 80}%` 
+            }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          />
+
           {workflowSteps.map((step, index) => {
             const isActive = activeStep === index;
             const isPast = index < activeStep;
             const StepIcon = step.icon;
 
             return (
-              <div key={step.id} className="flex items-center flex-1">
-                {/* Step Card */}
-                <motion.div
-                  className={`relative flex flex-col items-center p-3 rounded-xl transition-all duration-300 w-full ${
-                    isActive 
-                      ? 'bg-primary/15 border border-primary shadow-md shadow-primary/20' 
-                      : isPast 
-                        ? 'bg-primary/5 border border-primary/30' 
-                        : 'bg-muted/50 border border-border/50'
+              <div key={step.id} className="flex flex-col items-center z-10 relative">
+                {/* Step Number Badge */}
+                <motion.div 
+                  className={`absolute -top-1 -right-1 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center z-20 ${
+                    isActive || isPast ? 'bg-primary text-primary-foreground' : 'bg-muted-foreground/40 text-muted-foreground'
                   }`}
-                  animate={isActive ? { scale: 1.05, y: -2 } : { scale: 1, y: 0 }}
+                  animate={isActive ? { scale: [1, 1.1, 1] } : {}}
+                  transition={{ duration: 0.5, repeat: isActive ? Infinity : 0 }}
+                >
+                  {step.id}
+                </motion.div>
+
+                {/* Circular Icon Container */}
+                <motion.div
+                  className={`relative w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${
+                    isActive 
+                      ? 'bg-primary/10 border-2 border-primary shadow-lg shadow-primary/20' 
+                      : isPast 
+                        ? 'bg-primary/5 border-2 border-primary/40' 
+                        : 'bg-muted/80 border-2 border-border/60'
+                  }`}
+                  animate={isActive ? { scale: 1.1 } : { scale: 1 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {/* Step Number */}
-                  <div className={`absolute -top-2 -right-2 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center ${
-                    isActive || isPast ? 'bg-primary text-primary-foreground' : 'bg-muted-foreground/30 text-muted-foreground'
-                  }`}>
-                    {step.id}
-                  </div>
-                  
-                  {/* Icon */}
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-2 ${
+                  {/* Inner circle with icon */}
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
                     isActive 
                       ? 'bg-primary text-primary-foreground' 
                       : isPast 
@@ -234,31 +250,34 @@ const WorkflowAnimation = () => {
                   }`}>
                     <StepIcon className="w-5 h-5" />
                   </div>
-                  
-                  {/* Label */}
-                  <span className={`text-xs font-medium ${
-                    isActive ? 'text-primary' : isPast ? 'text-foreground' : 'text-muted-foreground'
-                  }`}>
-                    {step.label}
-                  </span>
 
-                  {/* Active Pulse */}
+                  {/* Active Pulse Ring */}
                   {isActive && (
                     <motion.div
-                      className="absolute inset-0 rounded-xl border border-primary"
-                      animate={{ opacity: [0.5, 0, 0.5] }}
+                      className="absolute inset-0 rounded-full border-2 border-primary"
+                      animate={{ 
+                        scale: [1, 1.15, 1],
+                        opacity: [0.8, 0, 0.8] 
+                      }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     />
                   )}
                 </motion.div>
+                
+                {/* Label */}
+                <span className={`mt-3 text-sm font-medium ${
+                  isActive ? 'text-primary' : isPast ? 'text-foreground' : 'text-muted-foreground'
+                }`}>
+                  {step.label}
+                </span>
 
-                {/* Connector Arrow */}
+                {/* Connector Arrow (between steps) */}
                 {index < workflowSteps.length - 1 && (
                   <motion.div 
-                    className={`flex-shrink-0 mx-1 ${
+                    className={`absolute top-8 -right-4 ${
                       isPast ? 'text-primary' : 'text-muted-foreground/30'
                     }`}
-                    animate={isActive ? { x: [0, 2, 0] } : {}}
+                    animate={isActive ? { x: [0, 3, 0] } : {}}
                     transition={{ duration: 0.8, repeat: Infinity }}
                   >
                     <ArrowRight className="w-4 h-4" />
@@ -270,7 +289,7 @@ const WorkflowAnimation = () => {
         </div>
 
         {/* Progress bar */}
-        <div className="mt-6 h-1.5 bg-muted rounded-full overflow-hidden">
+        <div className="mt-8 h-1.5 bg-muted rounded-full overflow-hidden">
           <motion.div
             className="h-full bg-gradient-to-r from-primary to-primary-light rounded-full"
             animate={{ width: `${((activeStep + 1) / workflowSteps.length) * 100}%` }}
