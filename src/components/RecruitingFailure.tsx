@@ -8,28 +8,24 @@ const impactPoints = [
     icon: AlertTriangle,
     title: "Root Cause",
     description: "Unstructured intake and fragmented recruiter work across distributed teams",
-    color: "hsl(0, 84%, 60%)"
   },
   {
     id: 2,
     icon: TrendingDown,
     title: "Business Impact",
     description: "Slower sourcing, repeated work, inconsistent quality, and rising cost per profile",
-    color: "hsl(25, 95%, 53%)"
   },
   {
     id: 3,
     icon: IndianRupee,
     title: "Cost Detail",
     description: "Each submitted profile costs ₹300–₹500*, with a significant share lost to duplication, rework, or unclear feedback",
-    color: "hsl(45, 93%, 47%)"
   },
   {
     id: 4,
     icon: Target,
     title: "Need",
     description: "A system that enforces clarity at intake and converts recruiter effort into reusable, searchable assets",
-    color: "hsl(142, 71%, 45%)"
   }
 ];
 
@@ -37,22 +33,22 @@ const jobBoardCards = [
   { 
     id: 1, 
     icon: "in", 
-    bgColor: "bg-[#0A66C2]", 
-    textColor: "text-white",
+    bgColor: "bg-primary", 
+    textColor: "text-primary-foreground",
     delay: 0 
   },
   { 
     id: 2, 
     icon: "n", 
-    bgColor: "bg-white", 
-    textColor: "text-green-600",
+    bgColor: "bg-primary-light", 
+    textColor: "text-primary-foreground",
     delay: 0.3 
   },
   { 
     id: 3, 
     icon: "i", 
-    bgColor: "bg-white", 
-    textColor: "text-blue-600",
+    bgColor: "bg-primary-dark", 
+    textColor: "text-primary-foreground",
     delay: 0.6 
   }
 ];
@@ -99,16 +95,10 @@ const RecruitingFailure = () => {
                 >
                   <div className="flex items-start gap-4 p-5 rounded-xl bg-background border border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg">
                     {/* Accent line */}
-                    <div 
-                      className="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl"
-                      style={{ backgroundColor: point.color }}
-                    />
+                    <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl bg-primary" />
                     
-                    <div 
-                      className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                      style={{ backgroundColor: `${point.color}20` }}
-                    >
-                      <Icon className="w-5 h-5" style={{ color: point.color }} />
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-accent">
+                      <Icon className="w-5 h-5 text-primary" />
                     </div>
                     
                     <div className="flex-1">
