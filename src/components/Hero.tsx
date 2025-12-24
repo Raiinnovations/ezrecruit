@@ -173,31 +173,31 @@ const WorkflowAnimation = () => {
   }, []);
 
   return (
-    <div className="relative w-full max-w-md ml-auto">
+    <div className="relative w-full max-w-xl ml-auto">
       {/* Background glow */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 rounded-2xl" />
       
       {/* Main container */}
-      <div className="relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-5 md:p-6">
+      <div className="relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-6 md:p-8">
         {/* Header */}
-        <div className="text-center mb-5">
+        <div className="text-center mb-6">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 mb-2"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-3"
           >
             <motion.div
-              className="w-1.5 h-1.5 rounded-full bg-primary"
+              className="w-2 h-2 rounded-full bg-primary"
               animate={{ scale: [1, 1.3, 1], opacity: [1, 0.6, 1] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             />
-            <span className="text-[10px] font-medium text-primary">Agency Workflow</span>
+            <span className="text-xs font-medium text-primary">Agency Workflow</span>
           </motion.div>
-          <h3 className="text-sm font-semibold text-foreground">Your Recruitment Pipeline</h3>
+          <h3 className="text-base font-semibold text-foreground">Your Recruitment Pipeline</h3>
         </div>
 
         {/* Workflow Steps - Horizontal Flow */}
-        <div className="flex items-center justify-between gap-1">
+        <div className="flex items-center justify-between gap-2">
           {workflowSteps.map((step, index) => {
             const isActive = activeStep === index;
             const isPast = index < activeStep;
@@ -207,7 +207,7 @@ const WorkflowAnimation = () => {
               <div key={step.id} className="flex items-center flex-1">
                 {/* Step Card */}
                 <motion.div
-                  className={`relative flex flex-col items-center p-2 rounded-lg transition-all duration-300 w-full ${
+                  className={`relative flex flex-col items-center p-3 rounded-xl transition-all duration-300 w-full ${
                     isActive 
                       ? 'bg-primary/15 border border-primary shadow-md shadow-primary/20' 
                       : isPast 
@@ -218,25 +218,25 @@ const WorkflowAnimation = () => {
                   transition={{ duration: 0.3 }}
                 >
                   {/* Step Number */}
-                  <div className={`absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full text-[8px] font-bold flex items-center justify-center ${
+                  <div className={`absolute -top-2 -right-2 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center ${
                     isActive || isPast ? 'bg-primary text-primary-foreground' : 'bg-muted-foreground/30 text-muted-foreground'
                   }`}>
                     {step.id}
                   </div>
                   
                   {/* Icon */}
-                  <div className={`w-8 h-8 rounded-md flex items-center justify-center mb-1 ${
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-2 ${
                     isActive 
                       ? 'bg-primary text-primary-foreground' 
                       : isPast 
                         ? 'bg-primary/20 text-primary' 
                         : 'bg-muted text-muted-foreground'
                   }`}>
-                    <StepIcon className="w-4 h-4" />
+                    <StepIcon className="w-5 h-5" />
                   </div>
                   
                   {/* Label */}
-                  <span className={`text-[10px] font-medium ${
+                  <span className={`text-xs font-medium ${
                     isActive ? 'text-primary' : isPast ? 'text-foreground' : 'text-muted-foreground'
                   }`}>
                     {step.label}
@@ -245,7 +245,7 @@ const WorkflowAnimation = () => {
                   {/* Active Pulse */}
                   {isActive && (
                     <motion.div
-                      className="absolute inset-0 rounded-lg border border-primary"
+                      className="absolute inset-0 rounded-xl border border-primary"
                       animate={{ opacity: [0.5, 0, 0.5] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     />
@@ -255,13 +255,13 @@ const WorkflowAnimation = () => {
                 {/* Connector Arrow */}
                 {index < workflowSteps.length - 1 && (
                   <motion.div 
-                    className={`flex-shrink-0 mx-0.5 ${
+                    className={`flex-shrink-0 mx-1 ${
                       isPast ? 'text-primary' : 'text-muted-foreground/30'
                     }`}
                     animate={isActive ? { x: [0, 2, 0] } : {}}
                     transition={{ duration: 0.8, repeat: Infinity }}
                   >
-                    <ArrowRight className="w-3 h-3" />
+                    <ArrowRight className="w-4 h-4" />
                   </motion.div>
                 )}
               </div>
@@ -270,7 +270,7 @@ const WorkflowAnimation = () => {
         </div>
 
         {/* Progress bar */}
-        <div className="mt-5 h-1 bg-muted rounded-full overflow-hidden">
+        <div className="mt-6 h-1.5 bg-muted rounded-full overflow-hidden">
           <motion.div
             className="h-full bg-gradient-to-r from-primary to-primary-light rounded-full"
             animate={{ width: `${((activeStep + 1) / workflowSteps.length) * 100}%` }}
@@ -497,7 +497,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-foreground leading-[1.2] tracking-tight mb-3"
+              className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-foreground leading-[1.2] tracking-tight mb-4"
             >
               <span className="gradient-text">Ez Recruit</span> The Agency{" "}
               <span className="block">Operating System</span>
@@ -508,7 +508,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-sm md:text-base text-muted-foreground max-w-md mb-4 leading-relaxed"
+              className="text-base md:text-lg text-muted-foreground max-w-lg mb-6 leading-relaxed"
             >
               Bringing structure, visibility and consistency to your workflow.
             </motion.p>
