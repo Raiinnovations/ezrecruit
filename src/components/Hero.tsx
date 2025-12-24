@@ -541,15 +541,14 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Hero Image / Dashboard Preview - Autoplay Carousel */}
-        <motion.div
+        {/* Hero Image / Dashboard Preview - Autoplay Carousel - COMMENTED OUT */}
+        {/* <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mt-20 relative"
         >
           <div className="glass-card rounded-xl p-1.5 md:p-2 mx-auto max-w-6xl relative dark:glow-border">
-            {/* AI Powered ATS Badge - positioned at top right corner */}
             <motion.div
               animate={{ y: [0, -6, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
@@ -560,7 +559,6 @@ const Hero = () => {
               </div>
               <span className="text-sm font-medium text-foreground whitespace-nowrap">AI Powered ATS</span>
             </motion.div>
-            {/* Browser Header */}
             <div className="bg-muted/50 rounded-t-lg px-3 py-2 border-b border-border flex items-center gap-2">
               <div className="flex gap-1">
                 <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
@@ -574,7 +572,6 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Screenshot Carousel */}
             <div className="relative aspect-[16/8] overflow-hidden rounded-b-lg bg-secondary">
               <AnimatePresence initial={false}>
                 <motion.img
@@ -589,7 +586,6 @@ const Hero = () => {
                 />
               </AnimatePresence>
 
-              {/* Cursor pointer overlay with feature callout */}
               <AnimatePresence initial={false}>
                 <motion.div
                   key={`cursor-${currentIndex}`}
@@ -600,7 +596,6 @@ const Hero = () => {
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 >
-                  {/* Cursor icon */}
                   <motion.div
                     className="flex-shrink-0 mt-2"
                     animate={{ x: [0, 6, 0] }}
@@ -609,17 +604,14 @@ const Hero = () => {
                     <Pointer size={28} className="text-primary fill-primary/30 drop-shadow-lg" />
                   </motion.div>
                   
-                  {/* Feature description callout - Enhanced design */}
                   <motion.div
                     className="bg-card/98 backdrop-blur-md border border-primary/20 rounded-lg p-3 shadow-xl max-w-[280px] relative overflow-hidden"
                     initial={{ opacity: 0, scale: 0.9, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 0.4 }}
                   >
-                    {/* Gradient accent */}
                     <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-primary via-primary-light to-primary" />
                     
-                    {/* Header */}
                     <div className="flex items-center gap-1.5 mb-1.5">
                       <div className="w-5 h-5 rounded-md bg-primary/15 flex items-center justify-center">
                         {(() => {
@@ -630,17 +622,14 @@ const Hero = () => {
                       <span className="text-xs font-bold text-primary">{screens[currentIndex].title}</span>
                     </div>
                     
-                    {/* Headline */}
                     <h4 className="text-xs font-semibold text-foreground mb-1 leading-tight">
                       {screens[currentIndex].headline}
                     </h4>
                     
-                    {/* Description */}
                     <p className="text-[10px] text-muted-foreground mb-2 leading-relaxed line-clamp-2">
                       {screens[currentIndex].description}
                     </p>
                     
-                    {/* Feature points */}
                     <div className="space-y-1">
                       {screens[currentIndex].features.map((feature, idx) => {
                         const FeatureIcon = feature.icon;
@@ -665,9 +654,7 @@ const Hero = () => {
               </AnimatePresence>
             </div>
 
-            {/* Navigation Controls */}
             <div className="flex items-center justify-center gap-3 mt-2 pb-1">
-              {/* Prev Button */}
               <button
                 onClick={goToPrev}
                 className="w-8 h-8 rounded-full bg-muted/50 hover:bg-muted border border-border flex items-center justify-center transition-all hover:scale-105"
@@ -676,7 +663,6 @@ const Hero = () => {
                 <ChevronLeft size={16} className="text-foreground" />
               </button>
 
-              {/* Dot Indicators */}
               <div className="flex items-center gap-1.5">
                 {screens.map((_, index) => (
                   <button
@@ -692,7 +678,6 @@ const Hero = () => {
                 ))}
               </div>
 
-              {/* Next Button */}
               <button
                 onClick={goToNext}
                 className="w-8 h-8 rounded-full bg-muted/50 hover:bg-muted border border-border flex items-center justify-center transition-all hover:scale-105"
@@ -701,7 +686,6 @@ const Hero = () => {
                 <ChevronRight size={16} className="text-foreground" />
               </button>
 
-              {/* Pause/Play Button */}
               <button
                 onClick={() => setIsPaused(!isPaused)}
                 className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all hover:scale-105 ${
@@ -719,7 +703,7 @@ const Hero = () => {
               </button>
             </div>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
