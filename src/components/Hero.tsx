@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Play, Zap, User, CheckCircle2, Pointer, LayoutDashboard, FileText, Tags, Sparkles, GitBranch, Trophy, ClipboardList, Target, AlertTriangle, Clock, Users, Search, Database, TrendingUp, Shield, LucideIcon, ChevronLeft, ChevronRight, Pause, PlayCircle, Frown, Smile, Briefcase, Coffee } from "lucide-react";
+import { ArrowRight, Play, Zap, User, CheckCircle2, Pointer, LayoutDashboard, FileText, Tags, Sparkles, GitBranch, Trophy, ClipboardList, Target, AlertTriangle, Clock, Users, Search, Database, TrendingUp, Shield, LucideIcon, ChevronLeft, ChevronRight, Pause, PlayCircle, Frown, Smile, Briefcase, Coffee, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // Import all screen images
@@ -196,12 +196,12 @@ const Hero = () => {
               className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-3 lg:gap-3 xl:gap-4"
             >
               <Button variant="hero" size="lg" className="lg:text-sm xl:text-base lg:px-5 xl:px-6">
-                Start Free Trial
+                Request Demo
                 <ArrowRight size={18} className="lg:w-4 lg:h-4 xl:w-5 xl:h-5" />
               </Button>
               <Button variant="heroOutline" size="lg" className="lg:text-sm xl:text-base lg:px-5 xl:px-6">
-                <Play size={18} className="lg:w-4 lg:h-4 xl:w-5 xl:h-5" />
-                Watch Demo
+                <MessageCircle size={18} className="lg:w-4 lg:h-4 xl:w-5 xl:h-5" />
+                Talk to Us
               </Button>
             </motion.div>
           </div>
