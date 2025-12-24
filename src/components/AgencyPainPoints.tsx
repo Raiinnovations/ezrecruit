@@ -242,7 +242,13 @@ const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData:
 
   useEffect(() => {
     setCurrentIndex(0);
-  }, [animationKey]);
+    
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % stepData.solutions.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [animationKey, stepData.solutions.length]);
 
   const currentSolution = stepData.solutions[currentIndex];
 
