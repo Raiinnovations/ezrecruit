@@ -242,13 +242,7 @@ const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData:
 
   useEffect(() => {
     setCurrentIndex(0);
-    
-    const interval = setInterval(() => {
-      setCurrentIndex(prev => (prev + 1) % stepData.solutions.length);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [animationKey, stepData.solutions.length]);
+  }, [animationKey]);
 
   const currentSolution = stepData.solutions[currentIndex];
 
@@ -368,19 +362,6 @@ const StepCard = ({ stepData, animationKey }: { stepData: typeof stepsData[0]; a
 const AgencyPainPoints = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animationKey, setAnimationKey] = useState(0);
-
-  // Auto-advance slider
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex(prev => {
-        const next = (prev + 1) % stepsData.length;
-        setAnimationKey(k => k + 1);
-        return next;
-      });
-    }, 12000); // 12 seconds per slide
-
-    return () => clearInterval(interval);
-  }, []);
 
   const goToSlide = (index: number) => {
     setActiveIndex(index);
