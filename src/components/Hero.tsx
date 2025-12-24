@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Play, Zap, User, CheckCircle2, Pointer, LayoutDashboard, FileText, Tags, Sparkles, GitBranch, Trophy, ClipboardList, Target, AlertTriangle, Clock, Users, Search, Database, TrendingUp, Shield, LucideIcon, ChevronLeft, ChevronRight, Pause, PlayCircle, Frown, Smile, Briefcase, Coffee, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import WaveAnimation from "./WaveAnimation";
 // Import all screen images
 import Dashboard from "@/assets/screens/1-Dashboard.png";
 import Client from "@/assets/screens/2-Client.png";
@@ -121,6 +121,11 @@ const Hero = () => {
   };
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient pt-20">
+      {/* Flowing wave animation background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <WaveAnimation />
+      </div>
+
       {/* Animated gradient blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
