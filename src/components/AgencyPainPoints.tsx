@@ -427,7 +427,7 @@ const AgencyPainPoints = () => {
             className="text-center mb-4 md:mb-6"
           >
             <h2 className="text-2xl md:text-4xl font-bold text-foreground">
-              The pain we face as agency <span className="text-primary">at every step</span>
+              A Solution Designed Around the <span className="text-primary">Challenges Agencies Live With Daily</span>
             </h2>
           </motion.div>
 
