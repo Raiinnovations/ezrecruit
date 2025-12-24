@@ -1,8 +1,9 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import AgencyWorkflow from "@/components/AgencyWorkflow";
-import AgencyPainPoints from "@/components/AgencyPainPoints";
-import WhyEzRecruit from "@/components/WhyEzRecruit";
+import TabbedFeatures from "@/components/TabbedFeatures";
+import AdvancedFeatures from "@/components/AdvancedFeatures";
+import WallOfLove from "@/components/WallOfLove";
+import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
@@ -11,9 +12,10 @@ const Index = () => {
     <main className="min-h-screen">
       <Navbar />
       <Hero />
-      <AgencyWorkflow />
-      <AgencyPainPoints />
-      <WhyEzRecruit />
+      <TabbedFeatures />
+      <AdvancedFeatures />
+      <WallOfLove />
+      <FAQ />
       <CTA />
       <Footer />
     </main>
