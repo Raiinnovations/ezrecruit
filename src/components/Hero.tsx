@@ -149,152 +149,7 @@ const Hero = () => {
         />
       </div>
 
-      {/* Left Side - Stressed Recruiters Entering */}
-      <div className="absolute left-0 top-0 h-full w-72 hidden lg:block pointer-events-none z-0">
-        {[
-          { name: "Recruiter 1", status: "Struggling with manual search...", top: "15%", delay: 0 },
-          { name: "Recruiter 2", status: "Too many spreadsheets...", top: "35%", delay: 2 },
-          { name: "Recruiter 3", status: "Missing deadlines...", top: "55%", delay: 4 },
-          { name: "Recruiter 4", status: "Can't track candidates...", top: "75%", delay: 6 },
-        ].map((recruiter, i) => (
-          <motion.div
-            key={i}
-            className="absolute left-0"
-            style={{ top: recruiter.top }}
-            initial={{ x: -150, opacity: 0 }}
-            animate={{
-              x: [-150, 40, 280],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: 5,
-              delay: recruiter.delay,
-              repeat: Infinity,
-              repeatDelay: 3,
-              ease: "easeInOut",
-            }}
-          >
-            <div className="flex items-center gap-2 bg-orange-50 dark:bg-orange-950/30 backdrop-blur-sm border border-orange-200 dark:border-orange-800/50 rounded-lg px-3 py-2 shadow-lg">
-              <div className="w-9 h-9 rounded-full bg-orange-500/20 flex items-center justify-center">
-                <Coffee size={16} className="text-orange-600" />
-              </div>
-              <div>
-                <div className="flex items-center gap-1">
-                  <Frown size={12} className="text-orange-500" />
-                  <span className="text-[10px] font-medium text-orange-700 dark:text-orange-400">{recruiter.name}</span>
-                </div>
-                <div className="text-[9px] text-orange-600/70 dark:text-orange-500/70">{recruiter.status}</div>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
 
-      {/* Right Side - Happy Recruiters with Successful Placements */}
-      <div className="absolute right-0 top-0 h-full w-80 hidden lg:block pointer-events-none z-0">
-        {[
-          { name: "Recruiter 1", candidate: "Placed 3 candidates!", company: "TechCorp", top: "15%", delay: 2.5 },
-          { name: "Recruiter 2", candidate: "5 closures this week!", company: "StartupXYZ", top: "35%", delay: 4.5 },
-          { name: "Recruiter 3", candidate: "Record placements!", company: "BigTech", top: "55%", delay: 6.5 },
-          { name: "Recruiter 4", candidate: "Best quarter ever!", company: "Enterprise", top: "75%", delay: 8.5 },
-        ].map((recruiter, i) => (
-          <motion.div
-            key={i}
-            className="absolute right-0"
-            style={{ top: recruiter.top }}
-            initial={{ x: -150, opacity: 0 }}
-            animate={{
-              x: [-150, -40, 100],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: 5,
-              delay: recruiter.delay,
-              repeat: Infinity,
-              repeatDelay: 3,
-              ease: "easeOut",
-            }}
-          >
-            <div className="flex items-center gap-2 bg-green-50 dark:bg-green-950/30 backdrop-blur-sm border border-green-200 dark:border-green-800/50 rounded-lg px-3 py-2 shadow-lg">
-              <div className="w-9 h-9 rounded-full bg-green-500/20 flex items-center justify-center relative">
-                <Briefcase size={16} className="text-green-600" />
-                <motion.div 
-                  className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center"
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 0.5, repeat: Infinity }}
-                >
-                  <CheckCircle2 size={10} className="text-white" />
-                </motion.div>
-              </div>
-              <div>
-                <div className="flex items-center gap-1">
-                  <Smile size={12} className="text-green-500" />
-                  <span className="text-[10px] font-medium text-green-700 dark:text-green-400">{recruiter.name}</span>
-                </div>
-                <div className="text-[9px] font-semibold text-green-600 dark:text-green-500">{recruiter.candidate}</div>
-                <div className="text-[8px] text-green-600/70 dark:text-green-500/70">via {recruiter.company}</div>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Center ATS Processing Animation */}
-      <div className="absolute inset-0 hidden lg:flex items-center justify-center pointer-events-none">
-        {/* Data flow particles */}
-        {[0, 1, 2, 3, 4, 5].map((i) => (
-          <motion.div
-            key={`particle-${i}`}
-            className="absolute w-2 h-2 rounded-full"
-            style={{
-              left: "12%",
-              top: `${22 + i * 6}%`,
-              background: `linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(142, 71%, 45%) 100%)`,
-            }}
-            animate={{
-              x: ["0vw", "35vw", "75vw"],
-              scale: [0.6, 1.5, 0.8],
-              opacity: [0, 1, 1, 0],
-            }}
-            transition={{
-              duration: 6,
-              delay: i * 0.7,
-              repeat: Infinity,
-              repeatDelay: 1,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-        
-        {/* CV Icons flowing through */}
-        {[0, 1, 2].map((i) => (
-          <motion.div
-            key={`cv-${i}`}
-            className="absolute"
-            style={{
-              left: "10%",
-              top: `${25 + i * 12}%`,
-            }}
-            initial={{ x: 0, opacity: 0 }}
-            animate={{
-              x: ["0vw", "80vw"],
-              opacity: [0, 1, 1, 0],
-              rotate: [0, 5, -5, 0],
-            }}
-            transition={{
-              duration: 7,
-              delay: i * 2,
-              repeat: Infinity,
-              repeatDelay: 2,
-              ease: "easeInOut",
-            }}
-          >
-            <div className="w-6 h-7 bg-card border border-border rounded shadow-md flex items-center justify-center">
-              <FileText size={12} className="text-primary" />
-            </div>
-          </motion.div>
-        ))}
-      </div>
 
       <div className="container mx-auto px-4 lg:px-6 xl:px-8 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8 xl:gap-12">
@@ -358,6 +213,56 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="flex-1 w-full lg:w-[62%] xl:w-[60%] relative"
           >
+            {/* Background animations - flowing top to bottom behind product overview */}
+            <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none hidden lg:block">
+              {/* Happy Recruiters flowing from top to bottom */}
+              {[
+                { name: "Recruiter 1", candidate: "Placed 3 candidates!", company: "TechCorp", left: "85%", delay: 0 },
+                { name: "Recruiter 2", candidate: "5 closures this week!", company: "StartupXYZ", left: "90%", delay: 2 },
+                { name: "Recruiter 3", candidate: "Record placements!", company: "BigTech", left: "80%", delay: 4 },
+                { name: "Recruiter 4", candidate: "Best quarter ever!", company: "Enterprise", left: "88%", delay: 6 },
+              ].map((recruiter, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute"
+                  style={{ left: recruiter.left }}
+                  initial={{ y: -100, opacity: 0 }}
+                  animate={{
+                    y: [-100, 150, 500],
+                    opacity: [0, 1, 0],
+                  }}
+                  transition={{
+                    duration: 6,
+                    delay: recruiter.delay,
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <div className="flex items-center gap-2 bg-green-50 dark:bg-green-950/30 backdrop-blur-sm border border-green-200 dark:border-green-800/50 rounded-lg px-3 py-2 shadow-lg">
+                    <div className="w-9 h-9 rounded-full bg-green-500/20 flex items-center justify-center relative">
+                      <Briefcase size={16} className="text-green-600" />
+                      <motion.div 
+                        className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center"
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 0.5, repeat: Infinity }}
+                      >
+                        <CheckCircle2 size={10} className="text-white" />
+                      </motion.div>
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1">
+                        <Smile size={12} className="text-green-500" />
+                        <span className="text-[10px] font-medium text-green-700 dark:text-green-400">{recruiter.name}</span>
+                      </div>
+                      <div className="text-[9px] font-semibold text-green-600 dark:text-green-500">{recruiter.candidate}</div>
+                      <div className="text-[8px] text-green-600/70 dark:text-green-500/70">via {recruiter.company}</div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
           <div className="glass-card rounded-xl p-1 lg:p-1.5 xl:p-2 relative dark:glow-border">
             {/* AI Powered ATS Badge - positioned at top right corner */}
             <motion.div
