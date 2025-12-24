@@ -2,7 +2,6 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import AgencyWorkflow from "@/components/AgencyWorkflow";
 import StructuredWorkflow from "@/components/StructuredWorkflow";
-import RecruitingFails from "@/components/RecruitingFails";
 import AgencyPainPoints from "@/components/AgencyPainPoints";
 import WhyEzRecruit from "@/components/WhyEzRecruit";
 import CTA from "@/components/CTA";
@@ -15,7 +14,6 @@ const Index = () => {
       <Hero />
       <AgencyWorkflow />
       <StructuredWorkflow />
-      <RecruitingFails />
       <AgencyPainPoints />
       <WhyEzRecruit />
       <CTA />
