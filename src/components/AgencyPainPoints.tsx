@@ -385,7 +385,7 @@ const AgencyPainPoints = () => {
   };
 
   return (
-    <section id="challenges" className="relative bg-background py-12 md:py-20">
+    <section id="challenges" className="relative bg-background pt-12 md:pt-20 pb-6 md:pb-8">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
