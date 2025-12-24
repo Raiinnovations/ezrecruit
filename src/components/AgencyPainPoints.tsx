@@ -319,8 +319,6 @@ const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData:
 
 // Step Card component
 const StepCard = ({ stepData, animationKey }: { stepData: typeof stepsData[0]; animationKey: number }) => {
-  const Icon = stepData.icon;
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -331,22 +329,6 @@ const StepCard = ({ stepData, animationKey }: { stepData: typeof stepsData[0]; a
     >
       {/* Browser-style window frame */}
       <div className="rounded-2xl border border-border/50 bg-muted/30 shadow-xl overflow-hidden h-full flex flex-col">
-        {/* Header bar with problem heading */}
-        <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-b border-primary/20">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-              <Icon className="w-4 h-4 text-primary" />
-            </div>
-            <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-              Step {stepData.step}
-            </span>
-          </div>
-          <div className="flex-1">
-            <h3 className="text-sm md:text-base font-normal text-foreground/80">
-              {stepData.problemHeading}
-            </h3>
-          </div>
-        </div>
 
         {/* Content area - Two column layout 40/60 */}
         <div className="p-4 md:p-6 bg-gradient-to-br from-background to-muted/20 flex-1 flex flex-col md:flex-row gap-6 min-h-0">
