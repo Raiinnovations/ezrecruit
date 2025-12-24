@@ -1,4 +1,4 @@
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { AlertTriangle, TrendingDown, IndianRupee, Target, User, X, Check, AlertCircle, Copy, RotateCcw, MessageCircleWarning, Trash2 } from "lucide-react";
 
@@ -37,20 +37,29 @@ const candidateProfiles = [
 ];
 
 const RecruitingFailure = () => {
-  const sectionRef = useRef(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Auto-cycle through cards
-  useEffect(() => {
-    if (!isInView) return;
-    
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % impactPoints.length);
-    }, 4000);
+  // Scroll-based progress
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start center", "end center"]
+  });
 
-    return () => clearInterval(interval);
-  }, [isInView]);
+  // Update active index based on scroll progress
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (latest) => {
+      const newIndex = Math.min(
+        Math.floor(latest * impactPoints.length),
+        impactPoints.length - 1
+      );
+      if (newIndex >= 0) {
+        setActiveIndex(newIndex);
+      }
+    });
+    return () => unsubscribe();
+  }, [scrollYProgress]);
 
   // Story-based animation states for each step
   const getStoryAnimation = (): { 
@@ -172,14 +181,15 @@ const RecruitingFailure = () => {
   };
 
   return (
-    <section ref={sectionRef} className="py-6 md:py-10 bg-muted/30 relative overflow-hidden">
+    <section ref={sectionRef} className="min-h-[150vh] py-6 md:py-10 bg-muted/30 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
         <div className="absolute top-10 right-[10%] w-[300px] h-[300px] rounded-full border-[2px] border-muted-foreground" />
         <div className="absolute bottom-10 left-[5%] w-[200px] h-[200px] rounded-full border-[2px] border-muted-foreground" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      {/* Sticky container */}
+      <div className="sticky top-20 container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
