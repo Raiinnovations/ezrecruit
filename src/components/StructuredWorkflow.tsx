@@ -6,35 +6,35 @@ const layers = [
     id: 1,
     title: "Intake",
     description: "Standardised job intake to ensure clarity before sourcing begins",
-    color: "#1e3a5f",
+    color: "hsl(198, 94%, 28%)", // Darkest teal
     position: "left"
   },
   {
     id: 2,
     title: "Sourcing",
     description: "AI-assisted sourcing to accelerate quality shortlists.",
-    color: "#2d6a4f",
+    color: "hsl(198, 94%, 35%)", // Dark teal
     position: "right"
   },
   {
     id: 3,
     title: "Screening",
     description: "Consistent screening steps to reduce repeated efforts per profile",
-    color: "#e67e22",
+    color: "hsl(187, 72%, 42%)", // Medium teal
     position: "left"
   },
   {
     id: 4,
     title: "Submission",
     description: "Standardised submissions to improve feedback loops and outcomes",
-    color: "#f4c430",
+    color: "hsl(187, 72%, 52%)", // Light teal
     position: "right"
   },
   {
     id: 5,
     title: "Dashboard",
     description: "Clear visibility into pipeline status, recruiter activity, and bottlenecks",
-    color: "#f8c8d8",
+    color: "hsl(187, 60%, 65%)", // Lightest teal
     position: "left"
   },
 ];
