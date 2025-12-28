@@ -245,7 +245,7 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
 
               {/* Automated actions glowing - RIGHT side */}
               <div className="flex flex-col gap-2 items-start">
-                {["Auto-Boolean", "Smart Intake", "AI Tracker"].map((task, i) => (
+                {["Centralized Workflow", "Smart Tracker", "AI Search"].map((task, i) => (
                   <motion.div
                     key={task}
                     className="flex items-center gap-2 bg-primary/15 px-3 py-1.5 rounded-lg border border-primary/50"
