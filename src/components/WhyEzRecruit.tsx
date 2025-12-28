@@ -48,13 +48,13 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
         return (
           <div className="relative w-full h-full flex items-center justify-center py-2">
             {/* Funnel Container */}
-            <div className="relative flex flex-col items-center gap-1 w-full max-w-[280px]">
-              {/* Funnel Stages */}
+            <div className="relative flex flex-col items-center gap-2 w-full max-w-[280px]">
+              {/* Funnel Stages with animated candidate card */}
               {[
-                { label: "Leads", width: "100%", reduction: "", icons: 5, opacity: 1 },
-                { label: "Qualified", width: "82%", reduction: "–5%", icons: 4, opacity: 0.85 },
-                { label: "Screened", width: "64%", reduction: "–10%", icons: 3, opacity: 0.7 },
-                { label: "Submitted", width: "46%", reduction: "–15–20%", icons: 2, opacity: 0.55 },
+                { label: "Leads", width: "100%", reduction: "", icons: 5, opacity: 1, saving: "" },
+                { label: "Qualified", width: "82%", reduction: "–5%", icons: 4, opacity: 0.85, saving: "Filtered" },
+                { label: "Screened", width: "64%", reduction: "–10%", icons: 3, opacity: 0.7, saving: "Validated" },
+                { label: "Submitted", width: "46%", reduction: "–15–20%", icons: 2, opacity: 0.55, saving: "Optimized" },
               ].map((stage, i) => (
                 <motion.div
                   key={stage.label}
@@ -119,17 +119,67 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
                       transition={{ duration: 2.5, repeat: Infinity, ease: "linear", delay: i * 0.3 }}
                     />
                   </motion.div>
+
+                  {/* Saving highlight label - right side */}
+                  {stage.saving && (
+                    <motion.span
+                      className="absolute -right-16 text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full border border-primary/30"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ 
+                        opacity: [0, 1, 1, 0],
+                        scale: [0.8, 1, 1, 0.8]
+                      }}
+                      transition={{ 
+                        duration: 4, 
+                        repeat: Infinity, 
+                        delay: i * 1,
+                        times: [0, 0.1, 0.9, 1]
+                      }}
+                    >
+                      {stage.saving}
+                    </motion.span>
+                  )}
                 </motion.div>
               ))}
-              
-              {/* Arrow connectors */}
-              <motion.div 
-                className="absolute right-2 top-0 bottom-0 flex flex-col items-center justify-center pointer-events-none"
-                animate={{ opacity: [0.4, 0.8, 0.4] }}
-                transition={{ duration: 2, repeat: Infinity }}
+
+              {/* Animated Candidate Card moving through funnel */}
+              <motion.div
+                className="absolute left-1/2 -translate-x-1/2 w-16 h-8 rounded-md bg-gradient-to-r from-primary to-primary/70 border border-primary/50 flex items-center justify-center gap-1 shadow-lg shadow-primary/30 z-20"
+                animate={{
+                  y: [0, 44, 88, 132],
+                  scale: [1, 0.9, 0.8, 0.7],
+                  opacity: [1, 0.9, 0.8, 0.7]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  times: [0, 0.33, 0.66, 1]
+                }}
               >
-                <TrendingDown className="w-5 h-5 text-primary/60" />
+                <div className="w-4 h-4 rounded-full bg-background/90 flex items-center justify-center">
+                  <span className="text-[8px] text-primary font-bold">👤</span>
+                </div>
+                <span className="text-[8px] text-background font-semibold">Candidate</span>
               </motion.div>
+
+              {/* Stage highlight glow that follows the card */}
+              <motion.div
+                className="absolute left-0 right-0 h-10 rounded-lg pointer-events-none"
+                style={{ 
+                  background: "linear-gradient(90deg, transparent, rgba(var(--primary), 0.3), transparent)",
+                }}
+                animate={{
+                  y: [0, 44, 88, 132],
+                  opacity: [0.5, 0.6, 0.7, 0.8]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  times: [0, 0.33, 0.66, 1]
+                }}
+              />
             </div>
           </div>
         );
