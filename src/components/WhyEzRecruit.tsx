@@ -189,7 +189,7 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
             <div className="flex items-center justify-center gap-4 w-full">
               {/* Manual tasks fading out - LEFT side */}
               <div className="flex flex-col gap-2 items-end">
-                {["Spreadsheet", "Tracker", "Manual"].map((task, i) => (
+                {["Spreadsheet", "Manual Tracker", "Manual Search"].map((task, i) => (
                   <motion.div
                     key={task}
                     className="flex items-center gap-2 bg-destructive/15 px-3 py-1.5 rounded-lg border border-destructive/40"
