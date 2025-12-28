@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { User, FileText, Users, Search, FileCheck, Send, Trophy, ChevronLeft, ChevronRight } from "lucide-react";
 
-import requirementIntake from "@/assets/screens/requirement-intake.png";
+import requirementIntake from "@/assets/screens/evaluation-questions.webp";
 
 const stepsData = [
   {
