@@ -15,10 +15,15 @@ const CTA = () => {
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary-light to-primary opacity-95 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 dark:opacity-100 black:from-zinc-950 black:via-zinc-900 black:to-zinc-950 black:opacity-100" />
       
+      {/* Obsidian theme decorative gradients */}
+      <div className="hidden black:block absolute -bottom-20 -left-20 w-80 h-80 bg-gradient-to-tr from-primary/30 via-cyan-500/20 to-transparent rounded-full blur-3xl" />
+      <div className="hidden black:block absolute -top-10 -right-10 w-64 h-64 bg-gradient-to-bl from-primary/20 via-purple-500/15 to-transparent rounded-full blur-3xl" />
+      <div className="hidden black:block absolute top-1/2 left-1/4 w-40 h-40 bg-gradient-to-r from-cyan-500/10 to-primary/10 rounded-full blur-2xl" />
+      
       {/* Bottom border for Obsidian theme */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent black:via-primary/30" />
       <motion.div
-        className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"
+        className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl black:bg-primary/10"
         animate={{
           x: [0, 50, 0],
           y: [0, 30, 0],
@@ -30,7 +35,7 @@ const CTA = () => {
         }}
       />
       <motion.div
-        className="absolute bottom-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl"
+        className="absolute bottom-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl black:bg-cyan-500/10"
         animate={{
           x: [0, -40, 0],
           y: [0, -50, 0],
