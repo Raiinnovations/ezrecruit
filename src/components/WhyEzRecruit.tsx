@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef } from "react";
-import { DollarSign, Clock, FileCheck, TrendingDown, Timer, CheckCircle } from "lucide-react";
+import { DollarSign, Clock, FileCheck, TrendingDown, Timer, CheckCircle, Users, ArrowRight, RefreshCw } from "lucide-react";
 
 const benefits = [
   {
@@ -300,49 +300,121 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
         );
       case 2:
         return (
-          <div className="relative w-full h-full flex items-center justify-center">
-            <div className="relative">
-              {[0, 1, 2].map((i) => (
-                <motion.div
-                  key={i}
-                  className="absolute bg-background/80 backdrop-blur-sm rounded-xl border border-primary/30 w-32 h-20 flex items-center justify-center shadow-lg"
-                  style={{
-                    top: i * -6,
-                    left: i * 6,
-                    zIndex: 3 - i,
-                  }}
-                  animate={{
-                    y: [0, -4, 0],
-                    rotate: [0, 1, 0],
-                  }}
-                  transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+          <div className="relative w-full h-full flex items-center justify-center px-4">
+            {/* Flow container - left to right */}
+            <div className="flex items-center justify-between w-full gap-2">
+              
+              {/* Left side - Multiple duplicate profiles coming in */}
+              <div className="flex flex-col gap-1 relative">
+                {[0, 1, 2].map((i) => (
+                  <motion.div
+                    key={i}
+                    className="bg-background/60 backdrop-blur-sm rounded-lg border border-muted-foreground/30 px-2 py-1.5 flex items-center gap-1.5 shadow-md"
+                    initial={{ opacity: 0.4 }}
+                    animate={{
+                      opacity: [0.4, 0.7, 0.4],
+                      x: [0, 4, 0],
+                    }}
+                    transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.2 }}
+                  >
+                    <div className="w-4 h-4 rounded-full bg-muted-foreground/30 flex items-center justify-center">
+                      <Users className="w-2.5 h-2.5 text-muted-foreground" />
+                    </div>
+                    <span className="text-[9px] text-muted-foreground">Profile</span>
+                  </motion.div>
+                ))}
+                {/* Duplicate label */}
+                <motion.span 
+                  className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[8px] text-muted-foreground/70"
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 2, repeat: Infinity }}
                 >
-                  <div className="flex flex-col items-center gap-1">
-                    <FileCheck className="w-5 h-5 text-primary" />
-                    {i === 0 && (
-                      <motion.div
-                        animate={{ opacity: [0, 1, 0] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      >
-                        <CheckCircle className="w-3 h-3 text-primary" />
-                      </motion.div>
-                    )}
-                  </div>
+                  Duplicates
+                </motion.span>
+              </div>
+
+              {/* Arrow - merge indicator */}
+              <motion.div
+                className="flex items-center"
+                animate={{ x: [0, 3, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                <ArrowRight className="w-4 h-4 text-primary/60" />
+              </motion.div>
+
+              {/* Center - Merged standardized submission */}
+              <motion.div
+                className="relative bg-background/90 backdrop-blur-sm rounded-xl border-2 border-primary/50 p-3 shadow-lg"
+                animate={{ 
+                  scale: [1, 1.02, 1],
+                  boxShadow: [
+                    "0 0 0 0 rgba(var(--primary-rgb), 0)",
+                    "0 0 20px 2px rgba(var(--primary-rgb), 0.2)",
+                    "0 0 0 0 rgba(var(--primary-rgb), 0)"
+                  ]
+                }}
+                transition={{ duration: 2.5, repeat: Infinity }}
+              >
+                <div className="flex flex-col items-center gap-1">
+                  <FileCheck className="w-6 h-6 text-primary" />
+                  <span className="text-[10px] text-foreground font-medium">Standardised</span>
+                  <CheckCircle className="w-3 h-3 text-primary" />
+                </div>
+              </motion.div>
+
+              {/* Arrow - to client */}
+              <motion.div
+                className="flex items-center"
+                animate={{ x: [0, 3, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }}
+              >
+                <ArrowRight className="w-4 h-4 text-primary/60" />
+              </motion.div>
+
+              {/* Right side - Client review & feedback */}
+              <div className="flex flex-col items-center gap-1.5">
+                <motion.div
+                  className="bg-background/80 backdrop-blur-sm rounded-lg border border-primary/40 px-2 py-1.5 flex items-center gap-1.5 shadow-md"
+                  animate={{ 
+                    y: [0, -2, 0],
+                    borderColor: ["rgba(var(--primary-rgb), 0.4)", "rgba(var(--primary-rgb), 0.7)", "rgba(var(--primary-rgb), 0.4)"]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <Users className="w-4 h-4 text-primary" />
+                  <span className="text-[9px] text-foreground font-medium">Client</span>
                 </motion.div>
-              ))}
+                
+                {/* Feedback loop arrow */}
+                <motion.div
+                  className="flex items-center gap-0.5"
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <RefreshCw className="w-3 h-3 text-primary/70" />
+                  <span className="text-[8px] text-primary/70">Feedback</span>
+                </motion.div>
+              </div>
             </div>
-            
+
+            {/* Badge - Duplicate reduction */}
             <motion.div
-              className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-primary/30 shadow-lg"
-              animate={{ opacity: [0.7, 1, 0.7] }}
+              className="absolute top-2 right-2 bg-background/90 backdrop-blur-sm rounded-xl px-3 py-1.5 border border-primary/40 shadow-lg"
+              animate={{ 
+                y: [0, -2, 0]
+              }}
               transition={{ duration: 2, repeat: Infinity }}
             >
               <span className="text-primary font-bold">-50%</span>
               <span className="text-muted-foreground text-xs block">duplicates</span>
             </motion.div>
+
+            {/* Badge - Standardised label */}
             <motion.div
-              className="absolute bottom-6 left-4 bg-background/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-primary/30 shadow-lg"
-              animate={{ opacity: [0.7, 1, 0.7] }}
+              className="absolute bottom-2 left-2 bg-background/90 backdrop-blur-sm rounded-xl px-3 py-1.5 border border-primary/40 shadow-lg"
+              animate={{ 
+                y: [0, -2, 0]
+              }}
               transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
             >
               <span className="text-primary font-bold text-sm">Standardised</span>
