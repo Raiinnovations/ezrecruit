@@ -12,6 +12,9 @@ import pain2Feedback from "@/assets/screens/pain2-feedback.webp";
 import pain3Ai from "@/assets/screens/pain3-ai.webp";
 import pain3Duplicate from "@/assets/screens/pain3-duplicate.webp";
 import pain3Quality from "@/assets/screens/pain3-quality.webp";
+import pain4Feedback from "@/assets/screens/pain4-feedback.webp";
+import pain4Evaluation from "@/assets/screens/pain4-evaluation.webp";
+import pain4Clear from "@/assets/screens/pain4-clear.webp";
 
 const stepsData = [
   {
@@ -81,9 +84,9 @@ const stepsData = [
     ],
     solutionIntro: "brings consistency to screening.",
     solutions: [
-      { heading: "Standardized evaluation fields", image: undefined },
-      { heading: "Clear, comparable screening outcomes", image: undefined },
-      { heading: "Feedback becomes a long-term asset", image: undefined },
+      { heading: "Standardized evaluation fields", image: pain4Evaluation },
+      { heading: "Clear, comparable screening outcomes", image: pain4Clear },
+      { heading: "Feedback becomes a long-term asset", image: pain4Feedback },
     ],
   },
   {
