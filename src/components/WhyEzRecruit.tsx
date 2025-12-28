@@ -285,9 +285,9 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
               <span className="text-foreground text-sm font-bold">+60 min/day</span>
             </motion.div>
 
-            {/* Per role saving badge - bottom center */}
+            {/* Per role saving badge - bottom left (diagonal with top-right badge) */}
             <motion.div
-              className="absolute bottom-1 left-1/2 -translate-x-1/2 bg-background/90 backdrop-blur-sm rounded-xl px-4 py-1.5 border border-primary/40 shadow-lg"
+              className="absolute bottom-1 left-2 bg-background/90 backdrop-blur-sm rounded-xl px-3 py-1.5 border border-primary/40 shadow-lg"
               animate={{ 
                 y: [0, -2, 0]
               }}
