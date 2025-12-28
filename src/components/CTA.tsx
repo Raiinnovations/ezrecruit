@@ -10,9 +10,10 @@ const CTA = () => {
   return (
     <section className="py-24 relative overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary-light to-primary opacity-95 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 dark:opacity-100 black:from-black black:via-black black:to-black black:opacity-100" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary-light to-primary opacity-95 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 dark:opacity-100 black:from-black black:via-zinc-950 black:to-black black:opacity-100" />
       
-      {/* Animated shapes */}
+      {/* Bottom border for Obsidian theme */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent black:via-primary/30" />
       <motion.div
         className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"
         animate={{
