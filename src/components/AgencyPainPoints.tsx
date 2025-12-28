@@ -6,6 +6,9 @@ import requirementIntake from "@/assets/screens/evaluation-questions.webp";
 import pain1Requirement from "@/assets/screens/pain1-requirement.webp";
 import pain1Evaluation from "@/assets/screens/pain1-evaluation.webp";
 import pain1Goals from "@/assets/screens/pain1-goals.webp";
+import pain2Briefing from "@/assets/screens/pain2-briefing.webp";
+import pain2Assignment from "@/assets/screens/pain2-assignment.webp";
+import pain2Feedback from "@/assets/screens/pain2-feedback.webp";
 
 const stepsData = [
   {
@@ -39,9 +42,9 @@ const stepsData = [
     ],
     solutionIntro: "keeps everyone aligned.",
     solutions: [
-      { heading: "Centralized briefing for every job", image: undefined },
-      { heading: "Clear ownership and expectations", image: undefined },
-      { heading: "Notes, actions, and preferences stay searchable forever", image: undefined },
+      { heading: "Centralized briefing for every job", image: pain2Briefing },
+      { heading: "Clear ownership and expectations", image: pain2Assignment },
+      { heading: "Notes, actions, and preferences stay searchable forever", image: pain2Feedback },
     ],
   },
   {
