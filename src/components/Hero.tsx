@@ -103,14 +103,6 @@ const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Preload all images on mount to prevent lag
-  useEffect(() => {
-    screens.forEach((screen) => {
-      const img = new Image();
-      img.src = screen.image;
-    });
-  }, []);
-
   // Autoplay with pause support
   useEffect(() => {
     if (isPaused) return;
@@ -323,21 +315,18 @@ const Hero = () => {
 
             {/* Screenshot Carousel */}
             <div className="relative aspect-[16/9] lg:aspect-[16/8] overflow-hidden rounded-b-lg bg-secondary">
-              {/* Render all images but only show active one - prevents loading lag */}
-              {screens.map((screen, index) => (
+              <AnimatePresence initial={false}>
                 <motion.img
-                  key={index}
-                  src={screen.image}
-                  alt={screen.title}
-                  initial={false}
-                  animate={{ 
-                    opacity: currentIndex === index ? 1 : 0,
-                    zIndex: currentIndex === index ? 1 : 0
-                  }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  key={currentIndex}
+                  src={screens[currentIndex].image}
+                  alt={screens[currentIndex].title}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
                   className="absolute inset-0 w-full h-full object-cover object-top"
                 />
-              ))}
+              </AnimatePresence>
 
               {/* Cursor pointer overlay with feature callout */}
               <AnimatePresence initial={false}>
