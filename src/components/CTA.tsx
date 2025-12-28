@@ -9,8 +9,11 @@ const CTA = () => {
 
   return (
     <section className="py-24 relative overflow-hidden">
+      {/* Top border separator */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent black:via-white/10" />
+      
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary-light to-primary opacity-95 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 dark:opacity-100 black:from-black black:via-zinc-950 black:to-black black:opacity-100" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary-light to-primary opacity-95 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 dark:opacity-100 black:from-zinc-950 black:via-zinc-900 black:to-zinc-950 black:opacity-100" />
       
       {/* Bottom border for Obsidian theme */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent black:via-primary/30" />
