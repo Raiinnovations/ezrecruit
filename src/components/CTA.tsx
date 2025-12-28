@@ -10,7 +10,7 @@ const CTA = () => {
   return (
     <section className="py-24 relative overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary-light to-primary opacity-95 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 dark:opacity-100" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary-light to-primary opacity-95 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 dark:opacity-100 black:from-black black:via-black black:to-black black:opacity-100" />
       
       {/* Animated shapes */}
       <motion.div
