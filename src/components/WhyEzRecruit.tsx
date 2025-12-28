@@ -323,14 +323,6 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
                     <span className="text-[9px] text-muted-foreground">Profile</span>
                   </motion.div>
                 ))}
-                {/* Duplicate label */}
-                <motion.span 
-                  className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[8px] text-muted-foreground/70"
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  Duplicates
-                </motion.span>
               </div>
 
               {/* Arrow - merge indicator */}
