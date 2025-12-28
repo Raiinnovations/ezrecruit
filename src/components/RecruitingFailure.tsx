@@ -125,15 +125,15 @@ const RecruitingFailure = () => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "rejected":
-        return <X className="w-4 h-4 text-destructive" />;
+        return <X className="w-4 h-4 text-muted-foreground" />;
       case "duplicate":
-        return <Copy className="w-4 h-4 text-orange-500" />;
+        return <Copy className="w-4 h-4 text-muted-foreground" />;
       case "rework":
-        return <RotateCcw className="w-4 h-4 text-yellow-500" />;
+        return <RotateCcw className="w-4 h-4 text-muted-foreground" />;
       case "unclear":
-        return <MessageCircleWarning className="w-4 h-4 text-red-400" />;
+        return <MessageCircleWarning className="w-4 h-4 text-muted-foreground" />;
       case "organized":
-        return <Check className="w-4 h-4 text-green-500" />;
+        return <Check className="w-4 h-4 text-primary" />;
       default:
         return null;
     }
@@ -142,15 +142,15 @@ const RecruitingFailure = () => {
   const getCardBorderColor = (status: string) => {
     switch (status) {
       case "rejected":
-        return "border-destructive/50";
+        return "border-muted-foreground/50";
       case "duplicate":
-        return "border-orange-500/50";
+        return "border-muted-foreground/50";
       case "rework":
-        return "border-yellow-500/50";
+        return "border-muted-foreground/50";
       case "unclear":
-        return "border-red-400/50";
+        return "border-muted-foreground/50";
       case "organized":
-        return "border-green-500/50";
+        return "border-primary/50";
       case "cost":
         return "border-primary/50";
       default:
@@ -356,11 +356,7 @@ const RecruitingFailure = () => {
                           <motion.span
                             animate={{ x: [0, 5, 5], opacity: [1, 1, 0.7] }}
                             transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 0.5 }}
-                            className={`text-xs font-medium ${
-                              storyAnimation.profiles[index].status === "duplicate" ? "text-orange-500" :
-                              storyAnimation.profiles[index].status === "rework" ? "text-yellow-500" :
-                              "text-red-400"
-                            }`}
+                            className="text-xs font-medium text-muted-foreground"
                           >
                             {getWasteLabel(storyAnimation.profiles[index].status)}
                           </motion.span>
@@ -368,7 +364,7 @@ const RecruitingFailure = () => {
                             animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
                             transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 1 }}
                           >
-                            <Trash2 className="w-4 h-4 text-destructive/70" />
+                            <Trash2 className="w-4 h-4 text-muted-foreground/70" />
                           </motion.div>
                         </motion.div>
                       )}
