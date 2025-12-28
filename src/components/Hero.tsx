@@ -268,7 +268,7 @@ const Hero = () => {
               ))}
             </div>
 
-          <div className="glass-card rounded-xl p-1 lg:p-1.5 xl:p-2 relative dark:glow-border">
+          <div className="glass-card rounded-xl p-1 lg:p-1.5 xl:p-2 relative dark:glow-border black:glow-border black:border-primary/30">
             {/* AI Powered ATS Badge - positioned at top right corner */}
             <motion.div
               animate={{ y: [0, -6, 0] }}
