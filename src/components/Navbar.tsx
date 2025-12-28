@@ -3,7 +3,9 @@ import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useTheme } from "next-themes";
 import logo from "@/assets/logo.png";
+import logoDark from "@/assets/logo-dark.png";
 
 const navLinks = [
   { name: "Workflow", href: "#workflow" },
@@ -14,6 +16,9 @@ const navLinks = [
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { resolvedTheme } = useTheme();
+  
+  const currentLogo = resolvedTheme === "dark" || resolvedTheme === "black" ? logoDark : logo;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,8 +38,8 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2">
-          <img src={logo} alt="EZRecruit" className="h-8 md:h-10" />
+<a href="#" className="flex items-center gap-2">
+          <img src={currentLogo} alt="EZRecruit" className="h-8 md:h-10" />
         </a>
 
         {/* Desktop Navigation */}
