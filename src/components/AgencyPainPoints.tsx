@@ -17,6 +17,9 @@ import pain4Evaluation from "@/assets/screens/pain4-evaluation.webp";
 import pain4Clear from "@/assets/screens/pain4-clear.webp";
 
 import pain5Tracker from "@/assets/screens/pain5-tracker.webp";
+import pain6Scheduler from "@/assets/screens/pain6-scheduler.webp";
+import pain6Performance from "@/assets/screens/pain6-performance.webp";
+import pain6Closure from "@/assets/screens/pain6-closure.webp";
 
 const stepsData = [
   {
@@ -122,9 +125,9 @@ const stepsData = [
     ],
     solutionIntro: "helps you close with clarity.",
     solutions: [
-      { heading: "Automated scheduling and reminders", image: undefined },
-      { heading: "Real-time visibility on every closure", image: undefined },
-      { heading: "Performance tracked without spreadsheets", image: undefined },
+      { heading: "Automated scheduling and reminders", image: pain6Scheduler },
+      { heading: "Real-time visibility on every closure", image: pain6Performance },
+      { heading: "Performance tracked without spreadsheets", image: pain6Closure },
     ],
   },
 ];
