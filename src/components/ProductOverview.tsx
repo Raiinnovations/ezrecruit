@@ -15,16 +15,16 @@ import {
 } from "lucide-react";
 
 // Import all screen images
-import Dashboard from "@/assets/screens/1-Dashboard.png";
-import Client from "@/assets/screens/2-Client.png";
-import Requirement from "@/assets/screens/3-Requirement.png";
+import Dashboard from "@/assets/screens/1-Dashboard.webp";
+import Client from "@/assets/screens/2-Client.webp";
+import Requirement from "@/assets/screens/3-Requirement.webp";
 import Candidate from "@/assets/screens/4-Candidate.png";
-import TaggedSearch from "@/assets/screens/5-TaggedSearch.png";
-import Workflow from "@/assets/screens/6-Workflow.png";
-import Closure from "@/assets/screens/7-Closure.png";
-import Assignment from "@/assets/screens/8-Assignment.png";
-import AISearch from "@/assets/screens/9-AISearch.png";
-import GoalManagement from "@/assets/screens/10-GoalManagement.png";
+import TaggedSearch from "@/assets/screens/5-TaggedSearch.webp";
+import Workflow from "@/assets/screens/6-Workflow.webp";
+import Closure from "@/assets/screens/7-Closure.webp";
+import Assignment from "@/assets/screens/8-Assignment.webp";
+import AISearch from "@/assets/screens/9-AISearch.webp";
+import GoalManagement from "@/assets/screens/10-GoalManagement.webp";
 
 interface Screen {
   title: string;
