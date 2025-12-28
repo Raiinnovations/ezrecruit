@@ -275,7 +275,7 @@ const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData:
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: -50, scale: 0.95 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full max-w-xl bg-card rounded-xl overflow-hidden flex flex-col border-2 border-primary/30 shadow-2xl"
+            className="w-full max-w-xl bg-card rounded-xl overflow-hidden flex flex-col border-2 border-primary/30 shadow-2xl dark:glow-border black:glow-border"
           >
             {/* Solution Heading */}
             <div className="p-4 md:p-5 bg-muted/30">
@@ -328,7 +328,7 @@ const StepCard = ({ stepData, animationKey }: { stepData: typeof stepsData[0]; a
       className="w-full h-full flex flex-col"
     >
       {/* Browser-style window frame */}
-      <div className="rounded-2xl border border-border/50 bg-muted/30 shadow-xl overflow-hidden h-full flex flex-col">
+      <div className="rounded-2xl border border-border/50 bg-muted/30 shadow-xl overflow-hidden h-full flex flex-col dark:glow-border black:glow-border">
 
         {/* Content area - Two column layout 40/60 */}
         <div className="p-4 md:p-6 bg-gradient-to-br from-background to-muted/20 flex-1 flex flex-col md:flex-row gap-6 min-h-0">

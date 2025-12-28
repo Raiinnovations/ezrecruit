@@ -159,7 +159,7 @@ const ProductOverview = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="max-w-5xl mx-auto"
         >
-          <div className="glass-card rounded-xl p-2 dark:glow-border">
+          <div className="glass-card rounded-xl p-2 dark:glow-border black:glow-border">
             {/* Active Tab Header */}
             <div className="bg-background/80 rounded-t-lg border-b border-border px-4 py-3 flex items-center justify-between">
               <div className="flex items-center gap-3">
