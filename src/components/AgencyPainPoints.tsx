@@ -16,6 +16,8 @@ import pain4Feedback from "@/assets/screens/pain4-feedback.webp";
 import pain4Evaluation from "@/assets/screens/pain4-evaluation.webp";
 import pain4Clear from "@/assets/screens/pain4-clear.webp";
 
+import pain5Tracker from "@/assets/screens/pain5-tracker.webp";
+
 const stepsData = [
   {
     step: 1,
@@ -102,9 +104,9 @@ const stepsData = [
     ],
     solutionIntro: "does it in one click.",
     solutions: [
-      { heading: "Trackers auto-generated instantly", image: undefined },
-      { heading: "Client-ready formats, every time", image: undefined },
-      { heading: "Professional, reusable submissions", image: undefined },
+      { heading: "Trackers auto-generated instantly", image: pain5Tracker },
+      { heading: "Client-ready formats, every time", image: pain5Tracker },
+      { heading: "Professional, reusable submissions", image: pain5Tracker },
     ],
   },
   {
