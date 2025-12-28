@@ -203,8 +203,8 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
                       delay: i * 0.3,
                     }}
                   >
-                    <span className="text-xs text-destructive/80 font-medium line-through">{task}</span>
-                    <span className="text-destructive text-xs">✕</span>
+                    <span className="text-xs text-muted-foreground font-medium line-through">{task}</span>
+                    <span className="text-muted-foreground text-xs">✕</span>
                   </motion.div>
                 ))}
               </div>
