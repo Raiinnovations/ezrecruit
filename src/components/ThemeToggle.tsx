@@ -39,7 +39,7 @@ export function ThemeToggle() {
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("black")} className="gap-2 cursor-pointer">
           <Monitor className="h-4 w-4" />
-          <span>Pure Black</span>
+          <span>Obsidian</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
