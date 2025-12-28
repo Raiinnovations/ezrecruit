@@ -32,7 +32,7 @@ const stepsData = [
     painPoints: [
       "Managers can't see what recruiters are working on",
       "Distributed teams lose visibility",
-      "When recruiters leave, knowledge leaves with them",
+      "When recruiters quit knowledge is lost with them",
     ],
     solutionIntro: "keeps everyone aligned.",
     solutions: [
