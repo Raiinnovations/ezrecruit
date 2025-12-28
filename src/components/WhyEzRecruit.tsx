@@ -46,45 +46,91 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
     switch (idx) {
       case 0:
         return (
-          <div className="relative w-full h-full flex items-center justify-center">
-            <motion.div
-              className="absolute"
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.8, 1, 0.8],
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <div className="w-28 h-28 rounded-full bg-primary/20 flex items-center justify-center">
-                <div className="w-20 h-20 rounded-full bg-primary/30 flex items-center justify-center">
-                  <div className="w-14 h-14 rounded-full bg-primary/50 flex items-center justify-center">
-                    <TrendingDown className="w-7 h-7 text-primary" />
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-            
-            <motion.div
-              className="absolute top-4 left-4 bg-background/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-primary/30 shadow-lg"
-              animate={{ y: [0, -8, 0], opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 3, repeat: Infinity, delay: 0 }}
-            >
-              <span className="text-primary font-bold text-lg">-15%</span>
-            </motion.div>
-            <motion.div
-              className="absolute top-6 right-4 bg-background/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-primary/30 shadow-lg"
-              animate={{ y: [0, -8, 0], opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-            >
-              <span className="text-muted-foreground text-xs">-20%</span>
-            </motion.div>
-            <motion.div
-              className="absolute bottom-6 left-6 bg-background/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-primary/30 shadow-lg"
-              animate={{ y: [0, -8, 0], opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-            >
-              <span className="text-primary font-bold text-sm">Saved</span>
-            </motion.div>
+          <div className="relative w-full h-full flex items-center justify-center py-2">
+            {/* Funnel Container */}
+            <div className="relative flex flex-col items-center gap-1 w-full max-w-[280px]">
+              {/* Funnel Stages */}
+              {[
+                { label: "Leads", width: "100%", reduction: "", icons: 5, opacity: 1 },
+                { label: "Qualified", width: "82%", reduction: "–5%", icons: 4, opacity: 0.85 },
+                { label: "Screened", width: "64%", reduction: "–10%", icons: 3, opacity: 0.7 },
+                { label: "Submitted", width: "46%", reduction: "–15–20%", icons: 2, opacity: 0.55 },
+              ].map((stage, i) => (
+                <motion.div
+                  key={stage.label}
+                  className="relative flex items-center justify-center"
+                  style={{ width: stage.width }}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: i * 0.15 }}
+                >
+                  {/* Reduction label - left side */}
+                  {stage.reduction && (
+                    <motion.span
+                      className="absolute -left-14 text-xs font-semibold text-primary"
+                      animate={{ opacity: [0.6, 1, 0.6] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+                    >
+                      {stage.reduction}
+                    </motion.span>
+                  )}
+                  
+                  {/* Funnel bar */}
+                  <motion.div
+                    className="relative w-full h-10 rounded-lg bg-gradient-to-r from-primary/40 to-primary/20 border border-primary/30 flex items-center justify-between px-3 overflow-hidden"
+                    whileHover={{ scale: 1.02 }}
+                    animate={{
+                      boxShadow: [
+                        "0 0 0 0 rgba(var(--primary), 0)",
+                        "0 0 8px 2px rgba(var(--primary), 0.15)",
+                        "0 0 0 0 rgba(var(--primary), 0)"
+                      ]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity, delay: i * 0.25 }}
+                  >
+                    {/* Stage label */}
+                    <span className="text-xs font-medium text-foreground z-10">{stage.label}</span>
+                    
+                    {/* Currency icons - shrinking and fading */}
+                    <div className="flex items-center gap-0.5 z-10">
+                      {Array.from({ length: stage.icons }).map((_, idx) => (
+                        <motion.span
+                          key={idx}
+                          className="text-primary font-bold"
+                          style={{ 
+                            fontSize: `${14 - i * 2}px`,
+                            opacity: stage.opacity - idx * 0.1
+                          }}
+                          animate={{ 
+                            y: [0, -2, 0],
+                            opacity: [stage.opacity - idx * 0.1, stage.opacity, stage.opacity - idx * 0.1]
+                          }}
+                          transition={{ duration: 1.5, repeat: Infinity, delay: idx * 0.1 + i * 0.15 }}
+                        >
+                          ₹
+                        </motion.span>
+                      ))}
+                    </div>
+                    
+                    {/* Animated gradient overlay */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent"
+                      animate={{ x: ["-100%", "100%"] }}
+                      transition={{ duration: 2.5, repeat: Infinity, ease: "linear", delay: i * 0.3 }}
+                    />
+                  </motion.div>
+                </motion.div>
+              ))}
+              
+              {/* Arrow connectors */}
+              <motion.div 
+                className="absolute right-2 top-0 bottom-0 flex flex-col items-center justify-center pointer-events-none"
+                animate={{ opacity: [0.4, 0.8, 0.4] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <TrendingDown className="w-5 h-5 text-primary/60" />
+              </motion.div>
+            </div>
           </div>
         );
       case 1:
