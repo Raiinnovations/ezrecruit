@@ -338,6 +338,81 @@ const Hero = () => {
                   className="absolute inset-0 w-full h-full object-cover object-top"
                 />
               ))}
+
+              {/* Cursor pointer overlay with feature callout */}
+              <AnimatePresence initial={false}>
+                <motion.div
+                  key={`cursor-${currentIndex}`}
+                  className="absolute hidden md:flex items-start gap-3"
+                  style={{ left: "2%", top: screens[currentIndex].cursorTop }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                >
+                  {/* Cursor icon */}
+                  <motion.div
+                    className="flex-shrink-0 mt-2"
+                    animate={{ x: [0, 6, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <Pointer size={28} className="text-primary fill-primary/30 drop-shadow-lg" />
+                  </motion.div>
+                  
+                  {/* Feature description callout - Enhanced design */}
+                  <motion.div
+                    className="bg-card/98 backdrop-blur-md border border-primary/20 rounded-lg p-3 shadow-xl max-w-[280px] relative overflow-hidden"
+                    initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.4 }}
+                  >
+                    {/* Gradient accent */}
+                    <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-primary via-primary-light to-primary" />
+                    
+                    {/* Header */}
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <div className="w-5 h-5 rounded-md bg-primary/15 flex items-center justify-center">
+                        {(() => {
+                          const IconComponent = screens[currentIndex].features[0]?.icon || FileText;
+                          return <IconComponent size={10} className="text-primary" />;
+                        })()}
+                      </div>
+                      <span className="text-xs font-bold text-primary">{screens[currentIndex].title}</span>
+                    </div>
+                    
+                    {/* Headline */}
+                    <h4 className="text-xs font-semibold text-foreground mb-1 leading-tight">
+                      {screens[currentIndex].headline}
+                    </h4>
+                    
+                    {/* Description */}
+                    <p className="text-[10px] text-muted-foreground mb-2 leading-relaxed line-clamp-2">
+                      {screens[currentIndex].description}
+                    </p>
+                    
+                    {/* Feature points */}
+                    <div className="space-y-1">
+                      {screens[currentIndex].features.map((feature, idx) => {
+                        const FeatureIcon = feature.icon;
+                        return (
+                          <motion.div 
+                            key={idx}
+                            className="flex items-start gap-1.5"
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: 0.6 + idx * 0.1 }}
+                          >
+                            <div className="w-4 h-4 rounded bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                              <FeatureIcon size={8} className="text-primary" />
+                            </div>
+                            <span className="text-[9px] text-muted-foreground leading-tight">{feature.text}</span>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </motion.div>

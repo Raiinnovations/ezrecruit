@@ -3,9 +3,6 @@ import { useEffect, useState } from "react";
 import { User, FileText, Users, Search, FileCheck, Send, Trophy, ChevronLeft, ChevronRight } from "lucide-react";
 
 import requirementIntake from "@/assets/screens/requirement-intake.png";
-import requirement2 from "@/assets/screens/requirement-2.webp";
-import assign1 from "@/assets/screens/assign1.webp";
-import evaluation from "@/assets/screens/evaluation.webp";
 
 const stepsData = [
   {
@@ -21,9 +18,9 @@ const stepsData = [
     ],
     solutionIntro: "changes that from the first step.",
     solutions: [
-      { heading: "Every role begins with structured job intake with clear mandatory field", image: requirement2 },
-      { heading: "Evaluation question for each requirement", image: evaluation },
-      { heading: "Clear view who is working on which requirement", image: assign1 },
+      { heading: "Every role begins with structured job intake with clear mandatory field" },
+      { heading: "Evaluation question for each requirement" },
+      { heading: "Clear view who is working on which requirement" },
     ],
   },
   {
@@ -39,9 +36,9 @@ const stepsData = [
     ],
     solutionIntro: "keeps everyone aligned.",
     solutions: [
-      { heading: "Centralized briefing for every job", image: undefined },
-      { heading: "Clear ownership and expectations", image: undefined },
-      { heading: "Notes, actions, and preferences stay searchable forever", image: undefined },
+      { heading: "Centralized briefing for every job" },
+      { heading: "Clear ownership and expectations" },
+      { heading: "Notes, actions, and preferences stay searchable forever" },
     ],
   },
   {
@@ -57,9 +54,9 @@ const stepsData = [
     ],
     solutionIntro: "makes sourcing smarter.",
     solutions: [
-      { heading: "AI-assisted search finds better matches faster", image: undefined },
-      { heading: "Built-in duplication checks prevent rework", image: undefined },
-      { heading: "Recruiters focus on quality, not guesswork", image: undefined },
+      { heading: "AI-assisted search finds better matches faster" },
+      { heading: "Built-in duplication checks prevent rework" },
+      { heading: "Recruiters focus on quality, not guesswork" },
     ],
   },
   {
@@ -75,9 +72,9 @@ const stepsData = [
     ],
     solutionIntro: "brings consistency to screening.",
     solutions: [
-      { heading: "Standardized evaluation fields", image: undefined },
-      { heading: "Clear, comparable screening outcomes", image: undefined },
-      { heading: "Feedback becomes a long-term asset", image: undefined },
+      { heading: "Standardized evaluation fields" },
+      { heading: "Clear, comparable screening outcomes" },
+      { heading: "Feedback becomes a long-term asset" },
     ],
   },
   {
@@ -93,9 +90,9 @@ const stepsData = [
     ],
     solutionIntro: "does it in one click.",
     solutions: [
-      { heading: "Trackers auto-generated instantly", image: undefined },
-      { heading: "Client-ready formats, every time", image: undefined },
-      { heading: "Professional, reusable submissions", image: undefined },
+      { heading: "Trackers auto-generated instantly" },
+      { heading: "Client-ready formats, every time" },
+      { heading: "Professional, reusable submissions" },
     ],
   },
   {
@@ -111,9 +108,9 @@ const stepsData = [
     ],
     solutionIntro: "helps you close with clarity.",
     solutions: [
-      { heading: "Automated scheduling and reminders", image: undefined },
-      { heading: "Real-time visibility on every closure", image: undefined },
-      { heading: "Performance tracked without spreadsheets", image: undefined },
+      { heading: "Automated scheduling and reminders" },
+      { heading: "Real-time visibility on every closure" },
+      { heading: "Performance tracked without spreadsheets" },
     ],
   },
 ];
@@ -292,7 +289,7 @@ const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData:
             {/* Screenshot */}
             <div className="relative bg-background p-3 md:p-4">
               <img
-                src={currentSolution.image || requirementIntake}
+                src={requirementIntake}
                 alt={currentSolution.heading}
                 className="w-full h-[180px] md:h-[280px] object-cover object-top rounded-md"
               />
