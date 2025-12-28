@@ -186,17 +186,39 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
       case 1:
         return (
           <div className="relative w-full h-full flex items-center justify-center py-4">
-            {/* Central Clock */}
-            <div className="relative flex items-center justify-center">
+            <div className="flex items-center justify-center gap-4 w-full">
+              {/* Manual tasks fading out - LEFT side */}
+              <div className="flex flex-col gap-2 items-end">
+                {["Spreadsheet", "Tracker", "Manual"].map((task, i) => (
+                  <motion.div
+                    key={task}
+                    className="flex items-center gap-2 bg-destructive/15 px-3 py-1.5 rounded-lg border border-destructive/40"
+                    animate={{
+                      opacity: [0.9, 0.4, 0.2, 0.4, 0.9],
+                      x: [0, -5, -8, -5, 0],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      delay: i * 0.3,
+                    }}
+                  >
+                    <span className="text-xs text-destructive/80 font-medium line-through">{task}</span>
+                    <span className="text-destructive text-xs">✕</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Central Clock */}
               <motion.div
-                className="w-28 h-28 rounded-full border-4 border-primary/50 flex items-center justify-center relative bg-gradient-to-br from-primary/10 to-transparent shadow-lg shadow-primary/20"
+                className="w-24 h-24 rounded-full border-4 border-primary/50 flex items-center justify-center relative bg-gradient-to-br from-primary/10 to-transparent shadow-lg shadow-primary/20 flex-shrink-0"
               >
                 {/* Clock center dot */}
                 <div className="absolute w-3 h-3 rounded-full bg-primary z-10" />
                 
                 {/* Hour hand */}
                 <motion.div
-                  className="absolute w-1 h-7 bg-primary rounded-full origin-bottom"
+                  className="absolute w-1 h-6 bg-primary rounded-full origin-bottom"
                   style={{ bottom: "50%" }}
                   animate={{ rotate: [0, 30, 30, 30, 0] }}
                   transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -204,7 +226,7 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
                 
                 {/* Minute hand */}
                 <motion.div
-                  className="absolute w-0.5 h-10 bg-primary/80 rounded-full origin-bottom"
+                  className="absolute w-0.5 h-8 bg-primary/80 rounded-full origin-bottom"
                   style={{ bottom: "50%" }}
                   animate={{ rotate: [0, 180, 360] }}
                   transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
@@ -214,61 +236,38 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
                 <motion.div
                   className="absolute inset-0 rounded-full border-2 border-primary/30"
                   animate={{ 
-                    scale: [1, 1.1, 1],
-                    opacity: [0.5, 0.8, 0.5]
+                    scale: [1, 1.15, 1],
+                    opacity: [0.4, 0.8, 0.4]
                   }}
                   transition={{ duration: 3, repeat: Infinity }}
                 />
               </motion.div>
 
-              {/* Manual tasks fading out - left side */}
-              <div className="absolute -left-6 top-1/2 -translate-y-1/2 flex flex-col gap-2">
-                {["Spreadsheet", "Tracker", "Manual"].map((task, i) => (
-                  <motion.div
-                    key={task}
-                    className="flex items-center gap-1 bg-destructive/20 px-2 py-1 rounded border border-destructive/30"
-                    animate={{
-                      opacity: [0.8, 0.3, 0],
-                      x: [0, -10, -20],
-                      scale: [1, 0.9, 0.8]
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      delay: i * 0.5,
-                      repeatDelay: 1
-                    }}
-                  >
-                    <span className="text-[9px] text-destructive font-medium line-through">{task}</span>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Automated actions glowing - right side */}
-              <div className="absolute -right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2">
+              {/* Automated actions glowing - RIGHT side */}
+              <div className="flex flex-col gap-2 items-start">
                 {["Auto-Boolean", "Smart Intake", "AI Tracker"].map((task, i) => (
                   <motion.div
                     key={task}
-                    className="flex items-center gap-1 bg-primary/20 px-2 py-1 rounded border border-primary/40"
-                    initial={{ opacity: 0, x: 20 }}
+                    className="flex items-center gap-2 bg-primary/15 px-3 py-1.5 rounded-lg border border-primary/50"
                     animate={{
-                      opacity: [0, 1, 1],
-                      x: [20, 0, 0],
+                      opacity: [0.5, 1, 1, 1, 0.5],
+                      x: [5, 0, 0, 0, 5],
                       boxShadow: [
                         "0 0 0 0 rgba(var(--primary), 0)",
-                        "0 0 10px 2px rgba(var(--primary), 0.4)",
-                        "0 0 5px 1px rgba(var(--primary), 0.2)"
+                        "0 0 12px 2px rgba(var(--primary), 0.4)",
+                        "0 0 12px 2px rgba(var(--primary), 0.4)",
+                        "0 0 12px 2px rgba(var(--primary), 0.4)",
+                        "0 0 0 0 rgba(var(--primary), 0)"
                       ]
                     }}
                     transition={{
-                      duration: 3,
+                      duration: 4,
                       repeat: Infinity,
-                      delay: i * 0.5 + 1,
-                      repeatDelay: 1
+                      delay: i * 0.3,
                     }}
                   >
-                    <CheckCircle className="w-2.5 h-2.5 text-primary" />
-                    <span className="text-[9px] text-primary font-medium">{task}</span>
+                    <CheckCircle className="w-3.5 h-3.5 text-primary" />
+                    <span className="text-xs text-primary font-semibold">{task}</span>
                   </motion.div>
                 ))}
               </div>
@@ -276,14 +275,9 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
 
             {/* Time saved badge - top right */}
             <motion.div
-              className="absolute top-2 right-2 bg-background/90 backdrop-blur-sm rounded-xl px-3 py-2 border border-primary/40 shadow-lg shadow-primary/20 flex items-center gap-2"
+              className="absolute top-1 right-2 bg-background/90 backdrop-blur-sm rounded-xl px-3 py-1.5 border border-primary/40 shadow-lg shadow-primary/20 flex items-center gap-2"
               animate={{ 
                 scale: [1, 1.05, 1],
-                boxShadow: [
-                  "0 4px 6px -1px rgba(var(--primary), 0.1)",
-                  "0 10px 15px -3px rgba(var(--primary), 0.3)",
-                  "0 4px 6px -1px rgba(var(--primary), 0.1)"
-                ]
               }}
               transition={{ duration: 2.5, repeat: Infinity }}
             >
@@ -291,36 +285,16 @@ const BenefitCard = ({ benefit, index }: { benefit: typeof benefits[0]; index: n
               <span className="text-foreground text-sm font-bold">+60 min/day</span>
             </motion.div>
 
-            {/* Per role saving badge - bottom left */}
+            {/* Per role saving badge - bottom center */}
             <motion.div
-              className="absolute bottom-2 left-2 bg-background/90 backdrop-blur-sm rounded-xl px-3 py-2 border border-primary/40 shadow-lg"
+              className="absolute bottom-1 left-1/2 -translate-x-1/2 bg-background/90 backdrop-blur-sm rounded-xl px-4 py-1.5 border border-primary/40 shadow-lg"
               animate={{ 
-                scale: [1, 1.05, 1],
                 y: [0, -2, 0]
               }}
               transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
             >
-              <span className="text-primary font-bold text-lg">15-20 min</span>
-              <span className="text-muted-foreground text-xs block">per role saved</span>
-            </motion.div>
-
-            {/* Time blocks shrinking animation - bottom right */}
-            <motion.div className="absolute bottom-4 right-16 flex gap-1">
-              {[1, 2, 3].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="w-3 bg-primary/40 rounded"
-                  animate={{
-                    height: [20 - i * 4, 8, 20 - i * 4],
-                    opacity: [0.8, 0.4, 0.8]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: i * 0.2
-                  }}
-                />
-              ))}
+              <span className="text-primary font-bold">15-20 min</span>
+              <span className="text-muted-foreground text-xs ml-1">per role</span>
             </motion.div>
           </div>
         );
