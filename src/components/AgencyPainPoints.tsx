@@ -328,7 +328,7 @@ const StepCard = ({ stepData, animationKey }: { stepData: typeof stepsData[0]; a
       className="w-full h-full flex flex-col"
     >
       {/* Browser-style window frame */}
-      <div className="rounded-2xl border border-border/50 bg-muted/30 shadow-xl overflow-hidden h-full flex flex-col dark:glow-border black:glow-border">
+      <div className="rounded-2xl border border-border/50 bg-muted/30 shadow-xl overflow-hidden h-full flex flex-col relative glow-border black:border-primary/20">
 
         {/* Content area - Two column layout 40/60 */}
         <div className="p-4 md:p-6 bg-gradient-to-br from-background to-muted/20 flex-1 flex flex-col md:flex-row gap-6 min-h-0">
