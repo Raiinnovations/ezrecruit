@@ -268,7 +268,7 @@ const RecruitingFailure = () => {
           </div>
 
           {/* Right Side - Animated Candidate Profile Cards */}
-          <div className="w-full lg:flex-1 relative h-[280px] lg:h-[400px]">
+          <div className="w-full lg:flex-1 relative h-[220px] sm:h-[280px] lg:h-[400px]">
             {/* Background gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 rounded-2xl" />
             
@@ -279,98 +279,111 @@ const RecruitingFailure = () => {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="absolute left-[calc(25%+20px)] top-[15%] w-1 h-[60%] bg-gradient-to-b from-primary/60 via-primary to-primary/60 rounded-full"
+                  className="absolute left-[calc(20%+10px)] sm:left-[calc(25%+20px)] top-[15%] w-1 h-[55%] sm:h-[60%] bg-gradient-to-b from-primary/60 via-primary to-primary/60 rounded-full"
                 />
               )}
 
               <AnimatePresence mode="sync">
-                {candidateProfiles.map((profile, index) => (
-                  <motion.div
-                    key={profile.id}
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={isInView ? { 
-                      opacity: storyAnimation.profiles[index].opacity,
-                      x: storyAnimation.profiles[index].x,
-                      y: storyAnimation.profiles[index].y,
-                      rotate: storyAnimation.profiles[index].rotate,
-                      scale: storyAnimation.profiles[index].scale,
-                    } : {}}
-                    transition={{
-                      duration: 0.8,
-                      ease: "easeInOut"
-                    }}
-                    className="absolute left-1/4"
-                  >
-                    <motion.div 
-                      className={`flex items-center gap-3 bg-background rounded-xl shadow-lg border transition-all duration-300 p-3 pr-5 min-w-[200px] ${
-                        getCardBorderColor(storyAnimation.profiles[index].status)
-                      }`}
+                {candidateProfiles.map((profile, index) => {
+                  // Calculate mobile-adjusted positions
+                  const mobileScale = 0.75;
+                  const mobileX = storyAnimation.profiles[index].x * 0.5;
+                  const mobileY = storyAnimation.profiles[index].y * 0.55;
+                  
+                  return (
+                    <motion.div
+                      key={profile.id}
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={isInView ? { 
+                        opacity: storyAnimation.profiles[index].opacity,
+                        x: storyAnimation.profiles[index].x,
+                        y: storyAnimation.profiles[index].y,
+                        rotate: storyAnimation.profiles[index].rotate,
+                        scale: storyAnimation.profiles[index].scale,
+                      } : {}}
+                      transition={{
+                        duration: 0.8,
+                        ease: "easeInOut"
+                      }}
+                      className="absolute left-[10%] sm:left-1/4"
+                      style={{
+                        ['--mobile-x' as string]: `${mobileX}px`,
+                        ['--mobile-y' as string]: `${mobileY}px`,
+                      }}
                     >
-                      {/* Avatar */}
-                      <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center relative">
-                        <User className="w-6 h-6 text-primary" />
-                        {/* Status badge */}
-                        {getStatusIcon(storyAnimation.profiles[index].status) && (
-                          <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-background border border-border flex items-center justify-center"
-                          >
-                            {getStatusIcon(storyAnimation.profiles[index].status)}
-                          </motion.div>
-                        )}
-                      </div>
-                      
-                      {/* Profile info */}
-                      <div className="flex-1 space-y-1.5">
-                        <div className="h-3 w-20 bg-muted rounded-full" />
-                        <div className="h-2 w-14 bg-muted/60 rounded-full" />
-                      </div>
+                      <motion.div 
+                        className={`flex items-center gap-2 sm:gap-3 bg-background rounded-lg sm:rounded-xl shadow-lg border transition-all duration-300 p-2 sm:p-3 pr-3 sm:pr-5 min-w-[140px] sm:min-w-[200px] ${
+                          getCardBorderColor(storyAnimation.profiles[index].status)
+                        }`}
+                      >
+                        {/* Avatar */}
+                        <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-md sm:rounded-lg bg-primary/20 flex items-center justify-center relative flex-shrink-0">
+                          <User className="w-4 h-4 sm:w-6 sm:h-6 text-primary" />
+                          {/* Status badge */}
+                          {getStatusIcon(storyAnimation.profiles[index].status) && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-background border border-border flex items-center justify-center"
+                            >
+                              <span className="scale-75 sm:scale-100">
+                                {getStatusIcon(storyAnimation.profiles[index].status)}
+                              </span>
+                            </motion.div>
+                          )}
+                        </div>
+                        
+                        {/* Profile info */}
+                        <div className="flex-1 space-y-1 sm:space-y-1.5 min-w-0">
+                          <div className="h-2 sm:h-3 w-14 sm:w-20 bg-muted rounded-full" />
+                          <div className="h-1.5 sm:h-2 w-10 sm:w-14 bg-muted/60 rounded-full" />
+                        </div>
 
-                      {/* Cost indicator for cost state */}
-                      {storyAnimation.profiles[index].status === "cost" && (
-                        <motion.span
-                          initial={{ opacity: 0, x: 10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          className="text-sm font-semibold text-primary"
-                        >
-                          {storyAnimation.profiles[index].cost}
-                        </motion.span>
-                      )}
-
-                      {/* Waste label with price for duplication/rework/unclear */}
-                      {getWasteLabel(storyAnimation.profiles[index].status) && (
-                        <motion.div
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.3 }}
-                          className="flex items-center gap-2"
-                        >
+                        {/* Cost indicator for cost state */}
+                        {storyAnimation.profiles[index].status === "cost" && (
                           <motion.span
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="text-sm font-semibold text-primary"
+                            initial={{ opacity: 0, x: 10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="text-xs sm:text-sm font-semibold text-primary"
                           >
                             {storyAnimation.profiles[index].cost}
                           </motion.span>
-                          <motion.span
-                            animate={{ x: [0, 5, 5], opacity: [1, 1, 0.7] }}
-                            transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 0.5 }}
-                            className="text-xs font-medium text-muted-foreground"
-                          >
-                            {getWasteLabel(storyAnimation.profiles[index].status)}
-                          </motion.span>
+                        )}
+
+                        {/* Waste label with price for duplication/rework/unclear - hidden on mobile, show only icon */}
+                        {getWasteLabel(storyAnimation.profiles[index].status) && (
                           <motion.div
-                            animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
-                            transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 1 }}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.3 }}
+                            className="flex items-center gap-1 sm:gap-2"
                           >
-                            <Trash2 className="w-4 h-4 text-muted-foreground/70" />
+                            <motion.span
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              className="text-xs sm:text-sm font-semibold text-primary hidden sm:block"
+                            >
+                              {storyAnimation.profiles[index].cost}
+                            </motion.span>
+                            <motion.span
+                              animate={{ x: [0, 5, 5], opacity: [1, 1, 0.7] }}
+                              transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 0.5 }}
+                              className="text-[10px] sm:text-xs font-medium text-muted-foreground hidden sm:block"
+                            >
+                              {getWasteLabel(storyAnimation.profiles[index].status)}
+                            </motion.span>
+                            <motion.div
+                              animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
+                              transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 1 }}
+                            >
+                              <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground/70" />
+                            </motion.div>
                           </motion.div>
-                        </motion.div>
-                      )}
+                        )}
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                ))}
+                  );
+                })}
               </AnimatePresence>
 
               {/* Story message */}
@@ -380,22 +393,22 @@ const RecruitingFailure = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.4 }}
-                className="absolute top-6 right-6 px-4 py-2 rounded-lg bg-background/80 border border-border/50 backdrop-blur-sm"
+                className="absolute top-3 right-3 sm:top-6 sm:right-6 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-background/80 border border-border/50 backdrop-blur-sm"
               >
-                <span className="text-sm font-medium text-muted-foreground">{storyAnimation.message}</span>
+                <span className="text-xs sm:text-sm font-medium text-muted-foreground">{storyAnimation.message}</span>
               </motion.div>
 
               {/* Progress dots */}
               <motion.div
-                className="absolute bottom-6 left-1/2 -translate-x-1/2"
+                className="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2"
               >
-                <div className="flex gap-2">
+                <div className="flex gap-1.5 sm:gap-2">
                   {impactPoints.map((_, idx) => (
                     <motion.button
                       key={idx}
                       onClick={() => setActiveIndex(idx)}
-                      className={`h-2 rounded-full transition-all duration-300 ${
-                        idx === activeIndex ? 'w-6 bg-primary' : 'w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                      className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
+                        idx === activeIndex ? 'w-4 sm:w-6 bg-primary' : 'w-1.5 sm:w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50'
                       }`}
                     />
                   ))}
