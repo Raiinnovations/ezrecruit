@@ -419,35 +419,37 @@ const AgencyPainPoints = () => {
           </h2>
         </motion.div>
 
-        {/* Navigation Tabs */}
-        <div className="flex justify-center items-center gap-2 md:gap-4 mb-8 flex-wrap">
-          {['Briefing', 'Sourcing', 'Hunting', 'Screening', 'Submission', 'Closure'].map((tab, index) => (
-            <button
-              key={tab}
-              onClick={() => goToSlide(index)}
-              className={`px-4 md:px-6 py-2 md:py-2.5 rounded-full text-sm md:text-base font-medium transition-all duration-300 ${
-                index === activeIndex 
-                  ? 'bg-primary text-primary-foreground shadow-lg' 
-                  : 'bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground border border-border/50'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
+        {/* Navigation Tabs - Scrollable on mobile */}
+        <div className="overflow-x-auto pb-2 mb-6 md:mb-8 -mx-4 px-4">
+          <div className="flex justify-start md:justify-center items-center gap-2 md:gap-3 min-w-max">
+            {['Briefing', 'Sourcing', 'Hunting', 'Screening', 'Submission', 'Closure'].map((tab, index) => (
+              <button
+                key={tab}
+                onClick={() => goToSlide(index)}
+                className={`px-3 md:px-5 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-300 whitespace-nowrap ${
+                  index === activeIndex 
+                    ? 'bg-primary text-primary-foreground shadow-lg' 
+                    : 'bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground border border-border/50'
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Slider Container */}
         <div className="relative max-w-6xl mx-auto">
-          {/* Navigation Arrows */}
+          {/* Navigation Arrows - Hidden on mobile, use swipe instead */}
           <button
             onClick={goToPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 w-10 h-10 rounded-full bg-muted/80 hover:bg-muted border border-border/50 flex items-center justify-center transition-all duration-300 hover:scale-110"
+            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-10 w-10 h-10 rounded-full bg-muted/80 hover:bg-muted border border-border/50 items-center justify-center transition-all duration-300 hover:scale-110"
           >
             <ChevronLeft className="w-5 h-5 text-foreground" />
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 w-10 h-10 rounded-full bg-muted/80 hover:bg-muted border border-border/50 flex items-center justify-center transition-all duration-300 hover:scale-110"
+            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-10 w-10 h-10 rounded-full bg-muted/80 hover:bg-muted border border-border/50 items-center justify-center transition-all duration-300 hover:scale-110"
           >
             <ChevronRight className="w-5 h-5 text-foreground" />
           </button>

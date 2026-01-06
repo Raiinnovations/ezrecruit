@@ -213,10 +213,10 @@ const StructuredWorkflow = () => {
         </div>
 
         {/* Mobile Layout */}
-        <div className="md:hidden">
-          {/* Stacked boxes */}
-          <div className="flex justify-center mb-8">
-            <div style={{ width: "200px" }}>
+        <div className="md:hidden mt-6">
+          {/* Stacked boxes - smaller on mobile */}
+          <div className="flex justify-center mb-6">
+            <div style={{ width: "180px" }} className="transform scale-90">
               {layers.map((layer, index) => {
                 const isRevealed = revealedLayers.includes(index);
                 
@@ -224,7 +224,7 @@ const StructuredWorkflow = () => {
                   <div
                     key={layer.id}
                     className="relative"
-                    style={{ marginTop: index === 0 ? 0 : "-10px" }}
+                    style={{ marginTop: index === 0 ? 0 : "-12px" }}
                   >
                     <IsometricBox 
                       color={layer.color} 
@@ -237,8 +237,8 @@ const StructuredWorkflow = () => {
             </div>
           </div>
 
-          {/* Labels below */}
-          <div className="space-y-4">
+          {/* Labels below - more compact */}
+          <div className="space-y-3 px-2">
             {layers.map((layer, index) => {
               const isRevealed = revealedLayers.includes(index);
               
@@ -248,17 +248,17 @@ const StructuredWorkflow = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={isRevealed ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.4 }}
-                  className="flex items-start gap-3 p-4 rounded-xl bg-muted/30 border border-border/50"
+                  className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 border border-border/50"
                 >
                   <div 
-                    className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+                    className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
                     style={{ backgroundColor: layer.color }}
                   >
-                    <span className="text-sm font-bold text-white">{layer.id}</span>
+                    <span className="text-xs font-bold text-white">{layer.id}</span>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">{layer.title}</h3>
-                    <p className="text-sm text-muted-foreground">{layer.description}</p>
+                    <h3 className="font-semibold text-foreground text-sm">{layer.title}</h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{layer.description}</p>
                   </div>
                 </motion.div>
               );
