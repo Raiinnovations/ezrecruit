@@ -74,16 +74,22 @@ const CTA = () => {
             <Button
               size="xl"
               className="bg-white text-primary hover:bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 dark:bg-primary dark:text-white dark:hover:bg-primary-light"
+              asChild
             >
-              Talk to Us
-              <ArrowRight size={20} />
+              <a href="mailto:richabajaj@ezrecruit.ai?subject=Talk to Us - EZRecruit">
+                Talk to Us
+                <ArrowRight size={20} />
+              </a>
             </Button>
             <Button
               size="xl"
               variant="ghost"
               className="text-white border-2 border-white/30 hover:bg-white/10 hover:text-white dark:border-primary/50 dark:hover:bg-primary/20"
+              asChild
             >
-              Request Demo
+              <a href="mailto:richabajaj@ezrecruit.ai?subject=Request Demo - EZRecruit">
+                Request Demo
+              </a>
             </Button>
           </div>
         </motion.div>
