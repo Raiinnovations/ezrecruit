@@ -64,8 +64,8 @@ const RecruitingFailure = () => {
       case 0: // Root Cause - Scattered, chaotic, disconnected profiles
         return {
           profiles: [
-            { x: -30, y: -40, rotate: -15, scale: 0.9, opacity: 0.7, status: "scattered" },
-            { x: 80, y: 30, rotate: 10, scale: 0.85, opacity: 0.6, status: "scattered" },
+            { x: -30, y: -20, rotate: -15, scale: 0.9, opacity: 0.7, status: "scattered" },
+            { x: 80, y: 50, rotate: 10, scale: 0.85, opacity: 0.6, status: "scattered" },
             { x: 0, y: 120, rotate: -5, scale: 0.8, opacity: 0.5, status: "scattered" }
           ],
           showConnections: false,
@@ -75,8 +75,8 @@ const RecruitingFailure = () => {
       case 1: // Business Impact - Profiles falling/declining with rejection marks
         return {
           profiles: [
-            { x: 20, y: -20, rotate: 0, scale: 1, opacity: 1, status: "rejected" },
-            { x: 40, y: 60, rotate: 5, scale: 0.95, opacity: 0.8, status: "duplicate" },
+            { x: 20, y: 0, rotate: 0, scale: 1, opacity: 1, status: "rejected" },
+            { x: 40, y: 70, rotate: 5, scale: 0.95, opacity: 0.8, status: "duplicate" },
             { x: 60, y: 140, rotate: 8, scale: 0.9, opacity: 0.6, status: "rejected" }
           ],
           showConnections: false,
@@ -86,9 +86,9 @@ const RecruitingFailure = () => {
       case 2: // Cost Detail - Profiles going to duplication, rework, unclear feedback
         return {
           profiles: [
-            { x: -20, y: 0, rotate: -8, scale: 0.9, opacity: 0.7, status: "duplicate", cost: "₹400" },
+            { x: -20, y: 10, rotate: -8, scale: 0.9, opacity: 0.7, status: "duplicate", cost: "₹400" },
             { x: -10, y: 85, rotate: 5, scale: 0.85, opacity: 0.6, status: "rework", cost: "₹350" },
-            { x: -30, y: 170, rotate: -3, scale: 0.8, opacity: 0.5, status: "unclear", cost: "₹500" }
+            { x: -30, y: 160, rotate: -3, scale: 0.8, opacity: 0.5, status: "unclear", cost: "₹500" }
           ],
           showConnections: false,
           showWarnings: true,
@@ -98,9 +98,9 @@ const RecruitingFailure = () => {
       case 3: // Need - Organized, aligned, connected profiles
         return {
           profiles: [
-            { x: 50, y: 10, rotate: 0, scale: 1, opacity: 1, status: "organized" },
+            { x: 50, y: 20, rotate: 0, scale: 1, opacity: 1, status: "organized" },
             { x: 50, y: 95, rotate: 0, scale: 1, opacity: 1, status: "organized" },
-            { x: 50, y: 180, rotate: 0, scale: 1, opacity: 1, status: "organized" }
+            { x: 50, y: 170, rotate: 0, scale: 1, opacity: 1, status: "organized" }
           ],
           showConnections: true,
           showWarnings: false,
@@ -268,7 +268,7 @@ const RecruitingFailure = () => {
           </div>
 
           {/* Right Side - Animated Candidate Profile Cards */}
-          <div className="w-full lg:flex-1 relative h-[220px] sm:h-[280px] lg:h-[400px]">
+          <div className="w-full lg:flex-1 relative h-[280px] sm:h-[320px] lg:h-[400px] overflow-hidden">
             {/* Background gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 rounded-2xl" />
             
