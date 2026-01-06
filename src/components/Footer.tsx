@@ -2,9 +2,7 @@ import { Mail, Phone, MapPin, Linkedin, Twitter } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const footerLinks = {
-  Product: ["Features", "Pricing", "Integrations", "API", "Changelog"],
   Company: ["About", "Careers", "Blog", "Press", "Partners"],
-  Resources: ["Documentation", "Help Center", "Webinars", "Case Studies", "Templates"],
   Legal: ["Privacy Policy", "Terms of Service", "Cookie Policy", "GDPR"],
 };
 
