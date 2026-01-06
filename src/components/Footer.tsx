@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Linkedin, Twitter } from "lucide-react";
+import { Mail, Linkedin, Twitter } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const footerLinks = {
@@ -28,17 +28,6 @@ const Footer = () => {
                 <Mail size={16} />
                 hello@ezrecruit.com
               </a>
-              <a
-                href="tel:+1-800-RECRUIT"
-                className="flex items-center gap-2 text-white/70 hover:text-white transition-colors"
-              >
-                <Phone size={16} />
-                1-800-RECRUIT
-              </a>
-              <div className="flex items-center gap-2 text-white/70">
-                <MapPin size={16} />
-                San Francisco, CA
-              </div>
             </div>
           </div>
 
