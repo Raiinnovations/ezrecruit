@@ -124,13 +124,13 @@ const ProductOverview = () => {
           </p>
         </motion.div>
 
-        {/* Tab Navigation */}
+        {/* Tab Navigation - Grid on mobile, flex-wrap on desktop */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex flex-wrap justify-center gap-2 mb-8"
+          className="grid grid-cols-5 sm:grid-cols-6 md:flex md:flex-wrap md:justify-center gap-1.5 md:gap-2 mb-6 md:mb-8"
         >
           {screens.map((screen, index) => {
             const TabIcon = screen.icon;
@@ -138,14 +138,14 @@ const ProductOverview = () => {
               <button
                 key={index}
                 onClick={() => setActiveIndex(index)}
-                className={`relative flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                className={`relative flex items-center justify-center md:gap-2 px-2 md:px-4 py-2 md:py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all ${
                   activeIndex === index
                     ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
                     : "bg-secondary/50 text-muted-foreground hover:text-foreground hover:bg-secondary"
                 }`}
               >
                 <TabIcon size={16} />
-                <span className="hidden sm:inline">{screen.title}</span>
+                <span className="hidden md:inline">{screen.title}</span>
               </button>
             );
           })}
@@ -185,11 +185,12 @@ const ProductOverview = () => {
               </div>
             </div>
 
-            {/* Fixed Size Screenshot Container */}
+            {/* Fixed Size Screenshot Container - responsive height */}
             <div 
               className="relative bg-secondary rounded-b-lg overflow-hidden"
-              style={{ width: "100%", height: "540px" }}
+              style={{ width: "100%" }}
             >
+              <div className="h-[280px] sm:h-[380px] md:h-[480px] lg:h-[540px]">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={activeIndex}
@@ -202,6 +203,7 @@ const ProductOverview = () => {
                   className="absolute inset-0 w-full h-full object-cover object-top"
                 />
               </AnimatePresence>
+              </div>
             </div>
           </div>
         </motion.div>

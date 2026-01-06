@@ -193,10 +193,10 @@ const RecruitingFailure = () => {
         </motion.div>
 
         {/* Main Content */}
-        <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12 max-w-6xl mx-auto">
+        <div className="flex flex-col lg:flex-row items-stretch gap-6 lg:gap-12 max-w-6xl mx-auto">
           
           {/* Left Side - Impact Points */}
-          <div className="flex-1 space-y-4">
+          <div className="w-full lg:flex-1 space-y-3">
             {impactPoints.map((point, index) => {
               const Icon = point.icon;
               const isActive = index === activeIndex;
@@ -210,7 +210,7 @@ const RecruitingFailure = () => {
                   onClick={() => setActiveIndex(index)}
                 >
                   <motion.div 
-                    className={`flex items-start gap-4 p-5 rounded-xl border transition-all duration-500 ${
+                    className={`flex items-start gap-3 p-4 rounded-xl border transition-all duration-500 ${
                       isActive 
                         ? 'bg-primary/10 border-primary/50 shadow-lg shadow-primary/10' 
                         : 'bg-background border-border/50 hover:border-primary/30'
@@ -231,7 +231,7 @@ const RecruitingFailure = () => {
                     />
                     
                     <motion.div 
-                      className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-300 ${
+                      className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-300 ${
                         isActive ? 'bg-primary' : 'bg-accent'
                       }`}
                       animate={{
@@ -244,11 +244,11 @@ const RecruitingFailure = () => {
                       }`} />
                     </motion.div>
                     
-                    <div className="flex-1">
-                      <h3 className={`text-lg font-semibold mb-1 transition-colors duration-300 ${
+                    <div className="flex-1 min-w-0">
+                      <h3 className={`text-base font-semibold mb-0.5 transition-colors duration-300 ${
                         isActive ? 'text-primary' : 'text-foreground'
                       }`}>{point.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
+                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
                         {point.description}
                       </p>
                     </div>
@@ -268,7 +268,7 @@ const RecruitingFailure = () => {
           </div>
 
           {/* Right Side - Animated Candidate Profile Cards */}
-          <div className="flex-1 relative h-[400px] lg:h-[450px] w-full">
+          <div className="w-full lg:flex-1 relative h-[280px] lg:h-[400px]">
             {/* Background gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 rounded-2xl" />
             
