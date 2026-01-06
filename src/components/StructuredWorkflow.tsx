@@ -212,54 +212,40 @@ const StructuredWorkflow = () => {
           </div>
         </div>
 
-        {/* Mobile Layout */}
-        <div className="md:hidden mt-6">
-          {/* Stacked boxes - smaller on mobile */}
-          <div className="flex justify-center mb-6">
-            <div style={{ width: "180px" }} className="transform scale-90">
-              {layers.map((layer, index) => {
-                const isRevealed = revealedLayers.includes(index);
-                
-                return (
-                  <div
-                    key={layer.id}
-                    className="relative"
-                    style={{ marginTop: index === 0 ? 0 : "-12px" }}
-                  >
-                    <IsometricBox 
-                      color={layer.color} 
-                      isRevealed={isRevealed}
-                      index={index}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Labels below - more compact */}
-          <div className="space-y-3 px-2">
+        {/* Mobile Layout - Vertical timeline with integrated boxes */}
+        <div className="md:hidden mt-8 px-4">
+          <div className="relative">
+            {/* Center line */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/60 via-primary/40 to-primary/20 -translate-x-1/2" />
+            
             {layers.map((layer, index) => {
               const isRevealed = revealedLayers.includes(index);
+              const isLeft = index % 2 === 0;
               
               return (
                 <motion.div
                   key={layer.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isRevealed ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.4 }}
-                  className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 border border-border/50"
+                  initial={{ opacity: 0, x: isLeft ? -20 : 20 }}
+                  animate={isRevealed ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  className={`relative flex items-center gap-2 mb-6 ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}
                 >
+                  {/* Content */}
+                  <div className={`flex-1 ${isLeft ? 'text-right pr-3' : 'text-left pl-3'}`}>
+                    <h3 className="font-bold text-foreground text-sm mb-0.5">{layer.title}</h3>
+                    <p className="text-xs text-muted-foreground leading-tight">{layer.description}</p>
+                  </div>
+                  
+                  {/* Center number */}
                   <div 
-                    className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                    className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 z-10 shadow-lg"
                     style={{ backgroundColor: layer.color }}
                   >
                     <span className="text-xs font-bold text-white">{layer.id}</span>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground text-sm">{layer.title}</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{layer.description}</p>
-                  </div>
+                  
+                  {/* Spacer for opposite side */}
+                  <div className="flex-1" />
                 </motion.div>
               );
             })}
