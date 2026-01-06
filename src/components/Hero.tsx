@@ -200,13 +200,17 @@ const Hero = () => {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-3 lg:gap-3 xl:gap-4"
             >
-              <Button variant="hero" size="lg" className="lg:text-sm xl:text-base lg:px-5 xl:px-6">
-                Request Demo
-                <ArrowRight size={18} className="lg:w-4 lg:h-4 xl:w-5 xl:h-5" />
+              <Button variant="hero" size="lg" className="lg:text-sm xl:text-base lg:px-5 xl:px-6" asChild>
+                <a href="mailto:richabajaj@ezrecruit.ai?subject=Request Demo - EZRecruit">
+                  Request Demo
+                  <ArrowRight size={18} className="lg:w-4 lg:h-4 xl:w-5 xl:h-5" />
+                </a>
               </Button>
-              <Button variant="heroOutline" size="lg" className="lg:text-sm xl:text-base lg:px-5 xl:px-6">
-                <MessageCircle size={18} className="lg:w-4 lg:h-4 xl:w-5 xl:h-5" />
-                Talk to Us
+              <Button variant="heroOutline" size="lg" className="lg:text-sm xl:text-base lg:px-5 xl:px-6" asChild>
+                <a href="mailto:richabajaj@ezrecruit.ai?subject=Talk to Us - EZRecruit">
+                  <MessageCircle size={18} className="lg:w-4 lg:h-4 xl:w-5 xl:h-5" />
+                  Talk to Us
+                </a>
               </Button>
             </motion.div>
           </div>
