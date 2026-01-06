@@ -12,43 +12,43 @@ const Footer = () => {
       {/* Top accent line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-12">
+        <div className="flex flex-col md:flex-row items-start justify-between gap-12 mb-12">
           {/* Brand Column */}
-          <div className="lg:col-span-2">
+          <div className="max-w-sm">
             <img src={logo} alt="EZRecruit" className="h-8 mb-4 brightness-0 invert" />
-            <p className="text-white/70 mb-6 max-w-xs">
+            <p className="text-white/70 mb-6">
               The modern ATS that helps staffing agencies source, track, and
               place candidates faster.
             </p>
-            <div className="space-y-3">
-              <a
-                href="mailto:hello@ezrecruit.com"
-                className="flex items-center gap-2 text-white/70 hover:text-white transition-colors"
-              >
-                <Mail size={16} />
-                hello@ezrecruit.com
-              </a>
-            </div>
+            <a
+              href="mailto:hello@ezrecruit.com"
+              className="flex items-center gap-2 text-white/70 hover:text-white transition-colors"
+            >
+              <Mail size={16} />
+              hello@ezrecruit.com
+            </a>
           </div>
 
           {/* Links Columns */}
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
-              <h4 className="font-semibold text-white mb-4">{category}</h4>
-              <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="text-white/70 hover:text-white transition-colors text-sm"
-                    >
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="flex flex-wrap gap-16">
+            {Object.entries(footerLinks).map(([category, links]) => (
+              <div key={category}>
+                <h4 className="font-semibold text-white mb-4">{category}</h4>
+                <ul className="space-y-3">
+                  {links.map((link) => (
+                    <li key={link}>
+                      <a
+                        href="#"
+                        className="text-white/70 hover:text-white transition-colors text-sm"
+                      >
+                        {link}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Bottom Bar */}
