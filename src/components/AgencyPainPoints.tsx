@@ -175,7 +175,7 @@ const ChatBubble = ({ message, delay, resetKey }: { message: string; delay: numb
   }, [delay, resetKey]);
 
   return (
-    <div className="relative group min-h-[40px]">
+    <div className="relative group min-h-[36px] sm:min-h-[40px]">
       <AnimatePresence mode="wait">
         {showTyping && (
           <motion.div
@@ -194,10 +194,10 @@ const ChatBubble = ({ message, delay, resetKey }: { message: string; delay: numb
             initial={{ opacity: 0, scale: 0.8, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="relative bg-gradient-to-br from-accent to-accent/80 dark:from-accent dark:to-accent/70 px-4 py-2.5 rounded-2xl rounded-bl-sm text-sm text-foreground shadow-md border border-primary/30 inline-block"
+            className="relative bg-gradient-to-br from-accent to-accent/80 dark:from-accent dark:to-accent/70 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl rounded-bl-sm text-xs sm:text-sm text-foreground shadow-md border border-primary/30 inline-block max-w-full"
           >
             <div className="absolute -left-1.5 bottom-1 w-3 h-3 bg-gradient-to-br from-accent to-accent/80 dark:from-accent dark:to-accent/70 transform rotate-45 border-l border-b border-primary/30" />
-            <span className="relative z-10 font-medium">{message}</span>
+            <span className="relative z-10 font-medium break-words">{message}</span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -276,9 +276,9 @@ const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData:
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 3.5, duration: 0.5 }}
-        className="text-right mb-4"
+        className="text-right mb-2 sm:mb-4"
       >
-        <p className="text-sm md:text-base font-semibold">
+        <p className="text-xs sm:text-sm md:text-base font-semibold">
           <span className="text-primary">EzRecruit</span> <span className="text-foreground">{solutionIntro}</span>
         </p>
       </motion.div>
@@ -295,20 +295,20 @@ const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData:
             className="w-full max-w-xl bg-card rounded-xl overflow-hidden flex flex-col border-2 border-primary/30 shadow-2xl dark:glow-border black:glow-border"
           >
             {/* Solution Heading */}
-            <div className="p-4 md:p-5 bg-muted/30">
-              <div className="px-4 md:px-6 py-3 md:py-4 rounded-lg bg-primary/10 border border-primary/20">
-                <h3 className="text-base md:text-lg font-bold text-primary leading-tight">
+            <div className="p-2.5 sm:p-4 md:p-5 bg-muted/30">
+              <div className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 rounded-lg bg-primary/10 border border-primary/20">
+                <h3 className="text-xs sm:text-base md:text-lg font-bold text-primary leading-tight">
                   {currentSolution.heading}
                 </h3>
               </div>
             </div>
             
             {/* Screenshot */}
-            <div className="relative bg-background p-3 md:p-4">
+            <div className="relative bg-background p-2 sm:p-3 md:p-4">
               <img
                 src={currentSolution.image || requirementIntake}
                 alt={currentSolution.heading}
-                className="w-full h-[180px] md:h-[280px] object-cover object-top rounded-md"
+                className="w-full h-[120px] sm:h-[160px] md:h-[280px] object-cover object-top rounded-md"
               />
             </div>
           </motion.div>
@@ -316,16 +316,16 @@ const SolutionCarousel = ({ stepData, animationKey, solutionIntro }: { stepData:
       </div>
       
       {/* Carousel dots indicator */}
-      <div className="flex justify-center gap-2 mt-4">
+      <div className="flex justify-center gap-1.5 sm:gap-2 mt-2 sm:mt-4">
         {stepData.solutions.map((_, idx) => (
           <motion.div 
             key={idx}
             animate={{ 
-              width: idx === currentIndex ? 24 : 8,
+              width: idx === currentIndex ? 20 : 6,
               backgroundColor: idx === currentIndex ? 'hsl(var(--primary))' : 'hsl(var(--muted-foreground) / 0.3)'
             }}
             transition={{ duration: 0.3 }}
-            className="h-1.5 md:h-2 rounded-full cursor-pointer"
+            className="h-1 sm:h-1.5 md:h-2 rounded-full cursor-pointer"
             onClick={() => setCurrentIndex(idx)}
           />
         ))}
@@ -348,23 +348,23 @@ const StepCard = ({ stepData, animationKey }: { stepData: typeof stepsData[0]; a
       <div className="rounded-2xl border border-border/50 bg-muted/30 shadow-xl overflow-hidden h-full flex flex-col relative glow-border black:border-primary/20">
 
         {/* Content area - Two column layout 40/60 */}
-        <div className="p-4 md:p-6 bg-gradient-to-br from-background to-muted/20 flex-1 flex flex-col md:flex-row gap-6 min-h-0">
+        <div className="p-3 sm:p-4 md:p-6 bg-gradient-to-br from-background to-muted/20 flex-1 flex flex-col gap-4 md:flex-row md:gap-6 min-h-0">
           {/* Left Side - Pain Section (40%) */}
           <div className="w-full md:w-[40%] flex flex-col" key={animationKey}>
             {/* Pain Heading */}
-            <h4 className="text-xl md:text-2xl font-bold text-primary mb-3">Pain - {stepData.step}</h4>
+            <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-primary mb-2 md:mb-3">Pain - {stepData.step}</h4>
             
-            <p className="text-lg md:text-2xl font-bold text-foreground mb-4">{stepData.stepIntro}</p>
+            <p className="text-base sm:text-lg md:text-2xl font-bold text-foreground mb-3 md:mb-4">{stepData.stepIntro}</p>
             
             {/* Chat Bubbles with User Icon */}
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-2 sm:gap-3">
               {/* User Avatar */}
-              <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-lg ring-2 ring-white dark:ring-background">
-                <User className="w-4 h-4 md:w-5 md:h-5 text-primary-foreground" />
+              <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-lg ring-2 ring-white dark:ring-background">
+                <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-primary-foreground" />
               </div>
               
               {/* Chat Bubbles Container */}
-              <div className="flex flex-col gap-2 pt-1">
+              <div className="flex flex-col gap-1.5 sm:gap-2 pt-1 flex-1 min-w-0">
                 {stepData.painPoints.map((msg, idx) => (
                   <ChatBubble key={`${animationKey}-${idx}`} message={msg} delay={idx * 1000} resetKey={animationKey} />
                 ))}
@@ -373,7 +373,7 @@ const StepCard = ({ stepData, animationKey }: { stepData: typeof stepsData[0]; a
           </div>
 
           {/* Right Side - Solution Section (60%) */}
-          <div className="w-full md:w-[60%] flex flex-col">
+          <div className="w-full md:w-[60%] flex flex-col mt-2 md:mt-0">
             <SolutionCarousel stepData={stepData} animationKey={animationKey} solutionIntro={stepData.solutionIntro} />
           </div>
         </div>
