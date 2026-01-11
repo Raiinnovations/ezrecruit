@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useTheme } from "next-themes";
@@ -8,15 +9,17 @@ import logo from "@/assets/logo.png";
 import logoDark from "@/assets/logo-dark.png";
 
 const navLinks = [
-  { name: "Workflow", href: "#workflow" },
-  { name: "Challenges", href: "#challenges" },
-  { name: "Why EzRecruit", href: "#why-ezrecruit" },
+  { name: "Workflow", href: "#workflow", isAnchor: true },
+  { name: "Challenges", href: "#challenges", isAnchor: true },
+  { name: "Why EzRecruit", href: "#why-ezrecruit", isAnchor: true },
+  { name: "Blog", href: "/blog", isAnchor: false },
 ];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { resolvedTheme } = useTheme();
+  const location = useLocation();
   
   const currentLogo = resolvedTheme === "dark" || resolvedTheme === "black" ? logoDark : logo;
 
@@ -38,20 +41,30 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
-<a href="#" className="flex items-center gap-2">
+<Link to="/" className="flex items-center gap-2">
           <img src={currentLogo} alt="EZRecruit" className="h-8 md:h-10" />
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-muted-foreground hover:text-primary transition-colors duration-200 font-medium"
-            >
-              {link.name}
-            </a>
+            link.isAnchor ? (
+              <a
+                key={link.name}
+                href={location.pathname === "/" ? link.href : `/${link.href}`}
+                className="text-muted-foreground hover:text-primary transition-colors duration-200 font-medium"
+              >
+                {link.name}
+              </a>
+            ) : (
+              <Link
+                key={link.name}
+                to={link.href}
+                className="text-muted-foreground hover:text-primary transition-colors duration-200 font-medium"
+              >
+                {link.name}
+              </Link>
+            )
           ))}
         </div>
 
@@ -81,14 +94,25 @@ const Navbar = () => {
         >
           <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
             {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-foreground hover:text-primary transition-colors py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.name}
-              </a>
+              link.isAnchor ? (
+                <a
+                  key={link.name}
+                  href={location.pathname === "/" ? link.href : `/${link.href}`}
+                  className="text-foreground hover:text-primary transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className="text-foreground hover:text-primary transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              )
             ))}
             <div className="flex flex-col gap-2 pt-4 border-t border-border">
               <div className="flex justify-center pb-2">
