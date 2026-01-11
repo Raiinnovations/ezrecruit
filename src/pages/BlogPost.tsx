@@ -34,147 +34,170 @@ const BlogPost = () => {
     <main className="min-h-screen">
       <Navbar />
 
-      {/* Hero */}
-      <section className="pt-32 pb-8 px-4">
-        <div className="container mx-auto max-w-4xl">
+      <div className="pt-24 lg:pt-32">
+        <div className="container mx-auto px-4">
+          {/* Back Link */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4 }}
+            className="mb-6"
           >
-            {/* Back Link */}
             <Link
               to="/blog"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
             >
-              <ArrowLeft size={16} />
-              Back to Blog
+              <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+              <span className="font-medium">Back to Blog</span>
             </Link>
-
-            {/* Category */}
-            <span className="inline-block px-3 py-1 text-sm font-medium bg-primary/10 text-primary rounded-full mb-4">
-              {post.category}
-            </span>
-
-            {/* Title */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              {post.title}
-            </h1>
-
-            {/* Meta */}
-            <div className="flex flex-wrap items-center gap-4 md:gap-6 text-muted-foreground mb-8">
-              <span className="flex items-center gap-2">
-                <User size={16} />
-                {post.author}
-              </span>
-              <span className="flex items-center gap-2">
-                <Calendar size={16} />
-                {new Date(post.date).toLocaleDateString('en-US', { 
-                  month: 'long', 
-                  day: 'numeric', 
-                  year: 'numeric' 
-                })}
-              </span>
-              <span className="flex items-center gap-2">
-                <Clock size={16} />
-                {post.readTime}
-              </span>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleShare}
-                className="ml-auto"
-              >
-                <Share2 size={16} className="mr-2" />
-                Share
-              </Button>
-            </div>
           </motion.div>
-        </div>
-      </section>
 
-      {/* Featured Image */}
-      <section className="pb-8 px-4">
-        <div className="container mx-auto max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="rounded-2xl overflow-hidden"
-          >
-            <img
-              src={post.image}
-              alt={post.title}
-              className="w-full aspect-video object-cover"
-            />
-          </motion.div>
-        </div>
-      </section>
+          {/* Two Column Layout */}
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+            {/* Left Side - Fixed on desktop */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="lg:w-[45%] lg:sticky lg:top-28 lg:self-start"
+            >
+              {/* Featured Image */}
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl mb-6">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full aspect-[4/3] object-cover"
+                />
+                {/* Category Badge */}
+                <span className="absolute top-4 left-4 z-20 px-3 py-1.5 text-xs font-semibold bg-primary text-primary-foreground rounded-full uppercase tracking-wider">
+                  {post.category}
+                </span>
+              </div>
 
-      {/* Content */}
-      <section className="pb-16 px-4">
-        <div className="container mx-auto max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="prose prose-lg dark:prose-invert max-w-none"
-          >
-            <div 
-              className="blog-content"
-              dangerouslySetInnerHTML={{ 
-                __html: post.content
-                  .replace(/^## (.*$)/gm, '<h2 class="text-2xl md:text-3xl font-bold mt-10 mb-4">$1</h2>')
-                  .replace(/^### (.*$)/gm, '<h3 class="text-xl md:text-2xl font-semibold mt-8 mb-3">$1</h3>')
-                  .replace(/^\*\*(.*)\*\*$/gm, '<p class="font-semibold mt-4 mb-2">$1</p>')
-                  .replace(/^- (.*$)/gm, '<li class="text-muted-foreground ml-4">$1</li>')
-                  .replace(/^(?!<[hl]|<p|<li)(.*$)/gm, (match) => {
-                    if (match.trim() && !match.startsWith('<')) {
-                      return `<p class="text-muted-foreground leading-relaxed mb-4">${match}</p>`;
-                    }
-                    return match;
-                  })
-              }} 
-            />
-          </motion.div>
-        </div>
-      </section>
+              {/* Title & Meta */}
+              <div className="space-y-4">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
+                  {post.title}
+                </h1>
 
-      {/* Related Posts */}
-      {relatedPosts.length > 0 && (
-        <section className="pb-24 px-4">
-          <div className="container mx-auto max-w-4xl">
-            <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {relatedPosts.map((relatedPost) => (
-                <Link
-                  key={relatedPost.id}
-                  to={`/blog/${relatedPost.id}`}
-                  className="group"
-                >
-                  <div className="glass-card rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300">
-                    <div className="aspect-video overflow-hidden">
-                      <img
-                        src={relatedPost.image}
-                        alt={relatedPost.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
+                <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                      <User size={14} className="text-primary" />
                     </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold group-hover:text-primary transition-colors line-clamp-2">
-                        {relatedPost.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground mt-2">
-                        {relatedPost.readTime}
-                      </p>
-                    </div>
+                    <span className="font-medium">{post.author}</span>
                   </div>
-                </Link>
-              ))}
-            </div>
+                  <span className="w-1 h-1 rounded-full bg-muted-foreground/50" />
+                  <span className="flex items-center gap-1.5">
+                    <Calendar size={14} />
+                    {new Date(post.date).toLocaleDateString('en-US', { 
+                      month: 'short', 
+                      day: 'numeric', 
+                      year: 'numeric' 
+                    })}
+                  </span>
+                  <span className="w-1 h-1 rounded-full bg-muted-foreground/50" />
+                  <span className="flex items-center gap-1.5">
+                    <Clock size={14} />
+                    {post.readTime}
+                  </span>
+                </div>
+
+                {/* Share Button */}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleShare}
+                  className="mt-2 gap-2 hover:bg-primary hover:text-primary-foreground transition-colors"
+                >
+                  <Share2 size={14} />
+                  Share Article
+                </Button>
+              </div>
+            </motion.div>
+
+            {/* Right Side - Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="lg:w-[55%] pb-16"
+            >
+              {/* Content Card */}
+              <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-6 md:p-8 lg:p-10 shadow-lg">
+                <div 
+                  className="prose prose-lg dark:prose-invert max-w-none
+                    prose-headings:font-bold prose-headings:tracking-tight
+                    prose-h2:text-xl prose-h2:md:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-border/30
+                    prose-h3:text-lg prose-h3:md:text-xl prose-h3:mt-6 prose-h3:mb-3
+                    prose-p:text-muted-foreground prose-p:leading-relaxed
+                    prose-li:text-muted-foreground prose-li:marker:text-primary
+                    prose-strong:text-foreground prose-strong:font-semibold"
+                >
+                  <div 
+                    className="blog-content"
+                    dangerouslySetInnerHTML={{ 
+                      __html: post.content
+                        .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+                        .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+                        .replace(/^\*\*(.*)\*\*$/gm, '<p><strong>$1</strong></p>')
+                        .replace(/^- (.*$)/gm, '<li>$1</li>')
+                        .replace(/(<li>.*<\/li>\n?)+/g, '<ul class="space-y-2 my-4">$&</ul>')
+                        .replace(/^(?!<[hpul]|<li)(.*$)/gm, (match) => {
+                          if (match.trim() && !match.startsWith('<')) {
+                            return `<p>${match}</p>`;
+                          }
+                          return match;
+                        })
+                    }} 
+                  />
+                </div>
+              </div>
+
+              {/* Related Posts */}
+              {relatedPosts.length > 0 && (
+                <div className="mt-12">
+                  <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                    <span className="w-8 h-0.5 bg-primary rounded-full" />
+                    Related Articles
+                  </h2>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {relatedPosts.map((relatedPost) => (
+                      <Link
+                        key={relatedPost.id}
+                        to={`/blog/${relatedPost.id}`}
+                        className="group"
+                      >
+                        <div className="bg-card rounded-xl overflow-hidden border border-border/50 hover:border-primary/50 hover:shadow-lg transition-all duration-300">
+                          <div className="aspect-video overflow-hidden">
+                            <img
+                              src={relatedPost.image}
+                              alt={relatedPost.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                          </div>
+                          <div className="p-4">
+                            <span className="text-xs text-primary font-medium uppercase tracking-wider">
+                              {relatedPost.category}
+                            </span>
+                            <h3 className="font-semibold mt-1 group-hover:text-primary transition-colors line-clamp-2">
+                              {relatedPost.title}
+                            </h3>
+                            <p className="text-xs text-muted-foreground mt-2">
+                              {relatedPost.readTime}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
           </div>
-        </section>
-      )}
+        </div>
+      </div>
 
       <Footer />
     </main>
