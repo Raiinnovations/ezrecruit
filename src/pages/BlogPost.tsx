@@ -54,15 +54,33 @@ const BlogPost = () => {
 
           {/* Two Column Layout */}
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-            {/* Left Side - Fixed on desktop */}
+            {/* Left Side - Image Fixed on desktop */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className="lg:w-[45%] lg:sticky lg:top-28 lg:self-start"
             >
-              {/* Title & Meta - Now on top */}
-              <div className="space-y-4 mb-6">
+              {/* Featured Image */}
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-10" />
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full aspect-[4/3] object-cover"
+                />
+              </div>
+            </motion.div>
+
+            {/* Right Side - Title & Meta + Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="lg:w-[55%] pb-16"
+            >
+              {/* Title & Meta */}
+              <div className="space-y-4 mb-8">
                 {/* Category Badge */}
                 <span className="inline-block px-3 py-1.5 text-xs font-semibold bg-primary text-primary-foreground rounded-full uppercase tracking-wider">
                   {post.category}
@@ -107,24 +125,6 @@ const BlogPost = () => {
                 </Button>
               </div>
 
-              {/* Featured Image - Now below heading */}
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-10" />
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full aspect-[4/3] object-cover"
-                />
-              </div>
-            </motion.div>
-
-            {/* Right Side - Content */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="lg:w-[55%] pb-16"
-            >
               {/* Content Card */}
               <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-6 md:p-8 lg:p-10 shadow-lg">
                 <div 
