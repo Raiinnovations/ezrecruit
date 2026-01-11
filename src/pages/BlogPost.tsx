@@ -61,22 +61,13 @@ const BlogPost = () => {
               transition={{ duration: 0.5 }}
               className="lg:w-[45%] lg:sticky lg:top-28 lg:self-start"
             >
-              {/* Featured Image */}
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl mb-6">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full aspect-[4/3] object-cover"
-                />
+              {/* Title & Meta - Now on top */}
+              <div className="space-y-4 mb-6">
                 {/* Category Badge */}
-                <span className="absolute top-4 left-4 z-20 px-3 py-1.5 text-xs font-semibold bg-primary text-primary-foreground rounded-full uppercase tracking-wider">
+                <span className="inline-block px-3 py-1.5 text-xs font-semibold bg-primary text-primary-foreground rounded-full uppercase tracking-wider">
                   {post.category}
                 </span>
-              </div>
 
-              {/* Title & Meta */}
-              <div className="space-y-4">
                 <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
                   {post.title}
                 </h1>
@@ -114,6 +105,16 @@ const BlogPost = () => {
                   <Share2 size={14} />
                   Share Article
                 </Button>
+              </div>
+
+              {/* Featured Image - Now below heading */}
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-10" />
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full aspect-[4/3] object-cover"
+                />
               </div>
             </motion.div>
 
