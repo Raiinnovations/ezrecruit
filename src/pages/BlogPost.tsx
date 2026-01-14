@@ -1,20 +1,32 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Calendar, Clock, User, ArrowLeft, Share2, BookOpen } from "lucide-react";
+import { Calendar, Clock, User, ArrowLeft, Share2, BookOpen, Loader2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { blogPosts } from "@/data/blogPosts";
+import { useBlogPost, useBlogPosts } from "@/hooks/useSanityBlog";
 
 const BlogPost = () => {
   const { id } = useParams<{ id: string }>();
-  const post = blogPosts.find((p) => p.id === id);
+  const { data: post, isLoading } = useBlogPost(id || '');
+  const { data: allPosts = [] } = useBlogPosts();
+
+  if (isLoading) {
+    return (
+      <main className="min-h-screen">
+        <Navbar />
+        <div className="pt-32 flex items-center justify-center">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>
+      </main>
+    );
+  }
 
   if (!post) {
     return <Navigate to="/blog" replace />;
   }
 
-  const relatedPosts = blogPosts
+  const relatedPosts = allPosts
     .filter((p) => p.id !== post.id && p.category === post.category)
     .slice(0, 2);
 
